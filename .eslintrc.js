@@ -1,3 +1,3 @@
-{
-  "extends": ["airbnb"]
+module.exports = {
+  extends : ["airbnb"]
 }
