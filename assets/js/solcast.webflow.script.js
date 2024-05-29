@@ -1,4 +1,6 @@
-// Splide Scripts
+/*!
+ * Splide Script
+ */
     document.addEventListener('DOMContentLoaded', function () {
         new Splide('.splide', {
             type   : 'loop',
@@ -32,7 +34,9 @@
 // Map Embed
 // Solar Radiation Maps
 
-//Home Page Video
+/*!
+ * Latest World Map Embed
+ */
     // This function formats the date and time in the required format
     function formatDateTimeUTC() {
         const now = new Date(); // Gets the current date and time
@@ -58,7 +62,9 @@
     document.addEventListener('DOMContentLoaded', updateVideoUrls);
 
 
-//StatusPal
+/*!
+ * StatusPal.io required script
+ */
     window.statuspalWidget = {
         subdomain: 'solcast-com',
         badge: {
@@ -79,7 +85,10 @@
     // serviceId: 1, // Optional - Display the status of only one service
     }
 
-// Function to check if any dropdown link matches the current page
+/*!
+ * Function to check if any dropdown link matches the current page
+ */
+    
     function updateCurrentLink() {
         const navDropdowns = document.querySelectorAll('.nav_dropdown');
 
