@@ -61,6 +61,9 @@ document.addEventListener('DOMContentLoaded', function () {
         videoElement.setAttribute('src', `${baseUrl}.mp4?time=${dateTime}`);
     }
 
+    document.addEventListener('DOMContentLoaded', updateVideoUrls);
+
+
 //StatusPal
     window.statuspalWidget = {
         subdomain: 'solcast-com',
