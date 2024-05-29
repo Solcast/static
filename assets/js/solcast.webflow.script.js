@@ -31,8 +31,10 @@
         ).mount( window.splide.Extensions );
     });
 
-// Map Embed
-// Solar Radiation Maps
+/*!
+ * Solar Radiation Maps
+ */
+
 
 /*!
  * Latest World Map Embed
