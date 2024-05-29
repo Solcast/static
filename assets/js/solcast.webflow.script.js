@@ -63,39 +63,35 @@ document.addEventListener('DOMContentLoaded', Splide () {
 
 //StatusPal
 window.statuspalWidget = {
-subdomain: 'solcast-com',
-badge: {
-      enabled: true,
-      selector: '.sp-status', // Optional
-      position: 'bottom', // Optional [top | bottom | left | right] - defaults to top.
-    },
-    banner: {
-      enabled: true,
-      position: 'bottom-left', // Optional [bottom-left | bottom-right | top-left | top-right], def: bottom-left
-      translations: { // Optional - There are 7 supported languages by default (Danish, German, English, Spanish, French, Dutch and Portuguese). You can extend supported languages by this option.
-        en: {
-          lates_updates: 'View latest updates',
-          ongoing: 'Ongoing for {{time_diff}}',
-        },
-      },
-    },
-    // serviceId: 1, // Optional - Display the status of only one service
-  }
+    subdomain: 'solcast-com',
+    badge: {
+        enabled: true,
+        selector: '.sp-status', // Optional
+        position: 'bottom', // Optional [top | bottom | left | right] - defaults to top.
+    },
+    banner: {
+        enabled: true,
+        position: 'bottom-left', // Optional [bottom-left | bottom-right | top-left | top-right], def: bottom-left
+        translations: { // Optional - There are 7 supported languages by default (Danish, German, English, Spanish, French, Dutch and Portuguese). You can extend supported languages by this option.
+            en: {
+                lates_updates: 'View latest updates',
+                ongoing: 'Ongoing for {{time_diff}}',
+            },
+        },
+    }, 
+// serviceId: 1, // Optional - Display the status of only one service
+}
 
- document.addEventListener('DOMContentLoaded', function() {
-    // Function to check if any dropdown link matches the current page
-    function updateCurrentLink() {
-        const navDropdowns = document.querySelectorAll('.nav_dropdown');
+ // Function to check if any dropdown link matches the current page
+function updateCurrentLink() {
+    const navDropdowns = document.querySelectorAll('.nav_dropdown');
 
-        navDropdowns.forEach(dropdown => {
-            const links = dropdown.querySelectorAll('.nav_dropdown-list .nav_menu_link');
-            links.forEach(link => {
-                if (link.href === window.location.href) {
-                    dropdown.querySelector('.nav_menu_link.is-heading').classList.add('w--current');
-                }
-            });
+    navDropdowns.forEach(dropdown => {
+        const links = dropdown.querySelectorAll('.nav_dropdown-list .nav_menu_link');
+        links.forEach(link => {
+            if (link.href === window.location.href) {
+                dropdown.querySelector('.nav_menu_link.is-heading').classList.add('w--current');
+            }
         });
-    }
-
-    updateCurrentLink();
-});
+    });
+}
