@@ -9,34 +9,28 @@
             pauseOnHover: true,
             pauseOnFocus: true,
             autoScroll: {
-            speed: 0.8,
+                speed: 0.8,
             },
             breakpoints: {
                 1100: {
-                perPage: 6,
-            },
-            760: {
-                perPage: 4,
-            },
-            580: {
-                perPage: 3,
-            },
-            400: {
-                perPage: 2,
-            },
+                    perPage: 6,
+                },
+                760: {
+                    perPage: 4,
+                },
+                580: {
+                    perPage: 3,
+                },
+                400: {
+                    perPage: 2,
+                },
             }
-            }
+        }
         ).mount( window.splide.Extensions );
     });
 
 // Map Embed
-
-
-
-
 // Solar Radiation Maps
-
-
 
 //Home Page Video
     // This function formats the date and time in the required format
