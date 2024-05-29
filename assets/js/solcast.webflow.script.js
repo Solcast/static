@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // serviceId: 1, // Optional - Display the status of only one service
     }
 
-    // Function to check if any dropdown link matches the current page
+// Function to check if any dropdown link matches the current page
     function updateCurrentLink() {
         const navDropdowns = document.querySelectorAll('.nav_dropdown');
 
