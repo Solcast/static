@@ -1,6 +1,6 @@
 // Splide Scripts
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', Splide () {
     new Splide('.splide', {
       type   : 'loop',
       drag   : 'free',
