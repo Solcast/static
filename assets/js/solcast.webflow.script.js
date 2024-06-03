@@ -1,3 +1,5 @@
+/* global Splide */
+
 /*!
  * Splide Script
  */
