@@ -699,3 +699,32 @@ table tbody tr:last-child td:last-child{
 .sp-status:hover .sp-tooltip {
   visibility: visible;
 }
+
+/* Irr Map Location Styling */
+#gallery-list-section .w-embed {
+  display: none;
+}
+.gallery-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;    
+}
+.gallery-items .item {
+  cursor: pointer;
+  flex: 0 1 220px;
+  margin: 14px;
+  text-align: center;
+}
+.gallery-items img {
+  height: 120px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  width: 220px;
+}
+.gallery-items .item .item-wrap .label {
+  padding: .5rem;
+}
+.gallery-items .item .item-wrap {
+  background-color: #111;
+  color: #acafb6;
+}
