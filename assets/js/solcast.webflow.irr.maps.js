@@ -47,7 +47,7 @@ function fetchLatestVideoUrl() {
         videoElement.load();
       }
     });
-};
+}
 
 // Call fetchLatestVideoUrl when the document is loaded
 document.addEventListener('DOMContentLoaded', fetchLatestVideoUrl);
