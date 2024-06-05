@@ -55,15 +55,15 @@ getJSON(
         document.querySelectorAll('#gallery-list-section .item .inner_block').forEach((load_summary) => {
           const getItemId = load_summary.getAttribute('data-item-id');
           if (getItemId == myParam) {
-            const get_item_date = load_summary.getAttribute('data-item-date');
-            const get_item_data_poster = load_summary.getAttribute('data-item-poster');
-            const get_item_data_video_url = load_summary.getAttribute('data-item-video-url');
+            const getItemDate = load_summary.getAttribute('data-item-date');
+            const getItemDataPoster = load_summary.getAttribute('data-item-poster');
+            const getItemDataVideoUrl = load_summary.getAttribute('data-item-video-url');
             const videoElement = document.querySelector('.hero_video');
             if (videoElement) {
-              videoElement.src = get_item_data_video_url;
-              videoElement.poster = get_item_data_poster;
+              videoElement.src = getItemDataVideoUrl;
+              videoElement.poster = getItemDataPoster;
               videoElement.load(); // Load the new video
-              document.querySelector('.global_solcast_date').innerHTML = get_item_date;
+              document.querySelector('.global_solcast_date').innerHTML = getItemDate;
             } else {
 
             }
@@ -73,17 +73,17 @@ getJSON(
 
       document.querySelectorAll('#gallery-list-section .item .inner_block').forEach((summary) => {
         summary.addEventListener('click', () => {
-          const get_item_id = summary.getAttribute('data-item-id');
-          const get_item_date = summary.getAttribute('data-item-date');
-          const get_item_data_poster = summary.getAttribute('data-item-poster');
-          const get_item_data_video_url = summary.getAttribute('data-item-video-url');
+          const getItemId = summary.getAttribute('data-item-id');
+          const getItemDate = summary.getAttribute('data-item-date');
+          const getItemDataPoster = summary.getAttribute('data-item-poster');
+          const getItemDataVideoUrl = summary.getAttribute('data-item-video-url');
           const videoElement = document.querySelector('.hero_video');
           if (videoElement) {
-            videoElement.src = get_item_data_video_url;
-            videoElement.poster = get_item_data_poster;
+            videoElement.src = getItemDataVideoUrl;
+            videoElement.poster = getItemDataPoster;
             videoElement.load(); // Load the new video
-            document.querySelector('.global_solcast_date').innerHTML = get_item_date;
-            window.history.replaceState({}, '', `?id=${get_item_id}`);
+            document.querySelector('.global_solcast_date').innerHTML = getItemDate;
+            window.history.replaceState({}, '', `?id=${getItemId}`);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           } else {
 
