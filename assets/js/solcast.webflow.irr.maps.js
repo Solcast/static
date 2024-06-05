@@ -1,4 +1,4 @@
-/* global mapId
+/* global mapId error
 */
 
 // Function to fetch the video URL and update the video element
@@ -50,7 +50,6 @@ function fetchLatestVideoUrl() {
         videoElement.load();
       } else { }
     })
-    .catch((error) => {});
 }
 
 // Call fetchLatestVideoUrl when the document is loaded
