@@ -1,9 +1,11 @@
+/* global mapId
+*/
+
 // Function to fetch the video URL and update the video element
 function fetchLatestVideoUrl() {
   // Get the div element with class mapEmbed
   const mapEmbedDiv = document.querySelector('.mapembed');
   if (!mapEmbedDiv) {
-    console.error('No element with class mapEmbed found.');
     return;
   }
 
@@ -21,7 +23,6 @@ function fetchLatestVideoUrl() {
     })
     .then((data) => {
       if (!data || !data.files || !data.files.length) {
-        console.error('No data found!');
         return;
       }
 
@@ -46,15 +47,10 @@ function fetchLatestVideoUrl() {
       const videoElement = document.querySelector('.hero_video');
       if (videoElement) {
         videoElement.src = videoUrl;
-        videoElement.load(); // Load the new video
-        console.log('Video URL updated:', videoUrl);
-      } else {
-        console.error('No video element found!');
-      }
+        videoElement.load();
+      } else { }
     })
-    .catch((error) => {
-      console.error('Error fetching data:', error);
-    });
+    .catch((error) => {});
 }
 
 // Call fetchLatestVideoUrl when the document is loaded
