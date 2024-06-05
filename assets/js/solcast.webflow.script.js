@@ -1,8 +1,6 @@
 /* global Splide */
 
-/*!
- * Splide Script
- */
+/* Splide Script */
 document.addEventListener('DOMContentLoaded', () => {
   new Splide('.splide', {
     type: 'loop',
@@ -32,13 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }).mount(window.splide.Extensions);
 });
 
-/*!
- * Solar Radiation Maps
- */
 
-/*!
- * Latest World Map Embed
- */
+/* Latest World Map Embed */
 // This function formats the date and time in the required format
 function formatDateTimeUTC() {
   const now = new Date(); // Gets the current date and time
@@ -63,9 +56,7 @@ function updateVideoUrls() {
 
 document.addEventListener('DOMContentLoaded', updateVideoUrls);
 
-/*!
- * StatusPal.io required script
- */
+/* StatusPal.io required script */
 window.statuspalWidget = {
   subdomain: 'solcast-com',
   badge: {
@@ -86,10 +77,7 @@ window.statuspalWidget = {
   // serviceId: 1, // Optional - Display the status of only one service
 };
 
-/*!
- * Function to check if any dropdown link matches the current page
- */
-
+/* Function to check if any dropdown link matches the current page */
 function updateCurrentLink() {
   const navDropdowns = document.querySelectorAll('.nav_dropdown');
 

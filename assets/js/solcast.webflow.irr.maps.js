@@ -1,6 +1,3 @@
-/* global mapId error
-*/
-
 // Function to fetch the video URL and update the video element
 function fetchLatestVideoUrl() {
   // Get the div element with class mapEmbed
@@ -10,7 +7,7 @@ function fetchLatestVideoUrl() {
   }
 
   // Extract the ID from the div
-  const mapId = mapEmbedDiv.id;
+  // const mapId = mapEmbedDiv.id;
   // Define the API URL
   const apiUrl = 'https://api.solcast.com.au/media/global?format=json';
 
@@ -48,9 +45,9 @@ function fetchLatestVideoUrl() {
       if (videoElement) {
         videoElement.src = videoUrl;
         videoElement.load();
-      } else { }
-    })
-}
+      }
+    });
+};
 
 // Call fetchLatestVideoUrl when the document is loaded
 document.addEventListener('DOMContentLoaded', fetchLatestVideoUrl);
