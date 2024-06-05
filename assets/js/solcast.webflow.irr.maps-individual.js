@@ -7,11 +7,11 @@ const apiUrlPre = 'https://api.solcast.com.au/media/';
 const apiUrlPost = '?format=json';
 const apiUrl = apiUrlPre + locationId + apiUrlPost;
 
-const getJSON = function (url, callback) => {
+const getJSON = function getJSON(url, callback) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url, true);
   xhr.responseType = 'json';
-  xhr.onload = function () => {
+  xhr.onload = function onLoad() {
     const { status } = xhr;
     if (status === 200) {
       callback(null, xhr.response);
