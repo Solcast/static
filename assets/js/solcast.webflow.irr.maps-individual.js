@@ -86,7 +86,7 @@ getJSON(
             window.history.replaceState({}, '', `?id=${getItemId}`);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           } else {
-
+            return;
           }
         });
       });
