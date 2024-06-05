@@ -26,7 +26,7 @@ getJSON(
   apiUrl,
   (err, data) => {
     if (err !== null) {
-
+        return;
     } else {
       const videoElement = document.querySelector('.hero_video');
       if (videoElement) {
