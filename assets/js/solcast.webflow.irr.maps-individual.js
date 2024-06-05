@@ -65,7 +65,7 @@ getJSON(
               videoElement.load(); // Load the new video
               document.querySelector('.global_solcast_date').innerHTML = getItemDate;
             } else {
-
+              return;
             }
           }
         });
