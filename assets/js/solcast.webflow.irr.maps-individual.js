@@ -5,7 +5,7 @@ const heroElement = document.querySelector('.hero');
 const locationId = heroElement ? heroElement.id : null;
 const apiUrlPre = 'https://api.solcast.com.au/media/';
 const apiUrlPost = '?format=json';
-const apiUrl = apiUrlpre + locationId + apiUrlPost;
+const apiUrl = apiUrlPre + locationId + apiUrlPost;
 
 const getJSON = function (url, callback) {
   const xhr = new XMLHttpRequest();
