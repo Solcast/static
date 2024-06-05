@@ -3,7 +3,9 @@
 // Define the API URL
 const heroElement = document.querySelector('.hero');
 const locationId = heroElement ? heroElement.id : null;
-const apiUrl = 'https://api.solcast.com.au/media/${locationId}?format=json';
+const apiURLPre = 'https://api.solcast.com.au/media/'
+const apiURLPost = '?format=json'
+const apiUrl = '${apiURLpre}${locationId}${apiURLPost}';
 
 const getJSON = function (url, callback) {
   const xhr = new XMLHttpRequest();
