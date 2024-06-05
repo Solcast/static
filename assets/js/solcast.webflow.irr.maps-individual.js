@@ -52,12 +52,12 @@ getJSON(
       const urlParams = new URLSearchParams(window.location.search);
       const myParam = urlParams.get('id');
       if (myParam !== '') {
-        document.querySelectorAll('#gallery-list-section .item .inner_block').forEach((load_summary) => {
+        document.querySelectorAll('#gallery-list-section .item .inner_block').forEach((loadSummary) => {
           const getItemId = load_summary.getAttribute('data-item-id');
-          if (getItemId == myParam) {
+          if (getItemId === myParam) {
             const getItemDate = load_summary.getAttribute('data-item-date');
-            const getItemDataPoster = load_summary.getAttribute('data-item-poster');
-            const getItemDataVideoUrl = load_summary.getAttribute('data-item-video-url');
+            const getItemDataPoster = loadSummary.getAttribute('data-item-poster');
+            const getItemDataVideoUrl = loadSummary.getAttribute('data-item-video-url');
             const videoElement = document.querySelector('.hero_video');
             if (videoElement) {
               videoElement.src = getItemDataVideoUrl;
