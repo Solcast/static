@@ -33,7 +33,6 @@ getJSON(
         videoElement.src = data.files[0].video_url;
         videoElement.poster = data.files[0].poster_url;
         videoElement.load(); // Load the new video
-        console.log('Video URL updated:', data.files[0].video_url);
         document.querySelector('.global_solcast_date').innerHTML = data.files[0].title;
       } else {
         return;
@@ -52,10 +51,10 @@ getJSON(
 
       const urlParams = new URLSearchParams(window.location.search);
       const myParam = urlParams.get('id');
-      if (myParam != '') {
+      if (myParam !== '') {
         document.querySelectorAll('#gallery-list-section .item .inner_block').forEach((load_summary) => {
-          const get_item_id = load_summary.getAttribute('data-item-id');
-          if (get_item_id == myParam) {
+          const getItemId = load_summary.getAttribute('data-item-id');
+          if (getItemId == myParam) {
             const get_item_date = load_summary.getAttribute('data-item-date');
             const get_item_data_poster = load_summary.getAttribute('data-item-poster');
             const get_item_data_video_url = load_summary.getAttribute('data-item-video-url');
