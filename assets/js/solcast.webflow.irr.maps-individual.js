@@ -26,7 +26,7 @@ getJSON(
   apiUrl,
   (err, data) => {
     if (err !== null) {
-      return;
+      // Handle error if necessary
     } else {
       const videoElement = document.querySelector('.hero_video');
       if (videoElement) {
@@ -34,19 +34,17 @@ getJSON(
         videoElement.poster = data.files[0].poster_url;
         videoElement.load(); // Load the new video
         document.querySelector('.global_solcast_date').innerHTML = data.files[0].title;
-      } else {
-        return;
       }
-      for (let i = 0; i <= 14; i++) {
+      for (let i = 0; i <= 14; i += 1) {
         document.getElementById('gallery-list-section')
           .innerHTML += '    <div class="item" data-code="global">'
-    + `        <div class="inner_block" data-item-id="${data.files[i].id}" data-item-poster="${data.files[i].poster_url}" data-item-video-url="${data.files[i].video_url}" data-item-date="${data.files[i].title}">`
-    + '            <div class="item-wrap">'
-    + `                <img integrity="sha256-+Myk+fv6YyfOJhPb6Q1aeY0hj3gbe6DU5SIQmquT/uE=" crossorigin="anonymous" src="${data.files[i].thumbnail_url}" alt="Solar irradiance data for ${data.files[i].location} ${data.files[i].title}" />`
-    + `                <div class="label">${data.files[i].title}</div>`
-    + '            </div>'
-    + '        </div>'
-    + '    </div>';
+        + `        <div class="inner_block" data-item-id="${data.files[i].id}" data-item-poster="${data.files[i].poster_url}" data-item-video-url="${data.files[i].video_url}" data-item-date="${data.files[i].title}">`
+        + '            <div class="item-wrap">'
+        + `                <img integrity="sha256-+Myk+fv6YyfOJhPb6Q1aeY0hj3gbe6DU5SIQmquT/uE=" crossorigin="anonymous" src="${data.files[i].thumbnail_url}" alt="Solar irradiance data for ${data.files[i].location} ${data.files[i].title}" />`
+        + `                <div class="label">${data.files[i].title}</div>`
+        + '            </div>'
+        + '        </div>'
+        + '    </div>';
       }
 
       const urlParams = new URLSearchParams(window.location.search);
@@ -58,14 +56,12 @@ getJSON(
             const getItemDate = loadSummary.getAttribute('data-item-date');
             const getItemDataPoster = loadSummary.getAttribute('data-item-poster');
             const getItemDataVideoUrl = loadSummary.getAttribute('data-item-video-url');
-            const videoElement = document.querySelector('.hero_video');
-            if (videoElement) {
-              videoElement.src = getItemDataVideoUrl;
-              videoElement.poster = getItemDataPoster;
-              videoElement.load(); // Load the new video
+            const innerVideoElement = document.querySelector('.hero_video'); // Renamed to innerVideoElement
+            if (innerVideoElement) {
+              innerVideoElement.src = getItemDataVideoUrl;
+              innerVideoElement.poster = getItemDataPoster;
+              innerVideoElement.load(); // Load the new video
               document.querySelector('.global_solcast_date').innerHTML = getItemDate;
-            } else {
-              return;
             }
           }
         });
@@ -77,19 +73,18 @@ getJSON(
           const getItemDate = summary.getAttribute('data-item-date');
           const getItemDataPoster = summary.getAttribute('data-item-poster');
           const getItemDataVideoUrl = summary.getAttribute('data-item-video-url');
-          const videoElement = document.querySelector('.hero_video');
-          if (videoElement) {
-            videoElement.src = getItemDataVideoUrl;
-            videoElement.poster = getItemDataPoster;
-            videoElement.load(); // Load the new video
+          const innerVideoElement = document.querySelector('.hero_video'); // Renamed to innerVideoElement
+          if (innerVideoElement) {
+            innerVideoElement.src = getItemDataVideoUrl;
+            innerVideoElement.poster = getItemDataPoster;
+            innerVideoElement.load(); // Load the new video
             document.querySelector('.global_solcast_date').innerHTML = getItemDate;
             window.history.replaceState({}, '', `?id=${getItemId}`);
             window.scrollTo({ top: 0, behavior: 'smooth' });
-          } else {
-            return;
           }
         });
       });
     }
   },
 );
+
