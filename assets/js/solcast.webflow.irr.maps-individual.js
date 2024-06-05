@@ -26,7 +26,7 @@ getJSON(
   apiUrl,
   (err, data) => {
     if (err !== null) {
-        return;
+      return;
     } else {
       const videoElement = document.querySelector('.hero_video');
       if (videoElement) {
@@ -53,9 +53,9 @@ getJSON(
       const myParam = urlParams.get('id');
       if (myParam !== '') {
         document.querySelectorAll('#gallery-list-section .item .inner_block').forEach((loadSummary) => {
-          const getItemId = load_summary.getAttribute('data-item-id');
+          const getItemId = loadSummary.getAttribute('data-item-id');
           if (getItemId === myParam) {
-            const getItemDate = load_summary.getAttribute('data-item-date');
+            const getItemDate = loadSummary.getAttribute('data-item-date');
             const getItemDataPoster = loadSummary.getAttribute('data-item-poster');
             const getItemDataVideoUrl = loadSummary.getAttribute('data-item-video-url');
             const videoElement = document.querySelector('.hero_video');
