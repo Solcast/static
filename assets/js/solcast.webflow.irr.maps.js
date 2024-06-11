@@ -13,9 +13,6 @@
       const apiUrlPost = '?format=json';
       const apiUrl = `${apiUrlPre}${locationId}${apiUrlPost}`;
 
-      // Log the API URL to check if it's correct
-      console.log(`Fetching data from API URL: ${apiUrl}`);
-
       // Perform the fetch request to the API
       fetch(apiUrl)
         .then((response) => {
@@ -31,13 +28,13 @@
 
             // Update the image element's src attribute
             image.src = thumbnailUrl;
-            console.log(`Image src updated to: ${thumbnailUrl}`); // Log the new src URL
+            //console.log(`Image src updated to: ${thumbnailUrl}`); // Log the new src URL
           } else {
-            console.error('No files found in the API response for location ID:', locationId);
+            //console.error('No files found in the API response for location ID:', locationId);
           }
         })
         .catch(error => {
-          console.error('Failed to fetch data from API for location ID:', locationId, error);
+          //console.error('Failed to fetch data from API for location ID:', locationId, error);
         });
     });
   }
