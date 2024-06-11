@@ -10,14 +10,14 @@
 }
 @font-face {
   font-family: 'Font Awesome';
-  src: url('../fonts/fa-light-400.woff2') format('woff2');
+  src: url('../fonts/fa-regular-400.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Font Awesome';
-  src: url('../fonts/fa-light-900.woff2') format('woff2');
+  src: url('../fonts/fa-solid-900.woff2') format('woff2');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -26,7 +26,7 @@
 /* Font Metroplis */
 @font-face {
   font-family: 'Metropolis';
-  src: url('h../fonts/Metropolis-RegularItalic.otf') format('opentype');
+  src: url('../fonts/Metropolis-RegularItalic.otf') format('opentype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -701,10 +701,6 @@ table tbody tr:last-child td:last-child{
 }
 
 /* Irr Map Location Styling */
-#mapDate:after {
-	content: attr(data-date);
-}
-
 #gallery-list-section .w-embed {
   display: none;
 }
