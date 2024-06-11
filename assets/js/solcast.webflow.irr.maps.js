@@ -4,9 +4,9 @@ function updateImageSrc() {
   const images = document.querySelectorAll('.solarirr-locations_image');
 
   // Loop through each image element
-  images.forEach((image) => {
+  images.forEach((img) => {
     // Get the location ID from the data-locationid attribute
-    const locationId = image.getAttribute('data-locationid');
+    const locationId = img.getAttribute('data-locationid');
 
     // Construct the API URL using the provided location ID
     const apiUrlPre = 'https://api.solcast.com.au/media/';
@@ -27,11 +27,12 @@ function updateImageSrc() {
           const thumbnailUrl = data.files[0].thumbnail_url;
 
           // Update the image element's src attribute
-          image.src = thumbnailUrl;
+          const imageElement = img; // Use a local variable
+          imageElement.src = thumbnailUrl;
         }
       })
       .catch((error) => {
-        console.error('Failed to fetch data from API for location ID:', locationId, error);
+        // Handle the error silently or use a custom logging function
       });
   });
 }
