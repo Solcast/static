@@ -1,4 +1,3 @@
-<script>
   // Function to update the image source with the thumbnail URL from the API response
   function updateImageSrc() {
     // Get all image elements with the class 'solarirr-locations_image'
@@ -45,4 +44,3 @@
 
   // Call the function to update image sources
   updateImageSrc();
-</script>
