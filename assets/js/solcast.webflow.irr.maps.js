@@ -1,3 +1,4 @@
+<script>
   // Function to update the image source with the thumbnail URL from the API response
   function updateImageSrc() {
     // Get all image elements with the class 'solarirr-locations_image'
@@ -13,9 +14,17 @@
       const apiUrlPost = '?format=json';
       const apiUrl = `${apiUrlPre}${locationId}${apiUrlPost}`;
 
+      // Log the API URL to check if it's correct
+      console.log(`Fetching data from API URL: ${apiUrl}`);
+
       // Perform the fetch request to the API
       fetch(apiUrl)
-        .then((response) => response.json()) // Parse the JSON from the response
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+          }
+          return response.json(); // Parse the JSON from the response
+        })
         .then((data) => {
           if (data.files && data.files.length > 0) {
             // Assuming you want the first file's thumbnail URL
@@ -23,7 +32,7 @@
 
             // Update the image element's src attribute
             image.src = thumbnailUrl;
-            // console.log(`Image src updated to: ${thumbnailUrl}`); // Log the new src URL
+            console.log(`Image src updated to: ${thumbnailUrl}`); // Log the new src URL
           } else {
             console.error('No files found in the API response for location ID:', locationId);
           }
@@ -36,3 +45,4 @@
 
   // Call the function to update image sources
   updateImageSrc();
+</script>
