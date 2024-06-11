@@ -31,7 +31,7 @@ function updateImageSrc() {
           imageElement.src = thumbnailUrl;
         }
       })
-      .catch((error) => {
+      .catch(() => {
         // Handle the error silently or use a custom logging function
       });
   });
