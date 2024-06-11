@@ -1,38 +1,38 @@
-/* Global updateImageSrc */
+  // Function to update the image source with the thumbnail URL from the API response
+  function updateImageSrc() {
+    // Get all image elements with the class 'solarirr-locations_image'
+    const images = document.querySelectorAll('.solarirr-locations_image');
 
-// /* Location Images */
-// Function to update the image source with the thumbnail URL from the API response
-function updateImageSrc(locationId) {
-  
-  // Construct the API URL using the provided location ID
-  const apiUrlPre = 'https://api.solcast.com.au/media/';
-  const apiUrlPost = '?format=json';
-  const apiUrl = apiUrlPre + locationId + apiUrlPost;
-  // const apiUrl = `https://api.solcast.com.au/media/${locationId}?format=json`;
+    // Loop through each image element
+    images.forEach(image => {
+      // Get the location ID from the data-locationid attribute
+      const locationId = image.getAttribute('data-locationid');
 
-  // Perform the fetch request to the API
-  fetch(apiUrl)
-    .then((response) => response.json()) // Parse the JSON from the response
-    .then((data) => {
-      if (data.files && data.files.length > 0) {
-        // Assuming you want the first file's thumbnail URL
-        const thumbnailUrl = data.files[0].thumbnail_url;
+      // Construct the API URL using the provided location ID
+      const apiUrlPre = 'https://api.solcast.com.au/media/';
+      const apiUrlPost = '?format=json';
+      const apiUrl = `${apiUrlPre}${locationId}${apiUrlPost}`;
 
-        // Find the image element by the location ID and update its src attribute
-        const imageElement = document.getElementById(locationId);
-        if (imageElement) {
-          imageElement.src = thumbnailUrl;
-          // console.log(`Image src updated to: ${thumbnailUrl}`); // Log the new src URL
-        } else {
+      // Perform the fetch request to the API
+      fetch(apiUrl)
+        .then((response) => response.json()) // Parse the JSON from the response
+        .then((data) => {
+          if (data.files && data.files.length > 0) {
+            // Assuming you want the first file's thumbnail URL
+            const thumbnailUrl = data.files[0].thumbnail_url;
 
-          // console.error('Image element not found for the provided location ID');
-        }
-      } else {
-
-        // console.error('No files found in the API response');
-      }
+            // Update the image element's src attribute
+            image.src = thumbnailUrl;
+            // console.log(`Image src updated to: ${thumbnailUrl}`); // Log the new src URL
+          } else {
+            console.error('No files found in the API response for location ID:', locationId);
+          }
+        })
+        .catch(error => {
+          console.error('Failed to fetch data from API for location ID:', locationId, error);
+        });
     });
+  }
 
-  // .catch(error => {
-  // console.error('Failed to fetch data from API:', error);
-}
+  // Call the function to update image sources
+  updateImageSrc();
