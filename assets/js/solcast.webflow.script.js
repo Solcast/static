@@ -72,9 +72,11 @@ function fetchLatestVideoUrl() {
         }
       });
 
-      // Update the date display
+      // Update the date display if the element is present
       const dateElement = document.getElementById('mapDate');
-      dateElement.setAttribute('data-date', latestDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }));
+      if (dateElement) {
+        dateElement.setAttribute('data-date', latestDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }));
+      }
 
       // Check if there is a video element with class 'hero_video' and update its 'src'
       const videoElement = document.querySelector('.hero_video');
