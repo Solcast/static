@@ -1,22 +1,26 @@
 // Adds punctuation in Change To Column where required.
 document.addEventListener('DOMContentLoaded', () => {
-  const changeAttributeContainers = document.querySelectorAll('.changeattribute-container');
+  // Select all changeto-container divs
+  const changeToContainers = document.querySelectorAll('.changeto-container');
 
-  changeAttributeContainers.forEach((container) => {
-    const changeAttributes = container.querySelectorAll('.changeattribute');
+  changeToContainers.forEach((container) => {
+    // Select all paragraph elements within the container
+    const paragraphs = container.querySelectorAll('p');
 
-    if (changeAttributes.length > 1) {
-      changeAttributes.forEach((attr, index) => {
-        if (index < changeAttributes.length - 1) {
-          const nextAttr = changeAttributes[index + 1];
-          if (!nextAttr.classList.contains('w-condition-invisible')) {
-            const span = document.createElement('span');
-            span.style.marginRight = '3px';
-            span.innerHTML = ',';
-            attr.insertAdjacentElement('afterend', span);
-          }
+    paragraphs.forEach((paragraph, index) => {
+      // Check if the current paragraph does not have the class 'w-condition-invisible'
+      if (!paragraph.classList.contains('w-condition-invisible')) {
+        // Check if the next element is a paragraph and does not have the class 'w-condition-invisible'
+        const nextElement = paragraph.nextElementSibling;
+        if (nextElement && nextElement.tagName.toLowerCase() === 'p' && !nextElement.classList.contains('w-condition-invisible')) {
+          // Create the new span element
+          const newSpan = document.createElement('span');
+          newSpan.style.marginRight = '3px';
+          newSpan.textContent = ',';
+
+          // Append the new span to the current paragraph
+          paragraph.appendChild(newSpan);
         }
-      });
-    }
-  });
-});
+      }
+    });
+    
