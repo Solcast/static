@@ -1,6 +1,9 @@
 /* global Splide */
 
+/*---------------*/
 /* Splide Script */
+/*---------------*/
+
 document.addEventListener('DOMContentLoaded', () => {
   const splideElement = document.querySelector('.splide');
 
@@ -34,7 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+/*------------------------*/
 /* Latest World Map Embed */
+/*------------------------*/
+
 function fetchLatestVideoUrl() {
   // Get the div element with class mapEmbed
   const mapEmbedDiv = document.querySelector('.embed-map');
@@ -42,8 +48,6 @@ function fetchLatestVideoUrl() {
     return;
   }
 
-  // Extract the ID from the div
-  // const mapId = mapEmbedDiv.id;
   // Define the API URL
   const globalUrl = 'https://api.solcast.com.au/media/global?format=json';
 
@@ -68,7 +72,12 @@ function fetchLatestVideoUrl() {
         const fileDate = new Date(file.id); // Assuming 'id' holds the date in YYYY-MM-DD format
         if (fileDate > latestDate) {
           latestDate = fileDate;
-          videoUrl = file.video_url; // Update video URL if this entry has the latest date
+          // Find the 1280x720 video URL in the additional_videos array
+          const additionalVideo = file.additional_videos.find((video) => video.dimensions === '1280x720');
+          if (additionalVideo) {
+            // Update video URL if this entry has the latest date
+            videoUrl = additionalVideo.video_url;
+          }
         }
       });
 
@@ -94,7 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+/*------------------------------*/
 /* StatusPal.io required script */
+/*------------------------------*/
+
 window.statuspalWidget = {
   subdomain: 'solcast-com',
   badge: {
