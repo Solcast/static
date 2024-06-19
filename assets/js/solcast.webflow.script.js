@@ -73,9 +73,10 @@ function fetchLatestVideoUrl() {
         if (fileDate > latestDate) {
           latestDate = fileDate;
           // Find the 1280x720 video URL in the additional_videos array
-          const additionalVideo = file.additional_videos.find(video => video.dimensions === '1280x720');
+          const additionalVideo = file.additional_videos.find((video) => video.dimensions === '1280x720');
           if (additionalVideo) {
-            videoUrl = additionalVideo.video_url; // Update video URL if this entry has the latest date
+            // Update video URL if this entry has the latest date
+            videoUrl = additionalVideo.video_url;
           }
         }
       });
@@ -101,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchLatestVideoUrl();
   }
 });
-
 
 /*------------------------------*/
 /* StatusPal.io required script */
