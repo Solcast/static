@@ -1,0 +1,1157 @@
+/* _content/Solcast.Web/Components/Layout/MainLayout.razor.rz.scp.css */
+.page[b-n9rwrdxqha] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main[b-n9rwrdxqha] {
+    flex: 1;
+}
+
+.sidebar[b-n9rwrdxqha] {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row[b-n9rwrdxqha] {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .top-row[b-n9rwrdxqha]  a, .top-row[b-n9rwrdxqha]  .btn-link {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+        text-decoration: none;
+    }
+
+    .top-row[b-n9rwrdxqha]  a:hover, .top-row[b-n9rwrdxqha]  .btn-link:hover {
+        text-decoration: underline;
+    }
+
+    .top-row[b-n9rwrdxqha]  a:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row:not(.auth)[b-n9rwrdxqha] {
+        display: none;
+    }
+
+    .top-row.auth[b-n9rwrdxqha] {
+        justify-content: space-between;
+    }
+
+    .top-row[b-n9rwrdxqha]  a, .top-row[b-n9rwrdxqha]  .btn-link {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 641px) {
+    .page[b-n9rwrdxqha] {
+        flex-direction: row;
+    }
+
+    .sidebar[b-n9rwrdxqha] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row[b-n9rwrdxqha] {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row.auth[b-n9rwrdxqha]  a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    .top-row[b-n9rwrdxqha], article[b-n9rwrdxqha] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+
+#blazor-error-ui[b-n9rwrdxqha] {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss[b-n9rwrdxqha] {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+.dnv-announcement[b-n9rwrdxqha] {
+    background: #FFB657;
+    color: #353A4F;
+    filter: drop-shadow(5px, 5px, 5px, black);
+    text-align: center;
+    width: 100%;
+    margin: auto;
+    font-size: .9rem;
+    margin-bottom: -5px;
+    padding: .2rem;
+    min-height: 50px;
+    display: grid;
+    place-items: center;
+}
+
+.dnv-announcement a[b-n9rwrdxqha] {
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.dnv-announcement a:hover[b-n9rwrdxqha] {
+    color: white;
+    transition: all 200ms ease;
+}
+/* _content/Solcast.Web/Components/Layout/NavMenu.razor.rz.scp.css */
+.navbar-toggler[b-yhoqmzcph7] {
+    appearance: none;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 2.5rem;
+    color: white;
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center/1.75rem rgba(255, 255, 255, 0.1);
+}
+
+.navbar-toggler:checked[b-yhoqmzcph7] {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.top-row[b-yhoqmzcph7] {
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.navbar-brand[b-yhoqmzcph7] {
+    font-size: 1.1rem;
+}
+
+.bi[b-yhoqmzcph7] {
+    display: inline-block;
+    position: relative;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.75rem;
+    top: -1px;
+    background-size: cover;
+}
+
+.bi-house-door-fill[b-yhoqmzcph7] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-house-door-fill' viewBox='0 0 16 16'%3E%3Cpath d='M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z'/%3E%3C/svg%3E");
+}
+
+.bi-plus-square-fill[b-yhoqmzcph7] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-plus-square-fill' viewBox='0 0 16 16'%3E%3Cpath d='M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z'/%3E%3C/svg%3E");
+}
+
+.bi-list-nested[b-yhoqmzcph7] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-list-nested' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z'/%3E%3C/svg%3E");
+}
+
+.nav-item[b-yhoqmzcph7] {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type[b-yhoqmzcph7] {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type[b-yhoqmzcph7] {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item[b-yhoqmzcph7]  a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+    }
+
+.nav-item[b-yhoqmzcph7]  a.active {
+    background-color: rgba(255,255,255,0.25);
+    color: white;
+}
+
+.nav-item[b-yhoqmzcph7]  a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.nav-scrollable[b-yhoqmzcph7] {
+    display: none;
+}
+
+.navbar-toggler:checked ~ .nav-scrollable[b-yhoqmzcph7] {
+    display: block;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler[b-yhoqmzcph7] {
+        display: none;
+    }
+
+    .nav-scrollable[b-yhoqmzcph7] {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+
+        /* Allow sidebar to scroll for tall menus */
+        height: calc(100vh - 3.5rem);
+        overflow-y: auto;
+    }
+}
+/* _content/Solcast.Web/Components/Pages/Blog/AuthorCard.razor.rz.scp.css */
+h1[b-bk1dkrhyt4], h2[b-bk1dkrhyt4], h3[b-bk1dkrhyt4], h4[b-bk1dkrhyt4], h5[b-bk1dkrhyt4], h6[b-bk1dkrhyt4] {
+    font-weight: 500;
+}
+
+/* _content/Solcast.Web/Components/Pages/Blog/BlogHeaderTemplate.razor.rz.scp.css */
+.page-gradient[b-erfad6xhcp] {
+	height: 32rem;
+}
+
+	.page-gradient + div[b-erfad6xhcp] {
+		margin-top: -36rem;
+	}
+/* _content/Solcast.Web/Components/Pages/Blog/BlogPost.razor.rz.scp.css */
+h1[b-2dz2v0k49z], h2[b-2dz2v0k49z], h3[b-2dz2v0k49z], h4[b-2dz2v0k49z], h5[b-2dz2v0k49z], h6[b-2dz2v0k49z] {
+    font-weight: 500;
+}
+/* _content/Solcast.Web/Components/Pages/Blog/BlogPostListItem.razor.rz.scp.css */
+h1[b-kak4muczlj], h2[b-kak4muczlj], h3[b-kak4muczlj], h4[b-kak4muczlj], h5[b-kak4muczlj], h6[b-kak4muczlj] {
+    font-weight: 500;
+}
+/* _content/Solcast.Web/Components/Pages/Maps/Map.razor.rz.scp.css */
+body[b-dfxmcv08e2] {
+    margin: 0;
+    padding: 0;
+}
+
+#map[b-dfxmcv08e2] {
+    width: 100dvw;
+    height: 100dvh;
+}
+
+.map-overlay[b-dfxmcv08e2] {
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    position: absolute;
+    width: 25%;
+    top: 0;
+    left: 0;
+    padding: 10px;
+}
+
+    .map-overlay h1[b-dfxmcv08e2] {
+        font-size: 1.2rem;
+        margin: 0 0 6px;
+    }
+
+    .map-overlay .map-overlay-inner[b-dfxmcv08e2] {
+        background-color: #fff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+        .map-overlay .map-overlay-inner p[b-dfxmcv08e2] {
+            margin-bottom: 10px;
+        }
+
+    .map-overlay h2[b-dfxmcv08e2] {
+        line-height: 24px;
+        display: block;
+        margin: 0 0 10px;
+    }
+
+    .map-overlay .legend .bar[b-dfxmcv08e2] {
+        height: 10px;
+        width: 100%;
+    }
+
+    .map-overlay .legend .bar.magma[b-dfxmcv08e2] {
+        background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(50,16,103,1) 25%, rgba(177,53,122,1) 50%, rgba(251,134,96,1) 75%, rgba(251,252,191,1) 100%);
+    }
+
+    .map-overlay .legend .bar.rdylgn[b-dfxmcv08e2] {
+        background: linear-gradient(to right, #a50026, #d73027, #f46d43, #fdae61, #fee08b, #ffffbf, #d9ef8b, #a6d96a, #66bd63, #1a9850, #006837);
+    }
+
+    .map-overlay .legend .bar.nipy_spectral[b-dfxmcv08e2] {
+        background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(126,0,142,1) 12%, rgba(0,0,201,1) 25%, rgba(0,152,220,1) 37%, rgba(0,153,0,1) 50%, rgba(0,243,0,1) 63%, rgba(246,220,0,1) 75%, rgba(225,0,0,1) 88%, rgba(204,204,204,1) 100%);
+    }
+
+    .map-overlay .legend .bar.rdylgn_r[b-dfxmcv08e2] {
+        background: linear-gradient(to left, #a50026, #d73027, #f46d43, #fdae61, #fee08b, #ffffbf, #d9ef8b, #a6d96a, #66bd63, #1a9850, #006837);
+    }
+
+    .map-overlay .legend .units[b-dfxmcv08e2] {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .map-overlay input[b-dfxmcv08e2] {
+        background-color: transparent;
+        display: inline-block;
+        width: 100%;
+        position: relative;
+        margin: 0;
+        cursor: ew-resize;
+    }
+/* _content/Solcast.Web/Components/Pages/Pricing/Index.razor.rz.scp.css */
+label[b-bal3vxvt7t] {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    color: #353A4F;
+    font-size: 1rem;
+}
+/* _content/Solcast.Web/Components/Shared/CardQuote.razor.rz.scp.css */
+
+.carousel-card-quote[b-jv8byntucy],
+.carousel-card-case[b-jv8byntucy] {
+    position: relative;
+    background-color: #35345c;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    width: 380px;
+    height: 220px;
+    border-radius: 8px;
+    padding: 2rem 2rem 3rem;
+    color: white;
+    font-weight: 500;
+}
+
+    .carousel-card-quote:hover[b-jv8byntucy],
+    .carousel-card-case:hover[b-jv8byntucy] {
+        filter: drop-shadow(1px 1px 6px #000000aa);
+        transition: all 400ms ease;
+    }
+
+        .carousel-card-quote:hover .carousel-card-quote__quote[b-jv8byntucy],
+        .carousel-card-case:hover .carousel-card-case__quote[b-jv8byntucy] {
+            opacity: 0;
+            transition: all 400ms ease;
+        }
+
+        .carousel-card-quote:hover .bg-image[b-jv8byntucy],
+        .carousel-card-case:hover .bg-image[b-jv8byntucy] {
+            opacity: 1;
+            width: 80%;
+            bottom: 50%;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            transition: width 400ms ease;
+        }
+
+.carousel-card-quote__quote[b-jv8byntucy] {
+    font-style: italic;
+    line-height: 2rem;
+    transition: all 400ms ease;
+}
+
+.carousel-card-case__quote[b-jv8byntucy] {
+    line-height: 2rem;
+    transition: all 400ms ease;
+}
+
+.carousel-card-quote__details[b-jv8byntucy] {
+    position: absolute;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: right;
+    bottom: 0;
+    right: 0;
+    transform: translate(-16px, -16px);
+}
+
+.carousel-card-quote__logo[b-jv8byntucy] {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: grid;
+    place-items: center;
+    height: 80px;
+    width: 80px;
+    border: 5px solid #ffa238;
+    border-radius: 50%;
+    background-color: #fff;
+    transform: translate(50%, 50%);
+    color: white;
+    font-size: 1.4rem;
+}
+
+    .carousel-card-quote__logo > img[b-jv8byntucy] {
+        width: 100%;
+    }
+
+.bg-image[b-jv8byntucy] {
+    position: absolute;
+    width: 20%;
+    bottom: 0.33rem;
+    left: 10px;
+    transform: translate(0%, 0%);
+    opacity: 0.5;
+    transition: width 400ms ease;
+}
+
+    .bg-image > *[b-jv8byntucy] {
+        width: 100%;
+        filter: grayscale(100%) brightness(600%);
+        mix-blend-mode: multiply;
+    }
+/* _content/Solcast.Web/Components/Shared/ContainerTemplate.razor.rz.scp.css */
+/*.page-gradient-space {
+    margin-top: -36rem;
+}*/
+/* _content/Solcast.Web/Components/Shared/CustomerQuotes.razor.rz.scp.css */
+.customer-quotes-banner[b-mt2cjlzz2j] {
+    height: 70px;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    background-color: #35345C;
+    margin-top: -70px;
+    z-index: 20;
+    padding: 0 .8rem;
+    overflow: hidden;
+}
+
+@media (max-width: 350px) {
+    .customer-quotes-banner[b-mt2cjlzz2j] {
+        display: none;
+    }
+}
+
+.customer-quote[b-mt2cjlzz2j] {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+    font-size: .8rem;
+    overflow: hidden;
+    opacity: 0;
+}
+
+.customer-quote img[b-mt2cjlzz2j] {
+    height: 50px;
+    width: 50px;
+}
+
+
+.customer-quote strong[b-mt2cjlzz2j] {
+    font-weight: 600;
+    color: #ffa238;
+}
+
+
+/*This is how we animate the quotes*/
+.customer-quotes-banner .customer-quote:first-of-type[b-mt2cjlzz2j] {
+    opacity: 1;
+    animation: fadein-b-mt2cjlzz2j 2000ms ease;
+}
+
+@keyframes fadein-b-mt2cjlzz2j {
+    0% {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+    90% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
+/* _content/Solcast.Web/Components/Shared/EclipseMap.razor.rz.scp.css */
+#map[b-kw2gnnghvq] {
+    width: 100%;
+    height: 600px;
+    position: relative;
+}
+
+img.logo[b-kw2gnnghvq] {
+    width: 130px;
+    margin-top: 0;
+    margin: 0;
+}
+
+.mapboxgl-ctrl-geocoder[b-kw2gnnghvq] {
+    min-width: 100px;
+}
+
+.map-overlay[b-kw2gnnghvq] {
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    z-index: 1;
+}
+
+    .map-overlay h1[b-kw2gnnghvq] {
+        font-size: 1.2rem;
+        margin: 0 0 6px;
+    }
+
+    .map-overlay .map-overlay-inner[b-kw2gnnghvq] {
+        background-color: #fff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        border-radius: 3px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+        .map-overlay .map-overlay-inner p[b-kw2gnnghvq] {
+            margin-bottom: 10px;
+        }
+
+    .map-overlay h2[b-kw2gnnghvq] {
+        line-height: 24px;
+        display: block;
+        margin: 0 0 10px;
+    }
+
+    .map-overlay .legend .bar[b-kw2gnnghvq] {
+        height: 10px;
+        width: 100%;
+    }
+
+    .map-overlay .legend .bar.magma_r[b-kw2gnnghvq] {
+        background: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(50,16,103,1) 25%, rgba(177,53,122,1) 50%, rgba(251,134,96,1) 75%, rgba(251,252,191,1) 100%);
+    }
+
+    .map-overlay .legend .units[b-kw2gnnghvq] {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .map-overlay input[b-kw2gnnghvq] {
+        background-color: transparent;
+        display: inline-block;
+        width: 100%;
+        position: relative;
+        margin: 0;
+        cursor: ew-resize;
+    }
+/* _content/Solcast.Web/Components/Shared/Footer.razor.rz.scp.css */
+.mobile-navigation[b-qa60zoddor] {
+  overflow-y: auto;
+}
+
+.fade-enter-active[b-qa60zoddor],
+.fade-leave-active[b-qa60zoddor] {
+  transition: opacity 0.2s;
+}
+.fade-enter[b-qa60zoddor],
+.fade-leave-to[b-qa60zoddor] {
+  opacity: 0;
+}
+
+.slide-down-enter-active[b-qa60zoddor],
+.slide-down-leave-active[b-qa60zoddor] {
+  transition: all 0.6s;
+  min-height: 0px;
+  z-index: 1;
+}
+.slide-down-enter[b-qa60zoddor],
+.slide-down-leave-to[b-qa60zoddor] {
+  transform: translateY(-20px);
+  transition: all 0.2s;
+  opacity: 0;
+  z-index: 0;
+  height: 0px;
+}
+
+.slide-down-enter-active[b-qa60zoddor] {
+  animation: slide-down-b-qa60zoddor 250ms;
+  overflow: hidden;
+}
+.slide-down-leave-active[b-qa60zoddor] {
+  animation: slide-down-b-qa60zoddor 250ms reverse;
+  overflow: hidden;
+}
+@keyframes slide-down-b-qa60zoddor {
+  0% {
+    height: 0;
+  }
+
+  100% {
+    height: var(--target-height, 0);
+  }
+}
+/* _content/Solcast.Web/Components/Shared/Loading.razor.rz.scp.css */
+.loading[b-k62corwl4f] {
+    stroke-dasharray: 100;
+    stroke-dashoffset:100;
+    animation: dash-b-k62corwl4f 3s ease-in-out infinite;
+}
+
+@keyframes dash-b-k62corwl4f {
+    to {
+        stroke-dashoffset: -100;
+    }
+}
+.loading-wrapper[b-k62corwl4f] {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top:0;
+    background: #35345C;
+}
+/* _content/Solcast.Web/Components/Shared/Navigation.razor.rz.scp.css */
+.mobile-navigation[b-7inuvxy12e] {
+    overflow-y: auto;
+}
+
+.navigation[b-7inuvxy12e] {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fade-enter-active[b-7inuvxy12e],
+.fade-leave-active[b-7inuvxy12e] {
+    transition: opacity 0.2s;
+}
+
+.fade-enter[b-7inuvxy12e],
+.fade-leave-to[b-7inuvxy12e] {
+    opacity: 0;
+}
+
+.slide-down-enter-active[b-7inuvxy12e],
+.slide-down-leave-active[b-7inuvxy12e] {
+    transition: all 0.6s;
+    min-height: 0px;
+    z-index: 1;
+}
+
+.slide-down-enter[b-7inuvxy12e],
+.slide-down-leave-to[b-7inuvxy12e] {
+    transform: translateY(-20px);
+    transition: all 0.2s;
+    opacity: 0;
+    z-index: 0;
+    height: 0px;
+}
+
+.slide-down-enter-active[b-7inuvxy12e] {
+    animation: slide-down-b-7inuvxy12e 250ms;
+    overflow: hidden;
+}
+
+.slide-down-leave-active[b-7inuvxy12e] {
+    animation: slide-down-b-7inuvxy12e 250ms reverse;
+    overflow: hidden;
+}
+
+@keyframes slide-down-b-7inuvxy12e {
+    0% {
+        height: 0;
+    }
+
+    100% {
+        height: var(--target-height, 0);
+    }
+}
+
+.nav-button[b-7inuvxy12e] {
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+    place-items: center;
+    overflow: hidden;
+
+}
+
+.nav-button__burger[b-7inuvxy12e] {
+    position: relative;
+    width: 100%;
+    height: 3px;
+    cursor: pointer;
+    background: white;
+    border-radius: 100vmax;
+    transition: all 250ms ease-in-out;
+}
+
+.nav-button__burger[b-7inuvxy12e]::before,
+.nav-button__burger[b-7inuvxy12e]::after {
+    content: '';
+    position: absolute;
+    background: white;
+    width: 100%;
+    height: 3px;
+    border-radius: 100vmax;
+    transition: all 250ms ease-in-out;
+}
+
+.nav-button__burger[b-7inuvxy12e]::before {
+    transform: translateY(-10px);
+}
+
+.nav-button__burger[b-7inuvxy12e]::after {
+    transform: translateY(10px);
+}
+
+.nav-button.open .nav-button__burger[b-7inuvxy12e] {
+    transform: translateX(-50px);
+    transition: all 250ms ease-in-out;
+}
+
+.nav-button.open .nav-button__burger[b-7inuvxy12e]::before {
+    transform: translateX(50px) rotate(45deg);
+    transition: all 250ms ease-in-out;
+}
+
+.nav-button.open .nav-button__burger[b-7inuvxy12e]::after {
+    transform: translateX(50px) rotate(-45deg);
+    transition: all 250ms ease-in-out;
+}
+/* _content/Solcast.Web/Components/Shared/NavItem.razor.rz.scp.css */
+.selected[b-bchwyto3wq] {
+    /*border-top: rgba(255, 162, 40) 2px solid;*/
+    color: rgba(255, 162, 40);
+}
+
+.nav-item[b-bchwyto3wq] {
+    position: relative;
+    height: 100%;
+    white-space:nowrap;
+}
+.nav-item .nav-link[b-bchwyto3wq] {
+    /*height: 100%;*/
+}
+
+.nav-item:hover[b-bchwyto3wq] {
+    /*background-color: #434275;*/
+    transition: all 0.5s ease;
+}
+
+.nav-item:hover .nav-item-dropdown[b-bchwyto3wq] {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.5s ease;
+}
+
+.nav-item-dropdown[b-bchwyto3wq] {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    width: max-content;
+    left: 0;
+    z-index:10;
+}
+
+@media (max-width: 767px) {
+    .nav-item-dropdown[b-bchwyto3wq] {
+        position: relative;
+        visibility: visible;
+        opacity: 1;
+        background-color: transparent;
+    }
+}
+/* _content/Solcast.Web/Components/Shared/NavMenu.razor.rz.scp.css */
+.navbar-toggler[b-27ougzkaxu] {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.top-row[b-27ougzkaxu] {
+    height: 3.5rem;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.navbar-brand[b-27ougzkaxu] {
+    font-size: 1.1rem;
+}
+
+.active[b-27ougzkaxu] {
+    /*border-top: rgba(255, 162, 40) 2px solid;*/
+}
+.oi[b-27ougzkaxu] {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+.nav-item[b-27ougzkaxu] {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type[b-27ougzkaxu] {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type[b-27ougzkaxu] {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item[b-27ougzkaxu]  a {
+        color: #d7d7d7;
+        border-radius: 4px;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+    }
+
+.nav-item[b-27ougzkaxu]  a.active {
+    background-color: rgba(255,255,255,0.25);
+    color: white;
+}
+
+.nav-item[b-27ougzkaxu]  a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler[b-27ougzkaxu] {
+        display: none;
+    }
+
+    .collapse[b-27ougzkaxu] {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}
+/* _content/Solcast.Web/Components/Shared/SocialProof.razor.rz.scp.css */
+.glide[b-2ckqbfq6ev] {
+    display: flex;
+}
+
+.social-image[b-2ckqbfq6ev] {
+    filter: grayscale(100%);
+}
+
+    .social-image:hover[b-2ckqbfq6ev] {
+        filter: grayscale(0);
+        transform: scale(1.03);
+        transition: all 500ms ease;
+    }
+
+.glide[b-2ckqbfq6ev] {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+    .glide *[b-2ckqbfq6ev] {
+        box-sizing: inherit;
+    }
+
+.glide__track[b-2ckqbfq6ev] {
+    overflow: hidden;
+}
+
+.glide__slides[b-2ckqbfq6ev] {
+    position: relative;
+    width: 100%;
+    list-style: none;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    touch-action: pan-Y;
+    overflow: hidden;
+    padding: 0;
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: nowrap;
+    will-change: transform;
+}
+
+.glide__slides--dragging[b-2ckqbfq6ev] {
+    user-select: none;
+}
+
+.glide__slide[b-2ckqbfq6ev] {
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    white-space: normal;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+    .glide__slide a[b-2ckqbfq6ev] {
+        -webkit-user-drag: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+.glide__arrows[b-2ckqbfq6ev] {
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+
+.glide__bullets[b-2ckqbfq6ev] {
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+
+.glide--rtl[b-2ckqbfq6ev] {
+    direction: rtl;
+}
+
+.glide__arrow[b-2ckqbfq6ev] {
+    position: absolute;
+    display: block;
+    top: 50%;
+    z-index: 2;
+    color: white;
+    text-transform: uppercase;
+    padding: 9px 12px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    box-shadow: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.1);
+    text-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    cursor: pointer;
+    transition: opacity 150ms ease, border 300ms ease-in-out;
+    transform: translateY(-50%);
+    line-height: 1;
+}
+
+    .glide__arrow:focus[b-2ckqbfq6ev] {
+        outline: none;
+    }
+
+    .glide__arrow:hover[b-2ckqbfq6ev] {
+        border-color: white;
+    }
+
+.glide__arrow--left[b-2ckqbfq6ev] {
+    left: 2em;
+}
+
+.glide__arrow--right[b-2ckqbfq6ev] {
+    right: 2em;
+}
+
+.glide__arrow--disabled[b-2ckqbfq6ev] {
+    opacity: 0.33;
+}
+
+.glide__bullets[b-2ckqbfq6ev] {
+    position: absolute;
+    z-index: 2;
+    bottom: 2em;
+    left: 50%;
+    display: inline-flex;
+    list-style: none;
+    transform: translateX(-50%);
+}
+
+.glide__bullet[b-2ckqbfq6ev] {
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: all 300ms ease-in-out;
+    cursor: pointer;
+    line-height: 0;
+    box-shadow: 0 0.25em 0.5em 0 rgba(0, 0, 0, 0.1);
+    margin: 0 0.25em;
+}
+
+    .glide__bullet:focus[b-2ckqbfq6ev] {
+        outline: none;
+    }
+
+    .glide__bullet:hover[b-2ckqbfq6ev], .glide__bullet:focus[b-2ckqbfq6ev] {
+        border: 2px solid white;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+.glide__bullet--active[b-2ckqbfq6ev] {
+    background-color: white;
+}
+
+.glide--swipeable[b-2ckqbfq6ev] {
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
+.glide--dragging[b-2ckqbfq6ev] {
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+}
+/* _content/Solcast.Web/Components/Shared/SocialProofNew.razor.rz.scp.css */
+.carousel[b-tol3hk4l3l] {
+    width: 100%;
+    overflow: hidden;
+    border-top: 2px solid #d7e3f4;
+    border-bottom: 2px solid #d7e3f4;
+    background-color: #f8fbff;
+    color: black;
+    margin-bottom: 3rem;
+}
+
+.carousel__heading[b-tol3hk4l3l] {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.carousel__main-slider[b-tol3hk4l3l] {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6rem;
+    padding: 1.6rem 2.4rem 3.2rem;
+    max-height: 330px;
+    overflow: hidden;
+}
+
+.mini-slider[b-tol3hk4l3l] {
+    position: relative;
+    max-width: 1400px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+    .mini-slider[b-tol3hk4l3l]::before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 150px;
+        background: linear-gradient(to right, #f8fbff 0%, #f8fbff00 100%);
+        z-index: 2;
+        pointer-events: none;
+    }
+
+    .mini-slider[b-tol3hk4l3l]::after {
+        position: absolute;
+        content: "";
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 150px;
+        background: linear-gradient(to left, #f8fbff 0%, #f8fbff00 100%);
+        z-index: 2;
+        pointer-events: none;
+    }
+
+.mini-slider__track[b-tol3hk4l3l] {
+    display: flex;
+    gap: 3rem;
+    animation: scroll-b-tol3hk4l3l 60s linear infinite;
+    width: calc(100px * 19 + 3rem * 19 * 2);
+}
+
+.active[b-tol3hk4l3l] {
+    animation: none;
+    overflow-x: scroll;
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+}
+
+.shrink[b-tol3hk4l3l] {
+    animation: shrink-b-tol3hk4l3l 400ms ease;
+}
+
+@keyframes shrink-b-tol3hk4l3l {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.active[b-tol3hk4l3l]::-webkit-scrollbar {
+    display: none;
+}
+
+.mini-slider__logos[b-tol3hk4l3l] {
+    display: inline-flex;
+    gap: 3rem;
+}
+
+.mini-slider__block[b-tol3hk4l3l] {
+    width: max-content;
+}
+
+.mini-slider__heading[b-tol3hk4l3l] {
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+    /*border-bottom: 1px solid #ccc;*/
+    margin-bottom: 1rem;
+}
+
+.mini-logo[b-tol3hk4l3l] {
+    height: 45px;
+    width: 100px;
+    background-color: #e5e5e500;
+}
+
+    .mini-logo:hover[b-tol3hk4l3l] {
+        transition: all 300ms ease;
+    }
+
+@keyframes scroll-b-tol3hk4l3l {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(calc(-100px * 19 + -3rem * 19));
+    }
+}
+/* _content/Solcast.Web/Components/Shared/WorldSolarRadiationTool.razor.rz.scp.css */
+.google-map[b-yvxkg0vsu2] {
+    min-height: 450px;
+    width: 100%;
+}
+
+.metric-graph[b-yvxkg0vsu2] {
+    width: 100%;
+    min-height: 450px;
+}
