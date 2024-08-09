@@ -1,0 +1,13 @@
+// See https://containers.dev/implementors/json_reference/ for configuration reference
+{
+	"name": "Node.js Devcontainer",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind"
+	],
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
+	}
+}
