@@ -81,7 +81,7 @@ const generateHtmlFromProperties = (properties, title, link, linkText) => {
   if (title.length > 0) {
     html += `<div class="flex-popup-title"><span>${title}</span></div>`;
   }
-  properties.forEach((property) => {
+  Object.keys(properties).forEach((property) => {
     html += `<div class="flex-popup-row"><span>${property}</span><span>${properties[property]}</span></div>`;
   });
   if (link.length > 0) {
@@ -215,11 +215,11 @@ map.on("click", (e) => {
   // check that none of the features have the same id as any of the layers
   // if they do, then we don't want to do anything
   const features = map.queryRenderedFeatures(e.point);
-  features.forEach((feature) => {
-    if (config.layers.find((layer) => layer.id === feature.layer.id)) {
+  for (let i = 0; i < features.length; i++) {
+    if (config.layers.find((x) => x.id === features[i].layer.id)) {
       return;
     }
-  });
+  }
 
   Promise.all([
     getDataFromClick(e.lngLat),
