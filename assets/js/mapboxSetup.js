@@ -1,58 +1,27 @@
 /* global mapboxgl */
 const config = window.mapboxConfig;
-const marker = null;
+let marker;
+let map;
 
 let userInteracting = false;
 const attributes = {};
 
-const mapboxController = document.querySelector('.mapbox-wrapper');
+const mapboxController = document.querySelector(".mapbox-wrapper");
 // get all data attributes from mapboxController
 // and set them as properties on the config object
-for (let i = 0; i < mapboxController.attributes.length; i++) {
+for (let i = 0; i < mapboxController.attributes.length; i += 1) {
   const attr = mapboxController.attributes[i];
-  if (attr.name.startsWith('mapbox-')) {
+  if (attr.name.startsWith("mapbox-")) {
     const key = attr.name;
-    const { value } = attr;
+    const value = attr.value;
     attributes[key] = value;
-  }
-}
-console.log(attributes);
-
-// Legend
-if (config.showLegend) {
-  // if (config.showLegend) {
-  const legend = document.getElementById('mapbox-legend');
-  const wrapper = document.querySelector('.legend-wrapper');
-  legend.classList.add(config.legend.color);
-  if (config.legend.size) {
-    legend.classList.add(`legend-${config.legend.size}`);
-  }
-  if (config.legend.position) {
-    config.legend.position.split(' ').forEach((element) => {
-      wrapper.classList.add(`legend-${element}`);
-    });
-  }
-}
-
-// Icon Legend
-if (config.showIconLegend) {
-  const iconLegend = document.querySelector('.icon-legend-wrapper');
-  iconLegend.innerHTML = '';
-  for (const icon in config.icons) {
-    const iconDiv = document.createElement('div');
-    iconDiv.classList.add('icon-legend-item');
-    iconDiv.onclick = () => {
-      addRemoveLayer(config.icons[icon].layer_id);
-    };
-    iconDiv.innerHTML = `<img src="${config.icons[icon].url}" alt="${config.icons[icon].id}" /><span>${config.icons[icon].name}</span>`;
-    iconLegend.appendChild(iconDiv);
   }
 }
 
 // Functions
-const spinGlobe = (map) => {
+const spinGlobe = () => {
   const zoom = map.getZoom();
-  if (!userInteracting && config.spinGlobe && zoom < config.maxSpinZoom) {
+  if (!userInteracting && config.spinGlobe && zoom < config.maPxSpinZoom) {
     const distancePerSecond = 360 / config.secondsPerRotation;
     const center = map.getCenter();
     center.lng -= distancePerSecond;
@@ -83,9 +52,9 @@ const getLocationNameFromClick = (lngLat) => {
       .then((response) => response.json())
       .then((locationData) => {
         resolve(
-          locationData.features.find((x) => x.place_type[0] === 'place')
+          locationData.features.find((x) => x.place_type[0] === "place")
             ? locationData.features
-              .find((x) => x.place_type[0] === 'place')
+              .find((x) => x.place_type[0] === "place")
               .place_name.toString()
             : `${lngLat.lat.toFixed(5)}, ${lngLat.lng.toFixed(5)}`,
         );
@@ -97,13 +66,13 @@ const getLocationNameFromClick = (lngLat) => {
 };
 
 const addRemoveLayer = (layerId) => {
-  const visibility = map.getLayoutProperty(layerId, 'visibility');
-  if (visibility === 'visible') {
-    map.setLayoutProperty(layerId, 'visibility', 'none');
-  } else if (visibility === 'none') {
-    map.setLayoutProperty(layerId, 'visibility', 'visible');
+  const visibility = map.getLayoutProperty(layerId, "visibility");
+  if (visibility === "visible") {
+    map.setLayoutProperty(layerId, "visibility", "none");
+  } else if (visibility === "none") {
+    map.setLayoutProperty(layerId, "visibility", "visible");
   } else {
-    map.setLayoutProperty(layerId, 'visibility', 'none');
+    map.setLayoutProperty(layerId, "visibility", "none");
   }
 };
 
@@ -112,19 +81,50 @@ const generateHtmlFromProperties = (properties, title, link, linkText) => {
   if (title.length > 0) {
     html += `<div class="flex-popup-title"><span>${title}</span></div>`;
   }
-  for (const property in properties) {
+  properties.forEach((property) => {
     html += `<div class="flex-popup-row"><span>${property}</span><span>${properties[property]}</span></div>`;
-  }
+  });
   if (link.length > 0) {
     html += `<a href="${link}" target="_blank">${linkText}</a>`;
   }
-  html += '</div>';
+  html += "</div>";
   return html;
 };
 
+// Legend
+if (config.showLegend) {
+  // if (config.showLegend) {
+  const legend = document.getElementById("mapbox-legend");
+  const wrapper = document.querySelector(".legend-wrapper");
+  legend.classList.add(config.legend.color);
+  if (config.legend.size) {
+    legend.classList.add(`legend-${config.legend.size}`);
+  }
+  if (config.legend.position) {
+    config.legend.position.split(" ").forEach((element) => {
+      wrapper.classList.add(`legend-${element}`);
+    });
+  }
+}
+
+// Icon Legend
+if (config.showIconLegend) {
+  const iconLegend = document.querySelector(".icon-legend-wrapper");
+  iconLegend.innerHTML = "";
+  config.icons.forEach((icon) => {
+    const iconDiv = document.createElement("div");
+    iconDiv.classList.add("icon-legend-item");
+    iconDiv.onclick = () => {
+      addRemoveLayer(icon.layer_id);
+    };
+    iconDiv.innerHTML = `<img src="${icon.url}" alt="${icon.id}" /><span>${icon.name}</span>`;
+    iconLegend.appendChild(iconDiv);
+  });
+}
+
 mapboxgl.accessToken = config.accessToken;
-const map = new mapboxgl.Map({
-  container: 'map',
+map = new mapboxgl.Map({
+  container: "map",
   attributionControl: false,
   style: config.style,
   center: config.location.center,
@@ -143,7 +143,7 @@ if (config.showControls) {
 // map.dragRotate.disable();
 
 // Pause spinning on interaction
-map.on('mousedown', () => {
+map.on("mousedown", () => {
   userInteracting = true;
 });
 
@@ -160,50 +160,47 @@ map.on('mousedown', () => {
 //   spinGlobe(map);
 // });
 
-map.on('pitchend', () => {
+map.on("pitchend", () => {
   userInteracting = false;
   spinGlobe(map);
 });
-map.on('rotateend', () => {
+map.on("rotateend", () => {
   userInteracting = false;
   spinGlobe(map);
 });
-map.on('moveend', () => {
+map.on("moveend", () => {
   spinGlobe(map);
 });
 
 // Popup functionality
-for (const layer in config.layers) {
-  if (config.layers[layer].allowPopup) {
-    map.on('click', config.layers[layer].id, (e) => {
+config.layers.forEach((layer) => {
+  if (layer.allowPopup) {
+    map.on("click", layer.id, (e) => {
       const features = map
         .queryRenderedFeatures(e.point)
-        .find((f) => f.layer.id === config.layers[layer].id);
+        .find((f) => f.layer.id === layer.id);
       // properties are mapped to user defined column names
       const properties = {};
-      for (let i = 0; i < config.layers[layer].propertiesToShow.length; i++) {
-        properties[config.layers[layer].propertyColumnNames[i]] = features.properties[config.layers[layer].propertiesToShow[i]];
+      for (let i = 0; i < layer.propertiesToShow.length; i += 1) {
+        properties[layer.propertyColumnNames[i]] = features.properties[layer.propertiesToShow[i]];
       }
-      let title = '';
-      if (config.layers[layer].popupTitle) {
-        title = features.properties[config.layers[layer].popupTitle];
+      let title = "";
+      if (layer.popupTitle) {
+        title = features.properties[layer.popupTitle];
       }
-      let link = '';
-      let linkText = '';
-      if (
-        config.layers[layer].popupLink
-        && config.layers[layer].popupLinkText
-      ) {
-        link = config.layers[layer].popupLink;
-        linkText = config.layers[layer].popupLinkText;
+      let link = "";
+      let linkText = "";
+      if (layer.popupLink && layer.popupLinkText) {
+        link = layer.popupLink;
+        linkText = layer.popupLinkText;
       }
-      new mapboxgl.Popup({ closeOnClick: true, className: 'flex-popup' })
+      new mapboxgl.Popup({ closeOnClick: true, className: "flex-popup" })
         .setLngLat(e.lngLat)
         .setHTML(generateHtmlFromProperties(properties, title, link, linkText))
         .addTo(map);
     });
   }
-}
+});
 
 if (config.showMarkers) {
   marker = new mapboxgl.Marker({
@@ -214,15 +211,16 @@ if (config.showMarkers) {
     .addTo(map);
 }
 
-map.on('click', (e) => {
+map.on("click", (e) => {
   // check that none of the features have the same id as any of the layers
   // if they do, then we don't want to do anything
   const features = map.queryRenderedFeatures(e.point);
-  for (const feature of features) {
+  features.forEach((feature) => {
     if (config.layers.find((layer) => layer.id === feature.layer.id)) {
       return;
     }
-  }
+  });
+
   Promise.all([
     getDataFromClick(e.lngLat),
     getLocationNameFromClick(e.lngLat),
@@ -232,7 +230,7 @@ map.on('click', (e) => {
       data * config.tileDataScalar
     ).toFixed(0)} ${config.tileDataMeasurement}</span></div>`;
 
-    new mapboxgl.Popup({ closeOnClick: true, className: 'flex-popup' })
+    new mapboxgl.Popup({ closeOnClick: true, className: "flex-popup" })
       .setLngLat(e.lngLat)
       .setHTML(innerHTML)
       .addTo(map);
@@ -242,46 +240,46 @@ map.on('click', (e) => {
   }
 });
 
-map.on('load', () => {
+map.on("load", () => {
   // 3D Terrain
   if (config.use3dTerrain) {
-    map.addSource('mapbox-dem', {
-      type: 'raster-dem',
-      url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
+    map.addSource("mapbox-dem", {
+      type: "raster-dem",
+      url: "mapbox://mapbox.mapbox-terrain-dem-v1",
       tileSize: 512,
       maxzoom: 14,
     });
 
-    map.setTerrain({ source: 'mapbox-dem', exaggeration: 1.5 });
+    map.setTerrain({ source: "mapbox-dem", exaggeration: 1.5 });
   }
 
   // Add all layers from config
-  for (const layer in config.layers) {
-    map.addLayer(config.layers[layer], config.layers[layer].depth);
-  }
+  config.layers.forEach((layer) => {
+    map.addLayer(layer, layer.depth);
+  });
   // Load all icons from config
-  for (const icon in config.icons) {
-    map.loadImage(config.icons[icon].url, (error, image) => {
+  config.icons.forEach((icon) => {
+    map.loadImage(icon.url, (error, image) => {
       if (error) throw error;
-      map.addImage(config.icons[icon].id, image);
+      map.addImage(icon.id, image);
     });
-  }
-  if (attributes.showStars === 'true') {
+  });
+  if (attributes["showStars"] === "true") {
     map.setFog({
-      color: 'rgb(186, 210, 235)', // Lower atmosphere
-      'high-color': 'rgb(36, 92, 223)', // Upper atmosphere
-      'horizon-blend': 0.02, // Atmosphere thickness (default 0.2 at low zooms)
-      'space-color': 'rgb(11, 11, 25)', // Background color
-      'star-intensity': 0.6, // Background star brightness (default 0.35 at low zoooms )
+      color: "rgb(186, 210, 235)", // Lower atmosphere
+      "high-color": "rgb(36, 92, 223)", // Upper atmosphere
+      "horizon-blend": 0.02, // Atmosphere thickness (default 0.2 at low zooms)
+      "space-color": "rgb(11, 11, 25)", // Background color
+      "star-intensity": 0.6, // Background star brightness (default 0.35 at low zoooms )
     });
 
     map.addLayer({
-      id: 'sky',
-      type: 'sky',
+      id: "sky",
+      type: "sky",
       paint: {
-        'sky-type': 'atmosphere',
-        'sky-atmosphere-sun': [0.0, 0.0],
-        'sky-atmosphere-sun-intensity': 15,
+        "sky-type": "atmosphere",
+        "sky-atmosphere-sun": [0.0, 0.0],
+        "sky-atmosphere-sun-intensity": 15,
       },
     });
   }

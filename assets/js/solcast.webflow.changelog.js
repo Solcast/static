@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Select all paragraph elements within the container
     const paragraphs = container.querySelectorAll('p');
 
-    paragraphs.forEach((paragraph, index) => {
+    paragraphs.forEach((paragraph) => {
       // Check if the current paragraph does not have the class 'w-condition-invisible'
       if (!paragraph.classList.contains('w-condition-invisible')) {
         // Check if the next element is a paragraph and does not have the class 'w-condition-invisible'
