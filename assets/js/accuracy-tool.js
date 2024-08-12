@@ -208,7 +208,7 @@ function updateSummaryTableClasses(parentElement) {
 function renderStatsSummary(data) {
   summaryContainer.innerHTML = '';
   if (data.statistics.length === 0) {
-    summaryContainer.innerHTML = `No sites meet your criteria, please try again.`;
+    summaryContainer.innerHTML = 'No sites meet your criteria, please try again.';
     map.setFilter('kgpv-climate-zones', null);
     return;
   }
@@ -346,7 +346,7 @@ function initAccuracyData(first) {
 
 map.on('load', () => {
   if (accuracyVariant === undefined) {
-    summaryContainer.innerHTML = `Error: accuracyVariant is not defined.`;
+    summaryContainer.innerHTML = 'Error: accuracyVariant is not defined.';
     return;
   }
   if (accuracyVariant === 'forecast') {
