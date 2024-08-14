@@ -253,8 +253,8 @@ function updateResultsTableClasses(parentElement) {
 }
 
 function createResultsTableElement(data) {
-  // sort by name
-  data.sort((a, b) => a.name.localeCompare(b.name));
+  // sort by location
+  data.sort((a, b) => a.location.localeCompare(b.location));
 
   const table = document.createElement('table');
   // table header
@@ -274,7 +274,7 @@ function createResultsTableElement(data) {
     const siteRow = document.createElement('tr');
     let cell = document.createElement('td');
     cell.headers = 'site';
-    cell.innerHTML = `${site.name}<br>${site.location}<br>${site.region}`;
+    cell.innerHTML = `${site.location}<br>${site.region}`;
     siteRow.appendChild(cell);
     cell = document.createElement('td');
     cell.innerHTML = `${site.climateZone}`;
@@ -364,7 +364,7 @@ map.on('load', () => {
 
   map.on('click', 'sites', (e) => {
     const coordinates = e.features[0].geometry.coordinates.slice();
-    const description = `<strong>${e.features[0].properties.name}</strong><br>${e.features[0].properties.location}<br>
+    const description = `<strong>${e.features[0].properties.location}</strong>
     <table><tr><td>KGPV Zone</td><td>${e.features[0].properties.climateZone}</td></tr>
     <tr><td>Normalised Bias</td><td>${e.features[0].properties.normalisedBias}%</td></tr>
     <tr><td>Bias (W/m<sup>2</sup>)</td><td>${e.features[0].properties.bias}</td></tr>
