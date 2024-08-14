@@ -112,10 +112,12 @@ function loadMapGeoJson(data) {
 
 function appendOptions(selectElement, options) {
   options.forEach((option) => {
-    const optionElement = document.createElement('option');
-    optionElement.value = option;
-    optionElement.text = option;
-    selectElement.appendChild(optionElement);
+    if(option != '' && option != 'Uncategorised') {
+      const optionElement = document.createElement('option');
+      optionElement.value = option;
+      optionElement.text = option;
+      selectElement.appendChild(optionElement);
+    }
   });
 }
 
