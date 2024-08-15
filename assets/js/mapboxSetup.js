@@ -27,7 +27,7 @@ const spinGlobe = () => {
     center.lng -= distancePerSecond;
     // Smoothly animate the map over one second.
     // When this animation is complete, it calls a 'moveend' event.
-    map.easeTo({ center, duration: 1000, easing: (n) => n });
+    map.easeTo({ center, "duration": 1000, "easing": (n) => n });
   }
 };
 
@@ -124,16 +124,16 @@ if (config.showIconLegend) {
 
 mapboxgl.accessToken = config.accessToken;
 map = new mapboxgl.Map({
-  container: "map",
-  attributionControl: false,
-  style: config.style,
-  center: config.location.center,
-  projection: config.location.projection,
-  zoom: config.location.zoom,
-  minZoom: config.location.minZoom,
-  maxZoom: config.location.maxZoom,
-  pitch: config.location.pitch,
-  bearing: config.location.bearing,
+  "container": "map",
+  "attributionControl": false,
+  "style": config.style,
+  "center": config.location.center,
+  "projection": config.location.projection,
+  "zoom": config.location.zoom,
+  "minZoom": config.location.minZoom,
+  "maxZoom": config.location.maxZoom,
+  "pitch": config.location.pitch,
+  "bearing": config.location.bearing,
 });
 
 if (config.showControls) {
@@ -194,7 +194,7 @@ config.layers.forEach((layer) => {
         link = layer.popupLink;
         linkText = layer.popupLinkText;
       }
-      new mapboxgl.Popup({ closeOnClick: true, className: "flex-popup" })
+      new mapboxgl.Popup({ "closeOnClick": true, "className": "flex-popup" })
         .setLngLat(e.lngLat)
         .setHTML(generateHtmlFromProperties(properties, title, link, linkText))
         .addTo(map);
@@ -204,8 +204,8 @@ config.layers.forEach((layer) => {
 
 if (config.showMarkers) {
   marker = new mapboxgl.Marker({
-    draggable: true,
-    color: config.markerColor,
+    "draggable": true,
+    "color": config.markerColor,
   })
     .setLngLat(config.location.center)
     .addTo(map);
@@ -215,7 +215,7 @@ map.on("click", (e) => {
   // check that none of the features have the same id as any of the layers
   // if they do, then we don't want to do anything
   const features = map.queryRenderedFeatures(e.point);
-  for (let i = 0; i < features.length; i++) {
+  for (let i = 0; i < features.length; i += 1) {
     if (config.layers.find((x) => x.id === features[i].layer.id)) {
       return;
     }
@@ -230,7 +230,7 @@ map.on("click", (e) => {
       data * config.tileDataScalar
     ).toFixed(0)} ${config.tileDataMeasurement}</span></div>`;
 
-    new mapboxgl.Popup({ closeOnClick: true, className: "flex-popup" })
+    new mapboxgl.Popup({ "closeOnClick": true, "className": "flex-popup" })
       .setLngLat(e.lngLat)
       .setHTML(innerHTML)
       .addTo(map);
@@ -244,13 +244,13 @@ map.on("load", () => {
   // 3D Terrain
   if (config.use3dTerrain) {
     map.addSource("mapbox-dem", {
-      type: "raster-dem",
-      url: "mapbox://mapbox.mapbox-terrain-dem-v1",
-      tileSize: 512,
-      maxzoom: 14,
+      "type": "raster-dem",
+      "url": "mapbox://mapbox.mapbox-terrain-dem-v1",
+      "tileSize": 512,
+      "maxzoom": 14,
     });
 
-    map.setTerrain({ source: "mapbox-dem", exaggeration: 1.5 });
+    map.setTerrain({ "source": "mapbox-dem", "exaggeration": 1.5 });
   }
 
   // Add all layers from config
@@ -264,9 +264,9 @@ map.on("load", () => {
       map.addImage(icon.id, image);
     });
   });
-  if (attributes["showStars"] === "true") {
+  if (config.showStars) {
     map.setFog({
-      color: "rgb(186, 210, 235)", // Lower atmosphere
+      "color": "rgb(186, 210, 235)", // Lower atmosphere
       "high-color": "rgb(36, 92, 223)", // Upper atmosphere
       "horizon-blend": 0.02, // Atmosphere thickness (default 0.2 at low zooms)
       "space-color": "rgb(11, 11, 25)", // Background color
@@ -274,9 +274,9 @@ map.on("load", () => {
     });
 
     map.addLayer({
-      id: "sky",
-      type: "sky",
-      paint: {
+      "id": "sky",
+      "type": "sky",
+      "paint": {
         "sky-type": "atmosphere",
         "sky-atmosphere-sun": [0.0, 0.0],
         "sky-atmosphere-sun-intensity": 15,
@@ -289,7 +289,7 @@ spinGlobe(map);
 
 // Attempt to get the location from query params
 const params = new Proxy(new URLSearchParams(window.location.search), {
-  get: (target, prop) => target.get(prop.toString()),
+  "get": (target, prop) => target.get(prop.toString()),
 });
 
 const flyToLocation = [params.longitude, params.latitude];
@@ -297,8 +297,8 @@ const flyToLocation = [params.longitude, params.latitude];
 // Fly to location if query params are present
 if (flyToLocation[0] && flyToLocation[1]) {
   map.flyTo({
-    center: flyToLocation,
-    zoom: 4,
-    duration: 5000,
+    "center": flyToLocation,
+    "zoom": 4,
+    "duration": 5000,
   });
 }
