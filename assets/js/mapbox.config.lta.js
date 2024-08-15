@@ -32,7 +32,7 @@ window.mapboxConfig = {
     "bearing": 0,
   },
   "tileUrl":
-    's3://solcast-visualisation-test/longterm-average-raw/long_term_avg_40k.tif',
+    's3://solcast-visualisation-test/longterm-average/long_term_avg_40k.tif',
   "tileDataMeasurement": 'kWh/m<sup>2</sup>/yr',
   "tileDataScalar": 8.76,
   "layers": [
