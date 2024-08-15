@@ -1,83 +1,83 @@
 window.mapboxConfig = {
-  style: 'mapbox://styles/solcast/clxjli2z6008h01pudwyx80kx',
-  accessToken:
+  "style": 'mapbox://styles/solcast/clxjli2z6008h01pudwyx80kx',
+  "accessToken":
     'pk.eyJ1Ijoic29sY2FzdCIsImEiOiJjbHBrbmZybjUwMXhuMm5wZHZkYTl2cHgzIn0.JoR-him1ia9CPTHOTTNIXw',
-  showMarkers: false,
-  markerColor: '#3FB1CE',
-  showControls: true,
-  showLegend: false,
-  legend: {
+  "showMarkers": false,
+  "markerColor": '#3FB1CE',
+  "showControls": true,
+  "showLegend": false,
+  "legend": {
     // title: "GHI (Long-term av erage annual total, kWh/m<sup>2</sup>/yr)",
     // color: "gist_ncar",
     // position: "bottom center", // top | bottom, left | right | center
     // size: "small", // small | large
-    min: 0,
-    max: 308,
+    "min": 0,
+    "max": 308,
   },
-  showIconLegend: true,
-  use3dTerrain: true,
-  spinGlobe: true,
-  secondsPerRotation: 180,
-  maxSpinZoom: 2,
-  showStars: true,
-  title: 'Long Term Average Solar Rad',
-  subtitle: 'Subtitle',
-  location: {
-    center: [0, 0],
-    projection: 'globe',
-    zoom: 1,
-    minZoom: 1,
-    maxZoom: 15,
-    pitch: 0,
-    bearing: 0,
+  "showIconLegend": true,
+  "use3dTerrain": true,
+  "spinGlobe": true,
+  "secondsPerRotation": 180,
+  "maxSpinZoom": 2,
+  "showStars": true,
+  "title": 'Long Term Average Solar Rad',
+  "subtitle": 'Subtitle',
+  "location": {
+    "center": [0, 0],
+    "projection": 'globe',
+    "zoom": 1,
+    "minZoom": 1,
+    "maxZoom": 10,
+    "pitch": 0,
+    "bearing": 0,
   },
-  tileUrl:
-    's3://solcast-visualisation-test/longterm-average-raw/long_term_avg.tif',
-  tileDataMeasurement: 'kWh/m<sup>2</sup>/yr',
-  tileDataScalar: 8.76,
-  layers: [
+  "tileUrl":
+    's3://solcast-visualisation-test/longterm-average-raw/long_term_avg_40k.tif',
+  "tileDataMeasurement": 'kWh/m<sup>2</sup>/yr',
+  "tileDataScalar": 8.76,
+  "layers": [
     {
-      id: 'ocean_highres',
-      type: 'fill',
-      source: {
-        type: 'vector',
-        url: 'mapbox://mapbox.mapbox-streets-v8',
+      "id": 'ocean_highres',
+      "type": 'fill',
+      "source": {
+        "type": 'vector',
+        "url": 'mapbox://mapbox.mapbox-streets-v8',
       },
       'source-layer': 'water',
-      paint: {
+      "paint": {
         'fill-color': '#205787',
       },
-      minzoom: 0,
+      "minzoom": 0,
     },
     {
-      id: 'long-term-avg',
-      type: 'raster',
-      source: {
-        type: 'raster',
-        tiles: [
+      "id": 'long-term-avg',
+      "type": 'raster',
+      "source": {
+        "type": 'raster',
+        "tiles": [
           'https://tiles.solcast.com.au/test/cog/tiles/{z}/{x}/{y}@1x?url=s3://solcast-visualisation-test/longterm-average/long_term_avg_40k.tif&rescale=0,308&colormap_name=gist_ncar',
         ],
-        tileSize: 256,
-        attribution: '&copy; <a href="https://solcast.com/">Solcast</a>',
+        "tileSize": 256,
+        "attribution": '&copy; <a href="https://solcast.com/">Solcast</a>',
       },
-      paint: {
+      "paint": {
         'raster-opacity': 0.9,
       },
-      depth: 'admin-1-boundary',
-      allowPopup: true,
+      "depth": 'admin-1-boundary',
+      "allowPopup": true,
     },
     {
-      id: 'large_utility',
-      type: 'symbol',
-      source: {
-        type: 'vector',
-        url: 'mapbox://solcast.495m93n3',
-        attribution:
+      "id": 'large_utility',
+      "type": 'symbol',
+      "source": {
+        "type": 'vector',
+        "url": 'mapbox://solcast.495m93n3',
+        "attribution":
           '&copy; <a href="https://globalenergymonitor.org/projects/global-solar-power-tracker/">GEM</a>',
       },
       'source-layer': 'GEM_large_utility-dt8kss',
-      filter: ['==', ['get', 'Status'], 'operating'],
-      layout: {
+      "filter": ['==', ['get', 'Status'], 'operating'],
+      "layout": {
         'icon-image': 'utility',
         'icon-size': [
           'interpolate',
@@ -119,69 +119,69 @@ window.mapboxConfig = {
         'icon-allow-overlap': true,
         'icon-ignore-placement': true,
       },
-      minzoom: 4,
-      paint: {
+      "minzoom": 4,
+      "paint": {
         'icon-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.5, 8, 1],
       },
-      allowPopup: true,
-      propertiesToShow: ['Capacity (MW)'],
-      propertyColumnNames: ['Capacity (MW)'],
-      popupTitle: 'Project Name',
+      "allowPopup": true,
+      "propertiesToShow": ['Capacity (MW)'],
+      "propertyColumnNames": ['Capacity (MW)'],
+      "popupTitle": 'Project Name',
     },
     {
-      id: 'bankability',
-      type: 'symbol',
-      source: {
-        type: 'geojson',
-        data: 'https://dev-web.solcast.com.au/api/accuracy/historic/geojson',
+      "id": 'bankability',
+      "type": 'symbol',
+      "source": {
+        "type": 'geojson',
+        "data": 'https://dev-web.solcast.com.au/api/accuracy/historic/geojson',
       },
-      layout: {
+      "layout": {
         'icon-image': 'bankable',
-        'icon-size': 0.25,
+        'icon-size': 0.2,
         'icon-allow-overlap': true,
       },
-      paint: {
+      "paint": {
         'icon-opacity': 1,
       },
-      minzoom: 1,
-      allowPopup: true,
-      propertiesToShow: [
+      "minzoom": 1,
+      "allowPopup": true,
+      "propertiesToShow": [
         'climateZone',
         'bias',
         'normalisedBias',
         'nmad',
         'nrmsd',
       ],
-      propertyColumnNames: [
+      "propertyColumnNames": [
         'KGPV Zone',
         'Bias (W/m<sup>2</sup>)',
         'Normalised Bias (%)',
         'nMAD (%)',
         'nRMSD (%)',
       ],
-      popupTitle: 'location',
-      popupLink: 'https://go.solcast.com/dnv-bankability-report',
-      popupLinkText: 'Read the bankability report',
+      "popupTitle": 'location',
+      "popupLink": 'https://solcast.com/validation-and-accuracy',
+      "popupLinkText": 'Read the bankability report',
     },
   ],
-  icons: [
+  "icons": [
     {
-      url: 'https://uploads-ssl.webflow.com/66837482f1a0f24c85bcd2db/66b42575f027f4bc278d0345_validation_sites.png',
-      id: 'bankable',
-      name: 'Validation Sites',
-      layer_id: 'bankability',
+      "url": 'https://uploads-ssl.webflow.com/66837482f1a0f24c85bcd2db/66b42575f027f4bc278d0345_validation_sites.png',
+      "id": 'bankable',
+      "name": 'Validation Sites',
+      "layer_id": 'bankability',
     },
     {
-      url: 'https://uploads-ssl.webflow.com/66837482f1a0f24c85bcd2db/66b42571511fdd69c8fec312_solar_sites.png',
-      id: 'utility',
-      name: 'Solar Sites',
-      layer_id: 'large_utility',
+      "url": 'https://uploads-ssl.webflow.com/66837482f1a0f24c85bcd2db/66b42571511fdd69c8fec312_solar_sites.png',
+      "id": 'utility',
+      "name": 'Solar Sites',
+      "layer_id": 'large_utility',
     },
     {
-      url: 'https://static.solcast.com/assets/icons/lta_icon.png',
-      id: 'lta',
-      name: 'Long Term Average',
-      layer_id: 'long-term-avg',
+      "url": 'https://static.solcast.com/assets/icons/lta_icon.png',
+      "id": 'lta',
+      "name": 'Long Term Average',
+      "layer_id": 'long-term-avg',
     },
   ],
 };
