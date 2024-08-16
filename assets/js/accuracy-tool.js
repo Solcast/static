@@ -11,7 +11,7 @@ const accuracyRequestDataUrl = accuracyToolContainer.getAttribute('accuracy-data
 mapboxgl.accessToken = 'pk.eyJ1Ijoic29sY2FzdCIsImEiOiJjbHBrbmZybjUwMXhuMm5wZHZkYTl2cHgzIn0.JoR-him1ia9CPTHOTTNIXw';
 const map = new mapboxgl.Map({
   container: 'accuracyMap',
-  maxZoom: 6,
+  maxZoom: 3,
   minZoom: 1,
   zoom: 1,
   center: [40, 10],
@@ -82,31 +82,31 @@ function loadMapGeoJson(data) {
   let climateZoneIds = null;
   switch (climateZone) {
     case 'Polar':
-      climateZoneIds = [1];
+      climateZoneIds = [6];
       break;
     case 'Cold':
-      climateZoneIds = [2, 3];
+      climateZoneIds = [5];
       break;
     case 'Temperate':
-      climateZoneIds = [4, 5, 6];
+      climateZoneIds = [4];
       break;
     case 'Tropical':
-      climateZoneIds = [11, 12];
+      climateZoneIds = [1];
       break;
     case 'Desert':
-      climateZoneIds = [9, 10];
+      climateZoneIds = [2];
       break;
     case 'Steppe':
-      climateZoneIds = [7, 8];
+      climateZoneIds = [3];
       break;
     default:
       break;
   }
 
   if (climateZoneIds !== null) {
-    map.setFilter('kgpv-climate-zones', ['match', ['get', 'zone'], climateZoneIds, true, false]);
+    map.setFilter('kg-climate-zones', ['match', ['get', 'zone'], climateZoneIds, true, false]);
   } else {
-    map.setFilter('kgpv-climate-zones', null);
+    map.setFilter('kg-climate-zones', null);
   }
 }
 
@@ -114,8 +114,8 @@ function appendOptions(selectElement, options) {
   options.forEach((option) => {
     if(option != '' && option != 'Uncategorised') {
       const optionElement = document.createElement('option');
-      optionElement.value = option;
-      optionElement.text = option;
+      optionElement.value = option.value;
+      optionElement.text = option.label;
       selectElement.appendChild(optionElement);
     }
   });
@@ -140,7 +140,7 @@ function createSummaryTableElement(data) {
   const table = document.createElement('table');
   // table header
   const head = document.createElement('thead');
-  const headerRowLabels = ['Normalised Bias', 'Bias (W/m<sup>2</sup>)', 'nMAD', 'nRMSD'];
+  const headerRowLabels = ['','Normalised Bias', 'Bias (W/m<sup>2</sup>)', 'nMAD', 'nRMSD'];
   const headRow = document.createElement('tr');
   headerRowLabels.forEach((label) => {
     const labelCell = document.createElement('td');
@@ -151,18 +151,38 @@ function createSummaryTableElement(data) {
   table.appendChild(head);
   // table body
   const body = document.createElement('tbody');
-  const row = document.createElement('tr');
+  let row = document.createElement('tr');
   let cell = document.createElement('td');
-  cell.innerHTML = `${data.normalisedBiasMean}%<br>(${data.normalisedBiasMin}% to ${data.normalisedBiasMax}%)`;
+  cell.innerHTML = 'Mean error';
   row.appendChild(cell);
   cell = document.createElement('td');
-  cell.innerHTML = `${data.biasMean}<br>(${data.biasMin} to ${data.biasMax})`;
+  cell.innerHTML = `${data.normalisedBiasMean}%`;
   row.appendChild(cell);
   cell = document.createElement('td');
-  cell.innerHTML = `${data.nmadMean}%<br>(${data.nmadMin}% to ${data.nmadMax}%)`;
+  cell.innerHTML = `${data.biasMean}`;
   row.appendChild(cell);
   cell = document.createElement('td');
-  cell.innerHTML = `${data.nrmsdMean}%<br>(${data.nrmsdMin}% to ${data.nrmsdMax}%)`;
+  cell.innerHTML = `${data.nmadMean}%`;
+  row.appendChild(cell);
+  cell = document.createElement('td');
+  cell.innerHTML = `${data.nrmsdMean}%`;
+  row.appendChild(cell);
+  body.appendChild(row);
+  row = document.createElement('tr');
+  cell = document.createElement('td');
+  cell.innerHTML = 'Range';
+  row.appendChild(cell);
+  cell = document.createElement('td');
+  cell.innerHTML = `${data.normalisedBiasMin}% to ${data.normalisedBiasMax}%`;
+  row.appendChild(cell);
+  cell = document.createElement('td');
+  cell.innerHTML = `${data.biasMin} to ${data.biasMax}`;
+  row.appendChild(cell);
+  cell = document.createElement('td');
+  cell.innerHTML = `${data.nmadMin}% to ${data.nmadMax}%`;
+  row.appendChild(cell);
+  cell = document.createElement('td');
+  cell.innerHTML = `${data.nrmsdMin}% to ${data.nrmsdMax}%`;
   row.appendChild(cell);
   body.appendChild(row);
   table.appendChild(body);
@@ -211,7 +231,7 @@ function renderStatsSummary(data) {
   summaryContainer.innerHTML = '';
   if (data.statistics.length === 0) {
     summaryContainer.innerHTML = 'No sites meet your criteria, please try again.';
-    map.setFilter('kgpv-climate-zones', null);
+    map.setFilter('kg-climate-zones', null);
     return;
   }
   if (data.statistics.length < 5) {
