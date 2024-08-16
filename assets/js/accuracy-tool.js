@@ -294,7 +294,7 @@ function createResultsTableElement(data) {
     const siteRow = document.createElement('tr');
     let cell = document.createElement('td');
     cell.headers = 'site';
-    cell.innerHTML = `${site.name}<br>${site.location}<br>${site.region}`;
+    cell.innerHTML = `${site.name}<br>${site.location}`;
     siteRow.appendChild(cell);
     cell = document.createElement('td');
     cell.innerHTML = `${site.climateZone}`;
