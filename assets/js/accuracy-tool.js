@@ -25,7 +25,7 @@ function renderMapLegend() {
   const legendItems = [
     { label: 'Tropical', color: '#f26e54' },
     { label: 'Desert', color: '#fcb82a' },
-    { label: 'Steppe', color: '#838bc2' },
+    { label: 'Steppe (Grassland &amp; Savannah)', color: '#838bc2' },
     { label: 'Temperate', color: '#98d09d' },
     { label: 'Cold', color: '#60a9d1' },
     { label: 'Polar', color: '#136aae' },
@@ -207,7 +207,7 @@ function updateSummaryTableClasses(parentElement) {
   // apply table classes used in webflow pages
   const table = parentElement.getElementsByTagName('table');
   for (i = 0; i < table.length; i += 1) {
-    table[i].className = 'table table_col-4';
+    table[i].className = 'table table_col-5';
   }
   const headers = parentElement.getElementsByTagName('thead');
   for (i = 0; i < headers.length; i += 1) {
