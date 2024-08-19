@@ -113,7 +113,7 @@ function loadMapGeoJson(data) {
 
 function appendOptions(selectElement, options) {
   options.forEach((option) => {
-    if(option != '' && option != 'Uncategorised') {
+    if (option !== '' && option !== 'Uncategorised') {
       const optionElement = document.createElement('option');
       optionElement.value = option.value;
       optionElement.text = option.label;
@@ -141,7 +141,7 @@ function createSummaryTableElement(data) {
   const table = document.createElement('table');
   // table header
   const head = document.createElement('thead');
-  const headerRowLabels = ['','Normalised Bias', 'Bias (W/m<sup>2</sup>)', 'nMAD', 'nRMSD'];
+  const headerRowLabels = ['', 'Normalised Bias', 'Bias (W/m<sup>2</sup>)', 'nMAD', 'nRMSD'];
   const headRow = document.createElement('tr');
   headerRowLabels.forEach((label) => {
     const labelCell = document.createElement('td');
@@ -246,7 +246,7 @@ function renderStatsSummary(data) {
     summaryContainer.appendChild(summarySubtitle);
     return;
   }
-  summarySubtitle.innerHTML = `Based on ${data.statistics.length} sites that meet the criteria of ${selectedRegion} region, ${selectedZone} climate zone${selectedZone === 'All' ? 's' : ''}`;
+  summarySubtitle.innerText = `Based on ${data.statistics.length} sites that meet the criteria of ${selectedRegion} region, ${selectedZone} climate zone${selectedZone === 'All' ? 's' : ''}`;
   summaryContainer.appendChild(summarySubtitle);
   const dataTable = createSummaryTableElement(data.summary);
   summaryContainer.appendChild(dataTable);
