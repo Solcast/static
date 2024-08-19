@@ -7,15 +7,16 @@ const summaryContainer = document.getElementById('accuracySummary');
 const resultsContainer = document.getElementById('accuracyStatistics');
 const legendContainer = document.getElementById('accuracyMapLegend');
 const accuracyRequestDataUrl = accuracyToolContainer.getAttribute('accuracy-data-url');
+let selectedZone = 'All';
+let selectedRegion = 'Global';
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic29sY2FzdCIsImEiOiJjbHBrbmZybjUwMXhuMm5wZHZkYTl2cHgzIn0.JoR-him1ia9CPTHOTTNIXw';
 const map = new mapboxgl.Map({
   container: 'accuracyMap',
-  maxZoom: 3,
+  maxZoom: 5,
   minZoom: 1,
   zoom: 1,
-  center: [40, 10],
-  bounds: [[-180, -75], [180, 75]],
+  center: [0, 0],
   style: 'mapbox://styles/solcast/clyzom3fx00ee01r5fw927na8',
   attributionControl: false,
 });
@@ -75,7 +76,7 @@ function loadMapGeoJson(data) {
   const bounds = new mapboxgl.LngLatBounds();
   data.features.forEach((feature) => bounds.extend(feature.geometry.coordinates));
   map.fitBounds(bounds, {
-    padding: 100,
+    padding: 150,
   });
 
   const climateZone = document.getElementById('climateZone').value;
@@ -112,7 +113,7 @@ function loadMapGeoJson(data) {
 
 function appendOptions(selectElement, options) {
   options.forEach((option) => {
-    if(option != '' && option != 'Uncategorised') {
+    if (option !== '' && option !== 'Uncategorised') {
       const optionElement = document.createElement('option');
       optionElement.value = option.value;
       optionElement.text = option.label;
@@ -140,7 +141,7 @@ function createSummaryTableElement(data) {
   const table = document.createElement('table');
   // table header
   const head = document.createElement('thead');
-  const headerRowLabels = ['','Normalised Bias', 'Bias (W/m<sup>2</sup>)', 'nMAD', 'nRMSD'];
+  const headerRowLabels = ['', 'Normalised Bias', 'Bias (W/m<sup>2</sup>)', 'nMAD', 'nRMSD'];
   const headRow = document.createElement('tr');
   headerRowLabels.forEach((label) => {
     const labelCell = document.createElement('td');
@@ -229,15 +230,24 @@ function updateSummaryTableClasses(parentElement) {
 
 function renderStatsSummary(data) {
   summaryContainer.innerHTML = '';
+  const summaryTitle = document.createElement('h4');
+  summaryTitle.innerHTML = 'Solcast error statistics from DNV Bankability Report 2023';
+  summaryContainer.appendChild(summaryTitle);
+  const summarySubtitle = document.createElement('p');
+  summarySubtitle.className = 'text-rich-text';
   if (data.statistics.length === 0) {
-    summaryContainer.innerHTML = 'No sites meet your criteria, please try again.';
+    summarySubtitle.innerHTML = 'No sites meet your criteria, please try again.';
+    summaryContainer.appendChild(summarySubtitle);
     map.setFilter('kg-climate-zones', null);
     return;
   }
   if (data.statistics.length < 5) {
-    summaryContainer.innerHTML = `${data.statistics.length} site${data.statistics.length > 1 ? 's' : ''} meet${data.statistics.length === 1 ? 's' : ''} your criteria, see individual site results below. Not enough sites for a meaningful statistical summary.`;
+    summarySubtitle.innerHTML = `${data.statistics.length} site${data.statistics.length > 1 ? 's' : ''} meet${data.statistics.length === 1 ? 's' : ''} your criteria, see individual site results below. Not enough sites for a meaningful statistical summary.`;
+    summaryContainer.appendChild(summarySubtitle);
     return;
   }
+  summarySubtitle.innerText = `Based on ${data.statistics.length} sites that meet the criteria of ${selectedRegion} region, ${selectedZone} climate zone${selectedZone === 'All' ? 's' : ''}`;
+  summaryContainer.appendChild(summarySubtitle);
   const dataTable = createSummaryTableElement(data.summary);
   summaryContainer.appendChild(dataTable);
   updateSummaryTableClasses(summaryContainer);
@@ -332,7 +342,7 @@ function renderStatsDetail(data) {
     return result;
   }, {});
   Object.entries(groupedByRegion).forEach(([region, items]) => {
-    const regionHeader = document.createElement('h2');
+    const regionHeader = document.createElement('h4');
     regionHeader.innerHTML = region;
     resultsContainer.appendChild(regionHeader);
     const dataTable = createResultsTableElement(items);
@@ -344,6 +354,8 @@ function renderStatsDetail(data) {
 function initAccuracyData(first) {
   const climateZone = document.getElementById('climateZone').value;
   const region = document.getElementById('region').value;
+  selectedZone = climateZone === '' ? 'All' : climateZone;
+  selectedRegion = region === '' ? 'Global' : region;
   let query = `climateZone=${climateZone}&region=${region}`;
   if (accuracyVariant === 'forecast') {
     const season = document.getElementById('season').value;

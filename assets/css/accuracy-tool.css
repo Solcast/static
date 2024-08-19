@@ -1,45 +1,53 @@
 .mapboxgl-popup {
-    width: 280px;
-    max-width: 280px;
+  width: 280px;
+  max-width: 280px;
 }
 
 .accuracy-tool__legend {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .accuracy-tool__legend .map-legend-item {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .accuracy-tool__legend .map-legend-color {
-    border-radius: 50%;
-    width: 0.8rem;
-    height: 0.8rem;
+  border-radius: 50%;
+  width: 0.8rem;
+  height: 0.8rem;
 }
 
 .mapboxgl-popup-content table {
-    width: 100%;
+  width: 100%;
 }
 
 .mapboxgl-popup-content table td {
-    padding: 0.1rem 0.3rem;
+  padding: 0.1rem 0.3rem;
 }
 
 .mapboxgl-popup-content table tr:nth-child(even) {
-    background-color: #f8f8f8;
+  background-color: #f8f8f8;
 }
 .mapboxgl-popup-content table tr:nth-child(odd) {
-    background-color: #efeeee
+  background-color: #efeeee
 }
 
 #accuracyMap {
-    height: 400px;
-    width: 100%;
+  height: 400px;
+  width: 100%;
+}
+
+#accuracySummary p {
+  margin-bottom: 1rem;
+}
+
+.accuracy-tool__statistics table tbody tr td {
+  padding: 0.3rem 0.3rem;
 }
