@@ -133,7 +133,7 @@ window.mapboxConfig = {
       "type": 'symbol',
       "source": {
         "type": 'geojson',
-        "data": 'https://dev-web.solcast.com.au/api/accuracy/historic/geojson',
+        "data": 'https://web.solcast.com.au/api/accuracy/historic/geojson',
       },
       "layout": {
         'icon-image': 'bankable',
