@@ -159,7 +159,7 @@ window.mapboxConfig = {
         'nMAD (%)',
         'nRMSD (%)',
       ],
-      "popupTitle": 'location',
+      "popupTitle": 'name',
       "popupLink": 'https://solcast.com/validation-and-accuracy',
       "popupLinkText": 'Read the bankability report',
     },

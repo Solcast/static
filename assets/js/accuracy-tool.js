@@ -304,7 +304,7 @@ function createResultsTableElement(data) {
     const siteRow = document.createElement('tr');
     let cell = document.createElement('td');
     cell.headers = 'site';
-    cell.innerHTML = `${site.name}<br>${site.location}`;
+    cell.innerHTML = `${site.name}`;
     siteRow.appendChild(cell);
     cell = document.createElement('td');
     cell.innerHTML = `${site.climateZone}`;
@@ -396,7 +396,7 @@ map.on('load', () => {
 
   map.on('click', 'sites', (e) => {
     const coordinates = e.features[0].geometry.coordinates.slice();
-    const description = `<strong>${e.features[0].properties.name}</strong><br>${e.features[0].properties.location}<br>
+    const description = `<strong>${e.features[0].properties.name}</strong><br>
     <table><tr><td>KGPV Zone</td><td>${e.features[0].properties.climateZone}</td></tr>
     <tr><td>Normalised Bias</td><td>${e.features[0].properties.normalisedBias}%</td></tr>
     <tr><td>Bias (W/m<sup>2</sup>)</td><td>${e.features[0].properties.bias}</td></tr>
