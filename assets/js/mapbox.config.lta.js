@@ -166,13 +166,13 @@ window.mapboxConfig = {
   ],
   "icons": [
     {
-      "url": 'https://uploads-ssl.webflow.com/66837482f1a0f24c85bcd2db/66b42575f027f4bc278d0345_validation_sites.png',
+      "url": 'https://static.solcast.com/assets/icons/validation_sites.png',
       "id": 'bankable',
       "name": 'Validation Sites',
       "layer_id": 'bankability',
     },
     {
-      "url": 'https://uploads-ssl.webflow.com/66837482f1a0f24c85bcd2db/66b42571511fdd69c8fec312_solar_sites.png',
+      "url": 'https://static.solcast.com/assets/icons/solar_sites.png',
       "id": 'utility',
       "name": 'Solar Sites',
       "layer_id": 'large_utility',
