@@ -15,7 +15,7 @@ window.mapboxConfig = {
     "max": 308,
   },
   "showIconLegend": true,
-  "use3dTerrain": true,
+  "use3dTerrain": false,
   "spinGlobe": true,
   "secondsPerRotation": 180,
   "maxSpinZoom": 2,
@@ -32,30 +32,30 @@ window.mapboxConfig = {
     "bearing": 0,
   },
   "tileUrl":
-    's3://solcast-visualisation-test/longterm-average/long_term_avg_40k.tif',
+    's3://solcast-visualisation-prod/longterm-average/long_term_avg_40k.tif',
   "tileDataMeasurement": 'kWh/m<sup>2</sup>/yr',
   "tileDataScalar": 8.76,
   "layers": [
-    {
-      "id": 'ocean_highres',
-      "type": 'fill',
-      "source": {
-        "type": 'vector',
-        "url": 'mapbox://mapbox.mapbox-streets-v8',
-      },
-      'source-layer': 'water',
-      "paint": {
-        'fill-color': '#205787',
-      },
-      "minzoom": 0,
-    },
+    // {
+    //   "id": 'ocean_highres',
+    //   "type": 'fill',
+    //   "source": {
+    //     "type": 'vector',
+    //     "url": 'mapbox://mapbox.mapbox-streets-v8',
+    //   },
+    //   'source-layer': 'water',
+    //   "paint": {
+    //     'fill-color': '#205787',
+    //   },
+    //   "minzoom": 0,
+    // },
     {
       "id": 'long-term-avg',
       "type": 'raster',
       "source": {
         "type": 'raster',
         "tiles": [
-          'https://tiles.solcast.com.au/test/cog/tiles/{z}/{x}/{y}@1x?url=s3://solcast-visualisation-test/longterm-average/long_term_avg_40k.tif&rescale=0,308&colormap_name=gist_ncar',
+          'https://tiles.solcast.com.au/prod/cog/tiles/{z}/{x}/{y}@1x?url=s3://solcast-visualisation-prod/longterm-average/long_term_avg_40k.tif&rescale=0,308&colormap_name=gist_ncar',
         ],
         "tileSize": 256,
         "attribution": '&copy; <a href="https://solcast.com/">Solcast</a>',

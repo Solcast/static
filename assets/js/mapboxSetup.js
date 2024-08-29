@@ -32,7 +32,7 @@ const spinGlobe = () => {
 };
 
 const getDataFromClick = (lngLat) => {
-  const dataUrl = `https://tiles.solcast.com.au/test/cog/point/${lngLat.lng},${lngLat.lat}?url=${config.tileUrl}`;
+  const dataUrl = `https://tiles.solcast.com.au/prod/cog/point/${lngLat.lng},${lngLat.lat}?url=${config.tileUrl}`;
   return new Promise((resolve, reject) => {
     fetch(dataUrl)
       .then((response) => response.json())
