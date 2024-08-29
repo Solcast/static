@@ -15,7 +15,7 @@ window.mapboxConfig = {
     "max": 308,
   },
   "showIconLegend": true,
-  "use3dTerrain": true,
+  "use3dTerrain": false,
   "spinGlobe": true,
   "secondsPerRotation": 180,
   "maxSpinZoom": 2,
@@ -36,19 +36,19 @@ window.mapboxConfig = {
   "tileDataMeasurement": 'kWh/m<sup>2</sup>/yr',
   "tileDataScalar": 8.76,
   "layers": [
-    {
-      "id": 'ocean_highres',
-      "type": 'fill',
-      "source": {
-        "type": 'vector',
-        "url": 'mapbox://mapbox.mapbox-streets-v8',
-      },
-      'source-layer': 'water',
-      "paint": {
-        'fill-color': '#205787',
-      },
-      "minzoom": 0,
-    },
+    // {
+    //   "id": 'ocean_highres',
+    //   "type": 'fill',
+    //   "source": {
+    //     "type": 'vector',
+    //     "url": 'mapbox://mapbox.mapbox-streets-v8',
+    //   },
+    //   'source-layer': 'water',
+    //   "paint": {
+    //     'fill-color': '#205787',
+    //   },
+    //   "minzoom": 0,
+    // },
     {
       "id": 'long-term-avg',
       "type": 'raster',
