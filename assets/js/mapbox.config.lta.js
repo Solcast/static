@@ -32,7 +32,7 @@ window.mapboxConfig = {
     "bearing": 0,
   },
   "tileUrl":
-    's3://solcast-visualisation-test/longterm-average/long_term_avg_40k.tif',
+    's3://solcast-visualisation-prod/longterm-average/long_term_avg_40k.tif',
   "tileDataMeasurement": 'kWh/m<sup>2</sup>/yr',
   "tileDataScalar": 8.76,
   "layers": [
@@ -55,7 +55,7 @@ window.mapboxConfig = {
       "source": {
         "type": 'raster',
         "tiles": [
-          'https://tiles.solcast.com.au/test/cog/tiles/{z}/{x}/{y}@1x?url=s3://solcast-visualisation-test/longterm-average/long_term_avg_40k.tif&rescale=0,308&colormap_name=gist_ncar',
+          'https://tiles.solcast.com.au/prod/cog/tiles/{z}/{x}/{y}@1x?url=s3://solcast-visualisation-prod/longterm-average/long_term_avg_40k.tif&rescale=0,308&colormap_name=gist_ncar',
         ],
         "tileSize": 256,
         "attribution": '&copy; <a href="https://solcast.com/">Solcast</a>',
