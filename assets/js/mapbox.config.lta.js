@@ -36,19 +36,32 @@ window.mapboxConfig = {
   "tileDataMeasurement": 'kWh/m<sup>2</sup>/yr',
   "tileDataScalar": 8.76,
   "layers": [
-    // {
-    //   "id": 'ocean_highres',
-    //   "type": 'fill',
-    //   "source": {
-    //     "type": 'vector',
-    //     "url": 'mapbox://mapbox.mapbox-streets-v8',
-    //   },
-    //   'source-layer': 'water',
-    //   "paint": {
-    //     'fill-color': '#205787',
-    //   },
-    //   "minzoom": 0,
-    // },
+    {
+      "id": 'ocean_highres',
+      "type": 'fill',
+      "source": {
+        "type": 'vector',
+        "url": 'mapbox://mapbox.mapbox-streets-v8',
+      },
+      'source-layer': 'water',
+      "paint": {
+        'fill-color': '#205787',
+      },
+      "minzoom": 0,
+    },
+    {
+      "id": 'ocean_ne_10m',
+      "type": 'fill',
+      "source": {
+        "type": 'vector',
+        "url": "mapbox://solcast.66a5o032",
+      },
+      'source-layer': 'ne_10m_ocean-3smy0z',
+      "paint": {
+        'fill-color': '#205787',
+      },
+      "minzoom": 0,
+    },
     {
       "id": 'long-term-avg',
       "type": 'raster',
@@ -182,6 +195,18 @@ window.mapboxConfig = {
       "id": 'lta',
       "name": 'Long Term Average',
       "layer_id": 'long-term-avg',
+    },
+    {
+      "url": 'https://static.solcast.com/assets/icons/lta_icon.png',
+      "id": 'ocean',
+      "name": 'Ocean High Res',
+      "layer_id": 'ocean_highres',
+    },
+    {
+      "url": 'https://static.solcast.com/assets/icons/lta_icon.png',
+      "id": 'ne_10m_ocean',
+      "name": 'NE 10m Ocean',
+      "layer_id": 'ocean_ne_10m',
     },
   ],
 };
