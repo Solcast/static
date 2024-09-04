@@ -196,17 +196,5 @@ window.mapboxConfig = {
       "name": 'Long Term Average',
       "layer_id": 'long-term-avg',
     },
-    {
-      "url": 'https://static.solcast.com/assets/icons/lta_icon.png',
-      "id": 'ocean',
-      "name": 'Ocean High Res',
-      "layer_id": 'ocean_highres',
-    },
-    {
-      "url": 'https://static.solcast.com/assets/icons/lta_icon.png',
-      "id": 'ne_10m_ocean',
-      "name": 'NE 10m Ocean',
-      "layer_id": 'ocean_ne_10m',
-    },
   ],
 };
