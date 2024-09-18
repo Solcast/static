@@ -1,0 +1,101 @@
+.mapboxgl-popup {
+  width: 280px;
+  max-width: 280px;
+}
+
+.accuracy-tool__legend {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.accuracy-tool__legend .map-legend-item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.accuracy-tool__legend .map-legend-color {
+  border-radius: 50%;
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.mapboxgl-popup {
+  width: 600px;
+}
+
+.mapboxgl-popup-content table {
+  width: 100%;
+}
+
+.mapboxgl-popup-content table td {
+  padding: 0.1rem 0.3rem;
+}
+
+.mapboxgl-popup-content table tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+.mapboxgl-popup-content table tr:nth-child(odd) {
+  background-color: #efeeee
+}
+
+#accuracyMap {
+  height: 400px;
+  width: 100%;
+}
+
+#accuracyStatistics,
+#accuracySummary {
+  font-size: 0.8em;
+}
+
+#accuracySummary p {
+  margin-bottom: 0.5rem;
+}
+
+
+#accuracyStatistics .text-center,
+#accuracySummary .text-center,
+.mapboxgl-popup-content .text-center {
+  text-align: center;
+}
+
+#accuracyStatistics .row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+#accuracyStatistics tr[data-source='solcast']>td {
+  font-weight: bolder;
+}
+
+#accuracySummary tr[data-source='solcast']>td {
+  font-weight: bolder;
+}
+
+#accuracyStatistics thead td,
+#accuracySummary thead td,
+.mapboxgl-popup-content thead td {
+  font-weight: bolder;
+}
+
+#accuracyStatistics td,
+#accuracySummary td {
+  border: 1px solid #d7e3f4;
+  padding: .2rem 0.4rem;
+}
+
+#forecastOptions {
+  display: flex;
+  gap: 1rem;
+  -ms-flex-wrap: inherit;
+  -webkit-flex-wrap: inherit;
+  flex-wrap: inherit;
+}
