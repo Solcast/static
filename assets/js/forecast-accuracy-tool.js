@@ -252,7 +252,7 @@ function createSiteRowsForDetail(site) {
   return clone;
 }
 
-function getsitemapcontent(site) {
+function getPopupContent(site) {
   const template = document.getElementById('mapStatTable');
   const clone = template.content.cloneNode(true);
   clone.querySelector('.name').textContent = site.name;
@@ -347,7 +347,7 @@ map.on('load', () => {
     const coordinates = e.features[0].geometry.coordinates.slice();
     const properties = e.features[0].properties;
     properties.sources = JSON.parse(properties.sources);
-    const description = getsitemapcontent(properties);
+    const description = getPopupContent(properties);
     new mapboxgl.Popup({ closeButton: true })
       .setLngLat(coordinates)
       .setDOMContent(description)
