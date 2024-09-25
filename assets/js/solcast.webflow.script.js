@@ -11,28 +11,25 @@ document.addEventListener('DOMContentLoaded', () => {
     new Splide('.splide', {
       type: 'loop',
       drag: 'free',
-      focus: 'center',
-      perPage: 9,
-      autoWidth: false,
+      gap: '5rem',
+      autoWidth: true,
       pauseOnHover: true,
       pauseOnFocus: true,
       autoScroll: {
         speed: 0.8,
       },
       breakpoints: {
-        1400: {
-          perPage: 6,
-        },
         760: {
-          perPage: 4,
+          gap: '3rem',
         },
         580: {
-          perPage: 3,
-        },
-        400: {
-          perPage: 2,
+          gap: '2rem',
         },
       },
+      reducedMotion: {
+        speed: 0,
+        autoplay: 'pause',
+      }
     }).mount(window.splide.Extensions);
   }
 });
