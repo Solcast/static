@@ -168,7 +168,7 @@ $(".slider-main_component").each(function (index) {
     },
     keyboard: {
       enabled: true,
-      onlyInViewport: true
+      onlyInViewport: true,
     },
     breakpoints: {
       // mobile landscape
