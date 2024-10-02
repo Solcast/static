@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new Splide('.splide', {
       type: 'loop',
       drag: 'free',
-      gap: '1rem',
+      gap: '2rem',
       autoWidth: true,
       pauseOnHover: true,
       pauseOnFocus: true,
