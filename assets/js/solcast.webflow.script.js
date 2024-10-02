@@ -11,20 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
     new Splide('.splide', {
       type: 'loop',
       drag: 'free',
-      gap: '5rem',
+      gap: '1rem',
       autoWidth: true,
       pauseOnHover: true,
       pauseOnFocus: true,
       autoScroll: {
         speed: 0.8,
-      },
-      breakpoints: {
-        760: {
-          gap: '3rem',
-        },
-        580: {
-          gap: '2rem',
-        },
       },
       reducedMotion: {
         speed: 0,
