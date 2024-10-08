@@ -351,7 +351,7 @@ map.on('load', () => {
     new mapboxgl.Popup({ closeButton: true })
       .setLngLat(coordinates)
       .setDOMContent(description)
-      .setMaxWidth('600px')
+      .setMaxWidth('400px')
       .addTo(map);
   });
   map.on('mouseenter', 'sites', () => {
