@@ -402,7 +402,7 @@ map.on('load', () => {
     <tr><td>Bias (W/m<sup>2</sup>)</td><td>${e.features[0].properties.bias}</td></tr>
     <tr><td>nMAD</td><td>${e.features[0].properties.nmad}%</td></tr>
     <tr><td>nRMSD</td><td>${e.features[0].properties.nrmsd}%</td></tr>
-    </table><a href="${accuracyRequestDataUrl}" target="_blank">Request raw validation data</a>`;
+    </table>`;
     new mapboxgl.Popup({
       closeButton: false,
     })
