@@ -261,9 +261,9 @@ function getPopupContent(site) {
   const body = clone.querySelector('tbody');
   const cloned = createSiteRows(site.sources);
   body.appendChild(cloned);
-  const link = document.createElement('div');
-  link.innerHTML = `<a href="${accuracyRequestDataUrl}" target="_blank">Request raw validation data</a>`;
-  clone.appendChild(link);
+  // const link = document.createElement('div');
+  // link.innerHTML = `<a href="${accuracyRequestDataUrl}" target="_blank">Request raw validation data</a>`;
+  // clone.appendChild(link);
   return clone;
 }
 
