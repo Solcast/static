@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
       autoWidth: true,
       pauseOnHover: true,
       pauseOnFocus: true,
+      focusableNodes: 'img',
       autoScroll: {
         speed: 0.8,
       },
