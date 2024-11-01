@@ -153,7 +153,6 @@ $(".slider-main_component").each(function (index) {
     followFinger: true,
     freeMode: false,
     slideToClickedSlide: false,
-    slidesPerView: 2,
     spaceBetween: "4%",
     rewind: false,
     mousewheel: {
