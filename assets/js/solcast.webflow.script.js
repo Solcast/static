@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
       autoWidth: true,
       pauseOnHover: true,
       pauseOnFocus: true,
+      focusableNodes: 'img',
       autoScroll: {
         speed: 0.8,
       },
@@ -152,7 +153,6 @@ $(".slider-main_component").each(function (index) {
     followFinger: true,
     freeMode: false,
     slideToClickedSlide: false,
-    slidesPerView: 2,
     spaceBetween: "4%",
     rewind: false,
     mousewheel: {
