@@ -738,23 +738,23 @@ table tbody tr:last-child td:last-child{
 .text-rich-text.is-section-banner > h1, 
 .text-rich-text.is-section-banner > h2, 
 .text-rich-text.is-section-banner > h3 {
-	font-family: var(--font-families--headings) !important;
-  font-weight: 700 !important;
-  color: var(--text-color--text-alternate) !important;
+	font-family: var(--font-families--headings);
+  font-weight: 700;
+  color: var(--text-color--text-alternate);
 }
 
 .text-rich-text.is-section-banner h1 {
-	font-size: var(--text-size--heading-1) !important;
+	font-size: var(--text-size--heading-1);
 }
 
 .text-rich-text.is-section-banner h2 {
-	font-size: var(--text-size--heading-2) !important;
+	font-size: var(--text-size--heading-2);
 }
 
 .text-rich-text.is-section-banner p {
-  color: var(--text-color--text-alternate) !important;
-	font-family: var(--font-families--paragraph) !important;
-  font-size: 1.75rem !important;
+  color: var(--text-color--text-alternate);
+	font-family: var(--font-families--paragraph);
+  font-size: 1.75rem;
 }
 
 /* Custom Attribute Styling */
@@ -797,6 +797,6 @@ img[style-image-object-fit="cover"] {
 }
 
 .text-rich-text.is-blog * {
-	font-size: 0.9rem !important;
-  font-family: Montserrat , var(--font-families--paragraphs) , sans-serif !important;
+	font-size: 0.9rem;
+  font-family: Montserrat , var(--font-families--paragraphs) , sans-serif;
 }
