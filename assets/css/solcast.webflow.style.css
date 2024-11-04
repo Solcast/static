@@ -281,7 +281,7 @@ margin: 0rem !important;
 
 /*
 Custom CSS for Solcast Build
-Code by Liam Hammersley of Rework Digital
+Code by Liam Hammersley of Rework Digital (liam@reworkdigital.com.au)
 */
 
 ::marker {
@@ -420,6 +420,7 @@ table tbody tr:last-child td:last-child{
 }
 
 /* Table Columns */
+
 .table_col-1 {
     --table-col-count: 1;
 }
@@ -611,6 +612,8 @@ table tbody tr:last-child td:last-child{
   right: 0;
 }
 
+/* API Status Styling */
+
 .sp-status {
   position: relative;
   display: inline-block;
@@ -757,7 +760,7 @@ table tbody tr:last-child td:last-child{
   font-size: 1.75rem;
 }
 
-/* Custom Attribute Styling */
+/* Custom Attribute Styling for Components*/
 
 img[style-image-object-fit="contain"] {
 	object-fit: contain !important;
