@@ -81,6 +81,10 @@
   font-display: swap;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Scroll bar styling */
 * {
   scrollbar-width: auto;
@@ -277,7 +281,7 @@ margin: 0rem !important;
 
 /*
 Custom CSS for Solcast Build
-Code by Liam Hammersley of Rework Digital
+Code by Liam Hammersley of Rework Digital (liam@reworkdigital.com.au)
 */
 
 ::marker {
@@ -416,6 +420,7 @@ table tbody tr:last-child td:last-child{
 }
 
 /* Table Columns */
+
 .table_col-1 {
     --table-col-count: 1;
 }
@@ -607,6 +612,8 @@ table tbody tr:last-child td:last-child{
   right: 0;
 }
 
+/* API Status Styling */
+
 .sp-status {
   position: relative;
   display: inline-block;
@@ -727,4 +734,72 @@ table tbody tr:last-child td:last-child{
 .gallery-items .item .item-wrap {
   background-color: #111;
   color: #acafb6;
+}
+
+/* Rich Text Formatting */
+
+.text-rich-text.is-section-banner > h1, 
+.text-rich-text.is-section-banner > h2, 
+.text-rich-text.is-section-banner > h3 {
+	font-family: var(--font-families--headings);
+  font-weight: 700;
+  color: var(--text-color--text-alternate);
+}
+
+.text-rich-text.is-section-banner h1 {
+	font-size: var(--text-size--heading-1);
+}
+
+.text-rich-text.is-section-banner h2 {
+	font-size: var(--text-size--heading-2);
+}
+
+.text-rich-text.is-section-banner p {
+  color: var(--text-color--text-alternate);
+	font-family: var(--font-families--paragraph);
+  font-size: 1.75rem;
+}
+
+/* Custom Attribute Styling for Components*/
+
+img[style-image-object-fit="contain"] {
+	object-fit: contain !important;
+}
+img[style-image-object-fit="cover"] {
+	object-fit: cover !important;
+}
+
+/* Blog Page Styling */
+
+.blog_card:first-child {
+	grid-column: 1/4;
+}
+
+@media screen and (max-width: 991px) {
+	.blog_card:first-child {
+		grid-column: 1/3;
+	}
+}
+
+@media screen and (max-width: 767px) {
+  .blog_card:first-child {
+    grid-column: 1/2;
+	}
+}
+
+@media screen and (max-width: 478px) {
+	.blog_card:first-child {
+		grid-column: 1/1;
+	}
+}
+
+/* Blog Template Page Styling */
+
+.blog_tags-item:last-child {
+	border: none;
+}
+
+.text-rich-text.is-blog * {
+	font-size: 0.9rem;
+  font-family: Montserrat , var(--font-families--paragraphs) , sans-serif;
 }

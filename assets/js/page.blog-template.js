@@ -1,0 +1,25 @@
+/* --- Blog Template Scripts --- */
+
+//Search Box Redirect
+$('form').submit(function() {
+  setTimeout(function() {
+    location.href = 'https://solcast.webflow.io/blog?*=' + $('#search').val();
+  }, 10);
+});
+
+
+//Hides Table of Contents if no H2 found
+document.addEventListener("DOMContentLoaded", function() {
+  setTimeout(function() {
+    const tocElement = document.querySelector('.blog_summary-toc');
+    const linkWrapper = tocElement.querySelector('.blog_summary-toc_link-wrapper.is-h2');
+
+    if (linkWrapper && linkWrapper.textContent.trim() === "") {
+      tocElement.style.display = "none";
+    }
+  }, 200);
+});
+
+
+//Resizes iFrames for the newsletter sign ups
+iFrameResize({log:true});
