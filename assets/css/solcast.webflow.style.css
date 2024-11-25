@@ -762,7 +762,9 @@ table tbody tr:last-child td:last-child{
   font-size: 1.75rem;
 }
 
+
 /* Custom Attribute Styling for Components */
+
 
 img[style-image-object-fit="contain"] {
 	object-fit: contain !important;
@@ -805,7 +807,6 @@ img[style-image-object-fit="cover"] {
 	font-size: 0.9rem;
   font-family: Montserrat , var(--font-families--paragraphs) , sans-serif;
 }
-
 
 /* Component - Page Banner */
 

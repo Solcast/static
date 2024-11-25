@@ -186,3 +186,45 @@ $(".slider-main_component").each(function (index) {
     },
   });
 });
+
+/*--------------------------*/
+/* Hight Light Text Script  */
+/*--------------------------*/
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Select all elements with the class 'script-text-highlight'
+  var elements = document.querySelectorAll('.script-text-highlight');
+
+  // Loop through each element and apply the text replacement
+  elements.forEach(function(element) {
+      // Use a regular expression to find the ## content ##
+      var elementText = element.innerHTML;
+      var newText = elementText.replace(/##(.*?)##/g, '<span class="highlight">$1</span>');
+      
+      // Update the element with the new content
+      element.innerHTML = newText;
+  });
+});
+
+/*------------------------------------------*/
+/* Counter Script for Page Banner Component */
+/*------------------------------------------*/
+
+// Select all the paragraphs with the class 'stat-card_heading'
+const paragraphs = document.querySelectorAll('.stat-card_heading');
+
+// Regular expression to match number sets in each paragraph
+const regex = /\d+/g;
+
+// Loop through each element and apply the transformation
+paragraphs.forEach(function(paragraph) {
+    // Replace each number with the span element
+    paragraph.innerHTML = paragraph.innerHTML.replace(regex, function(match) {
+        // Format the number with commas using toLocaleString
+        const formattedNumber = Number(match).toLocaleString();
+        
+        return `<span data-purecounter-start="0" data-purecounter-end="${match}" data-purecounter-separator="true" class="purecounter">${formattedNumber}</span>`;
+    });
+});
+
+new PureCounter();

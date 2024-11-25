@@ -4,7 +4,9 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Select all elements with the class 'script-text-highlight'
+
     var elements = document.querySelectorAll('.text-rich-text');
+
   
     // Loop through each element and apply the text replacement
     elements.forEach(function(element) {
