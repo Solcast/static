@@ -881,7 +881,7 @@ Temporary workaround while site in mixed state
 
 .font-update {
 	& p, h1, h2, h3, h4, h5, h6 {
-  	font-family: font-family: Montserrat , var(--font-families--paragraphs) , sans-serif;
+  	font-family: Montserrat , var(--font-families--paragraphs) , sans-serif;
   }
   
   & .text-style-fa {
@@ -949,7 +949,7 @@ Temporary workaround while site in mixed state
     }
     & .text-style-title-1 {
     	font-size: calc(var(--text-size--title-1) / 1.4);
+   }
   }
 }
-
 /* End of Font Update */
