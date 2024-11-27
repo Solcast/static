@@ -117,7 +117,10 @@ window.statuspalWidget = {
   // serviceId: 1, // Optional - Display the status of only one service
 };
 
+/*-----------------------------------------------------------------*/
 /* Function to check if any dropdown link matches the current page */
+/*-----------------------------------------------------------------*/
+
 function updateCurrentLink() {
   const navDropdowns = document.querySelectorAll('.nav_dropdown');
 
@@ -133,98 +136,3 @@ function updateCurrentLink() {
 
 document.addEventListener('DOMContentLoaded', updateCurrentLink);
 
-/*------------------------------*/
-/* Testimonial Slider Settings  */
-/*------------------------------*/
-
-$(".slider-main_component").each(function (index) {
-  let loopMode = true;
-  if ($(this).attr("loop-mode") === "true") {
-    loopMode = true;
-  }
-  let sliderDuration = 300;
-  if ($(this).attr("slider-duration") !== undefined) {
-    sliderDuration = +$(this).attr("slider-duration");
-  }
-  const swiper = new Swiper($(this).find(".swiper")[0], {
-    speed: sliderDuration,
-    loop: loopMode,
-    autoHeight: true,
-    followFinger: true,
-    freeMode: false,
-    slideToClickedSlide: false,
-    spaceBetween: "4%",
-    rewind: false,
-    mousewheel: {
-      forceToAxis: true
-    },
-    keyboard: {
-      enabled: true,
-      onlyInViewport: true,
-    },
-    breakpoints: {
-      // mobile landscape
-      480: {
-        slidesPerView: 1,
-        spaceBetween: "4%"
-      },
-      // tablet
-      768: {
-        slidesPerView: 1,
-        spaceBetween: "4%"
-      },
-      // desktop
-      992: {
-        slidesPerView: 2,
-        spaceBetween: "3%"
-      }
-    },
-    navigation: {
-      nextEl: $(this).find(".swiper-next")[0],
-      prevEl: $(this).find(".swiper-prev")[0],
-      disabledClass: "is-disabled"
-    },
-  });
-});
-
-/*--------------------------*/
-/* Hight Light Text Script  */
-/*--------------------------*/
-
-document.addEventListener('DOMContentLoaded', function() {
-  // Select all elements with the class 'script-text-highlight'
-  var elements = document.querySelectorAll('.script-text-highlight');
-
-  // Loop through each element and apply the text replacement
-  elements.forEach(function(element) {
-      // Use a regular expression to find the ## content ##
-      var elementText = element.innerHTML;
-      var newText = elementText.replace(/##(.*?)##/g, '<span class="highlight">$1</span>');
-      
-      // Update the element with the new content
-      element.innerHTML = newText;
-  });
-});
-
-/*------------------------------------------*/
-/* Counter Script for Page Banner Component */
-/*------------------------------------------*/
-
-// Select all the paragraphs with the class 'stat-card_heading'
-const paragraphs = document.querySelectorAll('.stat-card_heading');
-
-// Regular expression to match number sets in each paragraph
-const regex = /\d+/g;
-
-// Loop through each element and apply the transformation
-paragraphs.forEach(function(paragraph) {
-    // Replace each number with the span element
-    paragraph.innerHTML = paragraph.innerHTML.replace(regex, function(match) {
-        // Format the number with commas using toLocaleString
-        const formattedNumber = Number(match).toLocaleString();
-        
-        return `<span data-purecounter-start="0" data-purecounter-end="${match}" data-purecounter-separator="true" class="purecounter">${formattedNumber}</span>`;
-    });
-});
-
-new PureCounter();
