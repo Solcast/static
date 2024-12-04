@@ -353,54 +353,51 @@ Code by Liam Hammersley of Rework Digital (liam@reworkdigital.com.au)
   --nav-animation-in: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   --nav-animation-out: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   
+  transition: var(--nav-animation-in);
+  
+  & .nav_menu_link.is-heading,
+    .nav_logo.is-light,
+    .nav_api-status,
+    .nav_api-status,
+    .nav_hamburger,
+    .nav_hamburger.is-light {
       transition: var(--nav-animation-in);
-  
-      & .nav_menu_link.is-heading,
-        .nav_logo.is-light,
-        .nav_api-status,
-        .nav_api-status,
-        .nav_hamburger,
-        .nav_hamburger.is-light {
-          transition: var(--nav-animation-in);
-      }
-  
-  
   }
+}
   
-  .scrolled {
-      background: var(--background-color--background-white);
+.scrolled {
+  background: var(--background-color--background-white);
+  transition: var(--nav-animation-out);
+  
+  & .nav_menu_link.is-heading {
+      color: var(--link-color--link-secondary);
       transition: var(--nav-animation-out);
-  
-      & .nav_menu_link.is-heading {
-          color: var(--link-color--link-secondary);
-          transition: var(--nav-animation-out);
-      }
-  
-      & .nav_menu_link:hover {
-          color: var(--link-color--link-primary);
-      }
-  
-      & .nav_logo.is-light{
-          opacity: 0;
-          transition: var(--nav-animation-out);
-      }
-  
-      & .nav_api-status {
-         color: var(--link-color--link-secondary);
-         transition: var(--nav-animation-out);
-      }
-  
-      & .nav_hamburger {
-          opacity: 1;
-          transition: var(--nav-animation-out);
-      }
-  
-      & .nav_hamburger.is-light {
-          opacity: 0;
-          transition: var(--nav-animation-out);
-      }
   }
 
+  & .nav_menu_link:hover {
+      color: var(--link-color--link-primary);
+  }
+
+  & .nav_logo.is-light{
+      opacity: 0;
+      transition: var(--nav-animation-out);
+  }
+
+  & .nav_api-status {
+      color: var(--link-color--link-secondary);
+      transition: var(--nav-animation-out);
+  }
+
+  & .nav_hamburger {
+      opacity: 1;
+      transition: var(--nav-animation-out);
+  }
+
+  & .nav_hamburger.is-light {
+      opacity: 0;
+      transition: var(--nav-animation-out);
+  }
+}
 
 /* Table Properties */
 
