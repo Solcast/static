@@ -19,3 +19,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
+/*------------------------------------------------------*/
+/* Highlight Text and Side Bar for Dynamic Colour ID    */
+/*------------------------------------------------------*/
+
+// Update text color for elements with the ID "dynamicColor-font"
+var dynamicColorElements = document.querySelectorAll("#dynamicColor-font");
+
+dynamicColorElements.forEach(function(dynamicColorElement) {
+    var color = dynamicColorElement.getAttribute("data-color");
+    dynamicColorElement.style.color = color || "inherit";
+});
+
+// Update background color for elements with the ID "dynamicColor-bg"
+var dynamicBackgroundColorElements = document.querySelectorAll("#dynamicColor-bg");
+
+dynamicBackgroundColorElements.forEach(function(dynamicBackgroundColorElement) {
+    var bgColor = dynamicBackgroundColorElement.getAttribute("data-color");
+    dynamicBackgroundColorElement.style.backgroundColor = bgColor;
+});

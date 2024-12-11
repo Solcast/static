@@ -876,7 +876,13 @@ img[style-image-object-fit="cover"] {
   }
 }
 
-/* Compoent - Solar Data Product Styling */
+@media (min-width: 767px) {
+  .component_brand-feature_columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Component - Solar Data Product Styling */
 
 .solar-data-product_hover-wrapper a:first-child {
 	padding-top: 0;
@@ -912,9 +918,8 @@ img[style-image-object-fit="cover"] {
   	}
 	}
 }
-/*
 
-/* Data Specifications Styling */
+/* Section - Data Specifications Styling */
 
 .data_specs-slot > .data_specs-row:last-child {
 	& .data_specs-row_divider {
