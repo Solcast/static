@@ -876,7 +876,13 @@ img[style-image-object-fit="cover"] {
   }
 }
 
-/* Compoent - Solar Data Product Styling */
+@media (max-width: 990px) {
+  .component_brand-feature_columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Component - Solar Data Product Styling */
 
 .solar-data-product_hover-wrapper a:first-child {
 	padding-top: 0;
@@ -912,9 +918,17 @@ img[style-image-object-fit="cover"] {
   	}
 	}
 }
-/*
 
-/* Data Specifications Styling */
+/* Component - Featured Icon Cards */
+
+.text-rich-text.is-component_brand-feature_icon-cards_text {
+  & code {
+    font-family: inherit;
+    font-size: inherit;
+  }
+}
+
+/* Section - Data Specifications Styling */
 
 .data_specs-slot > .data_specs-row:last-child {
 	& .data_specs-row_divider {
@@ -925,3 +939,4 @@ img[style-image-object-fit="cover"] {
 .data_specs-row_content_slot > .component_brand-feature_rich-text {
   	margin-bottom: 0.5rem;
 }
+
