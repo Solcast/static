@@ -1,4 +1,4 @@
-// Footer Newsletter Subscription Popup watcher to resize Salesforce Scubscription iFrame.
+// Footer Newsletter Subscription Popup watcher to resize Salesforce Subscription iFrame.
 
 const targetElement = document.querySelector('.footer_subscribe-popup');
 
