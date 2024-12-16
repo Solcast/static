@@ -663,7 +663,7 @@ table tbody tr:last-child td:last-child{
   right: 0;
 }
 
-/* API Status Styling */
+/* API Status Styling - Styling information adapted from https://statuspal.io/js/widget.js */
 .sp-status {
   position: relative;
   display: inline-block;
@@ -691,7 +691,7 @@ table tbody tr:last-child td:last-child{
   background: #ff231f;
 }
 
-/* Tooltip Base Styles - Styling information adapted from https://statuspal.io/js/widget.js */
+/* Tooltip Base Styles */
 .sp-status .sp-tooltip {
   font-size: 12px;
   background-color: black;
