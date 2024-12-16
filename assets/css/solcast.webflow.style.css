@@ -664,11 +664,12 @@ table tbody tr:last-child td:last-child{
 }
 
 /* API Status Styling */
-
 .sp-status {
   position: relative;
   display: inline-block;
 }
+
+/* Status Badge Styles */
 .sp-status .sp-status-badge {
   width: 0.8em;
   height: 0.8em;
@@ -676,8 +677,9 @@ table tbody tr:last-child td:last-child{
   display: inline-block;
   border-radius: 50%;
 }
+
 .sp-status .sp-status-badge.sp-status-ok {
-  background: rgb(52, 200, 0);
+  background: #34c800;
 }
 .sp-status .sp-status-badge.sp-status-scheduled {
   background: #2498ec;
@@ -689,60 +691,66 @@ table tbody tr:last-child td:last-child{
   background: #ff231f;
 }
 
-/* Tooltip text */
+/* Tooltip Base Styles */
 .sp-status .sp-tooltip {
   font-size: 12px;
   background-color: black;
   color: #fff;
   text-align: center;
-  padding: 5px 0;
+  padding: 5px 8px;
   border-radius: 4px;
   position: absolute;
   z-index: 1;
-  max-width: 130px;
-  word-break: break-word;
+  max-width: max-content;
+  visibility: hidden;
+  white-space: nowrap;
 }
+
+/* Tooltip Arrow */
 .sp-status .sp-tooltip::after {
-  content: " ";
+  content: "";
   position: absolute;
-  margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  color: black;
 }
-.sp-status .sp-tooltip--top, .sp-status .sp-tooltip--bottom {
-  margin-left: -65px;
+
+/* Tooltip Positions */
+.sp-status .sp-tooltip--top,
+.sp-status .sp-tooltip--bottom {
   left: 50%;
+  transform: translateX(-50%);
 }
 .sp-status .sp-tooltip--top {
   bottom: 120%;
 }
 .sp-status .sp-tooltip--top::after {
-  top: 100%; /* At the bottom of the tooltip */
+  top: 100%;
   left: 50%;
+  transform: translateX(-50%);
   border-color: black transparent transparent transparent;
 }
 .sp-status .sp-tooltip--bottom {
   top: 120%;
 }
 .sp-status .sp-tooltip--bottom::after {
-  top: -10px; /* At the bottom of the tooltip */
+  top: -10px;
   left: 50%;
+  transform: translateX(-50%);
   border-color: transparent transparent black transparent;
 }
-.sp-status .sp-tooltip--left, .sp-status .sp-tooltip--right {
+
+.sp-status .sp-tooltip--left,
+.sp-status .sp-tooltip--right {
   top: 50%;
   transform: translateY(-50%);
-}
-.sp-status .sp-tooltip--left::after, .sp-status .sp-tooltip--right::after {
-  top: calc(50% - 5px);
-  border-color: transparent transparent transparent black;
 }
 .sp-status .sp-tooltip--left {
   right: 105%;
 }
 .sp-status .sp-tooltip--left::after {
-  left: calc(100% + 5px);
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
   border-color: transparent transparent transparent black;
 }
 .sp-status .sp-tooltip--right {
@@ -750,11 +758,12 @@ table tbody tr:last-child td:last-child{
 }
 .sp-status .sp-tooltip--right::after {
   right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
   border-color: transparent black transparent transparent;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
-
+/* Show Tooltip on Hover */
 .sp-status:hover .sp-tooltip {
   visibility: visible;
 }
