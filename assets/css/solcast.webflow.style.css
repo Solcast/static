@@ -691,7 +691,7 @@ table tbody tr:last-child td:last-child{
   background: #ff231f;
 }
 
-/* Tooltip Base Styles */
+/* Tooltip Base Styles - Styling information adapted from https://statuspal.io/js/widget.js */
 .sp-status .sp-tooltip {
   font-size: 12px;
   background-color: black;
