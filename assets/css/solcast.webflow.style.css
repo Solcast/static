@@ -835,6 +835,12 @@ img[style-image-object-fit="cover"] {
 
 /* Blog Page Styling */
 
+.blog-filter-checkbox_button > input {
+  opacity: 0;
+  position:absolute;
+  z-index:-1
+}
+
 .blog_card:first-child {
 	grid-column: 1/4;
 }
