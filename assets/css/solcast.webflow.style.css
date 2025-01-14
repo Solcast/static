@@ -955,3 +955,8 @@ img[style-image-object-fit="cover"] {
   	margin-bottom: 0.5rem;
 }
 
+/* Data and API Change Log Customisations */
+
+.changelog_collection-table .table_cell a {
+	word-break: break-word;
+}
