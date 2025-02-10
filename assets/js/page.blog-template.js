@@ -3,7 +3,7 @@
 //Search Box Redirect
 $('form').submit(function() {
   setTimeout(function() {
-    location.href = 'https://solcast.webflow.io/blog?*=' + $('#search').val();
+    location.href = '/blog?*=' + $('#search').val();
   }, 10);
 });
 
