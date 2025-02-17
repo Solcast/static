@@ -960,3 +960,12 @@ img[style-image-object-fit="cover"] {
 .changelog_collection-table .table_cell a {
 	word-break: break-word;
 }
+
+.table_cell pre, .table_cell pre code {
+	white-space: pre-wrap !important;
+}
+
+.table_cell pre {
+	word-wrap: break-word;
+  word-break: break-all;
+}
