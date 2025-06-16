@@ -1,17 +1,18 @@
 window.addEventListener('DOMContentLoaded', function() {
-// the keys you stored in localStorage
-var utmKeys = ['utm_source', 'utm_medium', 'utm_campaign'];
+  var utmKeys = ['utm_source', 'utm_medium', 'utm_campaign'];
 
-utmKeys.forEach(function(key) {
-    // get the stored value
-    var value = localStorage.getItem(key);
-    if (!value) return; // nothing stored, skip
+  function getCookieValue(name) {
+    var match = document.cookie.match(new RegExp('(^|;\\s*)' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[2]) : null;
+  }
 
-    // find the input with the same ID
+  utmKeys.forEach(function(key) {
+    var value = getCookieValue(key);
+    if (!value) return;
+
     var input = document.getElementById(key);
-    if (!input) return; // no such field, skip
+    if (!input) return;
 
-    // set its value
     input.value = value;
-});
+  });
 });
