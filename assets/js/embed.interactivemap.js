@@ -1,3 +1,7 @@
+/*------------------------------*/
+/*    Interactive Map Script    */
+/*------------------------------*/
+
 !(function () {
 "use strict";
 window.addEventListener("message", function (a) {
