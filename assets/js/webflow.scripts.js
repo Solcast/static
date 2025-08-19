@@ -23,7 +23,7 @@ window.statuspalWidget = {
 };
 
 /*------------------------------*/
-/*         Nav Menu             */
+/*           Nav Menu           */
 /*------------------------------*/
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -107,10 +107,28 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', handleClose);
   });
 
-  // Prevent submenu clicks from closing nav
+  // Allow only content links to bubble for tracking; suppress other UI clicks
   dropdowns.forEach(dropdown => {
-    dropdown.addEventListener('click', e => e.stopPropagation());
+    dropdown.addEventListener('click', (e) => {
+      const anchor = e.target.closest('a');
+      const inContent = anchor && anchor.closest('.nav_megamenu_container');
+      if (inContent) {
+        return; // allow bubbling so your global dataLayer handler fires
+      }
+      e.stopPropagation(); // suppress UI clicks
+    });
   });
+
+  // Safety net: stop bubbling for anchors in nav that are not in .nav_megamenu_container
+  if (navMenu) {
+    navMenu.addEventListener('click', (e) => {
+      const a = e.target.closest('a');
+      if (!a) return;
+      if (!a.closest('.nav_megamenu_container')) {
+        e.stopPropagation();
+      }
+    }, true);
+  }
 
   // Escape key: close everything
   window.addEventListener('keydown', e => {
@@ -135,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
 
 /*----------------------------------------------*/
 /*       Footer Newsletter Submit               */
