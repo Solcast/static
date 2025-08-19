@@ -37,6 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const backButtons  = document.querySelectorAll('.nav_back');
   const closeButtons = document.querySelectorAll('.nav_close');
 
+  // Helper: which anchors should be allowed to bubble to dataLayer?
+  const isTrackableAnchor = (a) => {
+    if (!a) return false;
+    return !!(a.closest('.nav_megamenu_container') || a.closest('.nav_links-right'));
+  };
+
   let previousIsMobile = isMobile();
 
   const closeAllMenus = () => {
@@ -47,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const resetHamburger = () => {
     if (hamburger?.classList.contains('w--open')) {
-      hamburger.click(); // simulate toggle to close
+      hamburger.click();
     }
   };
 
@@ -82,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', (e) => {
       if (!isMobile()) return;
       e.preventDefault();
-
       closeAllMenus();
       link.classList.add('is-active');
       dropdown.classList.add('is-slide-in');
@@ -111,22 +116,23 @@ document.addEventListener('DOMContentLoaded', () => {
   dropdowns.forEach(dropdown => {
     dropdown.addEventListener('click', (e) => {
       const anchor = e.target.closest('a');
-      const inContent = anchor && anchor.closest('.nav_megamenu_container');
-      if (inContent) {
-        return; // allow bubbling so your global dataLayer handler fires
+      if (isTrackableAnchor(anchor)) {
+        // allow bubbling so the global dataLayer handler fires
+        return;
       }
-      e.stopPropagation(); // suppress UI clicks
+      e.stopPropagation();
     });
   });
 
-  // Safety net: stop bubbling for anchors in nav that are not in .nav_megamenu_container
+  // Safety net: stop bubbling for anchors in nav that are NOT trackable
   if (navMenu) {
     navMenu.addEventListener('click', (e) => {
       const a = e.target.closest('a');
       if (!a) return;
-      if (!a.closest('.nav_megamenu_container')) {
+      if (!isTrackableAnchor(a)) {
         e.stopPropagation();
       }
+      // no preventDefault; just controlling bubbling for tracking
     }, true);
   }
 
