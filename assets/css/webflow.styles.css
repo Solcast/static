@@ -1,3 +1,4 @@
+
 /* Make text look crisper and more legible in all browsers */
 body {
   -webkit-font-smoothing: antialiased;
@@ -577,6 +578,7 @@ table tbody tr:last-child td:last-child{
   border-radius: 4px;
   position: absolute;
   z-index: 1;
+  left: auto; right: auto;
   max-width: max-content;
   visibility: hidden;
   white-space: nowrap;
@@ -590,11 +592,12 @@ table tbody tr:last-child td:last-child{
   border-style: solid;
 }
 
+
+
 /* Tooltip Positions */
 .sp-status .sp-tooltip--top,
 .sp-status .sp-tooltip--bottom {
-  left: 50%;
-  transform: translateX(-50%);
+	left: 125%;
 }
 .sp-status .sp-tooltip--top {
   bottom: 120%;
@@ -610,7 +613,7 @@ table tbody tr:last-child td:last-child{
 }
 .sp-status .sp-tooltip--bottom::after {
   top: -10px;
-  left: 50%;
+ 	left: 50%;
   transform: translateX(-50%);
   border-color: transparent transparent black transparent;
 }
@@ -639,9 +642,10 @@ table tbody tr:last-child td:last-child{
   border-color: transparent black transparent transparent;
 }
 
-/* Show Tooltip on Hover */
-.sp-status:hover .sp-tooltip {
-  visibility: visible;
+@media and (max-width: 990px) {
+	.sp-status .sp-tooltip--bottom {
+  	visibility: hidden !important;
+  }
 }
 
 /* Irr Map Location Styling */

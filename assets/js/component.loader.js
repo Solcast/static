@@ -154,6 +154,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (document.querySelector('[data-script-loader="component.other-related-products"]')) {
     await loadModule('component.other-related-products.js', 'other related products');
   }
+  
+  // ---------- Latest Solar Video ----------
+  if (document.querySelector('[data-script-loader="component.latest-video"]')) {
+    await loadModule('component.latest-video.js', 'latest video');
+  }
+
 
   // ---------- Graph embeds ----------
   if (document.querySelector('.embed-graph')) {
