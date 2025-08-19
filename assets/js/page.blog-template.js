@@ -19,7 +19,3 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }, 200);
 });
-
-
-//Resizes iFrames for the newsletter sign ups
-iFrameResize({log:true});
