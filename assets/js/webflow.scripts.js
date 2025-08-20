@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const backButtons  = document.querySelectorAll('.nav_back');
   const closeButtons = document.querySelectorAll('.nav_close');
 
-  // Helper: which anchors should be allowed to bubble to dataLayer?
+  // Trackable anchors are ONLY within megamenu content or right-side links
   const isTrackableAnchor = (a) => {
     if (!a) return false;
     return !!(a.closest('.nav_megamenu_container') || a.closest('.nav_links-right'));
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const resetHamburger = () => {
     if (hamburger?.classList.contains('w--open')) {
-      hamburger.click();
+      hamburger.click(); // simulate toggle to close
     }
   };
 
@@ -67,12 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
     resetHamburger();
   };
 
-  // Top-level link click (mobile): open submenu
+  // Top-level link behavior
   links.forEach(link => {
     const key = link.dataset.menu;
-    const dropdown = [...dropdowns].find(dd => dd.dataset.menu === key);
+    const dropdown = document.querySelector(`.nav_megamenu_dropdown[data-menu="${key}"]`);
     if (!dropdown) return;
 
+    // Desktop hover open
     link.addEventListener('mouseenter', () => {
       if (!isMobile()) {
         closeAllMenus();
@@ -85,9 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isMobile()) closeAllMenus();
     });
 
+    // Mobile click: open submenu (and stop bubbling to avoid datalayer)
     link.addEventListener('click', (e) => {
       if (!isMobile()) return;
       e.preventDefault();
+      // allow our handler to run, but prevent global trackers:
+      e.stopPropagation();
+
       closeAllMenus();
       link.classList.add('is-active');
       dropdown.classList.add('is-slide-in');
@@ -112,28 +117,39 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', handleClose);
   });
 
-  // Allow only content links to bubble for tracking; suppress other UI clicks
+  // Inside dropdowns: allow megamenu content links to bubble (for datalayer), suppress other clicks
   dropdowns.forEach(dropdown => {
     dropdown.addEventListener('click', (e) => {
       const anchor = e.target.closest('a');
       if (isTrackableAnchor(anchor)) {
-        // allow bubbling so the global dataLayer handler fires
+        // let it bubble to global click listener (datalayer)
         return;
       }
+      // suppress UI/background clicks from reaching global trackers
       e.stopPropagation();
     });
   });
 
-  // Safety net: stop bubbling for anchors in nav that are NOT trackable
+  // SAFETY NET (capture): don't block .nav_top-link-wrap (mobile submenu toggles),
+  // but do block other non-trackable anchors inside the nav from reaching global listeners
   if (navMenu) {
     navMenu.addEventListener('click', (e) => {
       const a = e.target.closest('a');
       if (!a) return;
-      if (!isTrackableAnchor(a)) {
-        e.stopPropagation();
+
+      // Allow top-level toggles to reach their own handler
+      if (a.matches('.nav_top-link-wrap[data-menu]')) {
+        return;
       }
-      // no preventDefault; just controlling bubbling for tracking
-    }, true);
+
+      // Allow trackable anchors (megamenu content + right side) to bubble to datalayer
+      if (isTrackableAnchor(a)) {
+        return;
+      }
+
+      // Everything else in the nav is UI; suppress bubbling
+      e.stopPropagation();
+    }, true); // capture
   }
 
   // Escape key: close everything
