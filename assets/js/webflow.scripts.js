@@ -1,28 +1,4 @@
 /*------------------------------*/
-/* StatusPal.io required script */
-/*------------------------------*/
-
-window.statuspalWidget = {
-  subdomain: 'solcast-com',
-  badge: {
-    enabled: true,
-    selector: '.sp-status', // Optional
-    position: 'bottom', // Optional [top | bottom | left | right] - defaults to top.
-  },
-  banner: {
-    enabled: true,
-    position: 'bottom-left', // Optional [bottom-left | bottom-right | top-left | top-right], def: bottom-left
-    translations: {
-      en: {
-        lates_updates: 'View latest updates',
-        ongoing: 'Ongoing for {{time_diff}}',
-      },
-    },
-  },
-  // serviceId: 1, // Optional - Display the status of only one service
-};
-
-/*------------------------------*/
 /*           Nav Menu           */
 /*------------------------------*/
 
@@ -37,9 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const backButtons  = document.querySelectorAll('.nav_back');
   const closeButtons = document.querySelectorAll('.nav_close');
 
+  // Menus that should NOT behave like dropdowns:
+  const EXCLUDED_MENUS = new Set(['about']);
+
   // Trackable anchors are ONLY within megamenu content or right-side links
   const isTrackableAnchor = (a) => {
     if (!a) return false;
+    // Treat anchors inside excluded menu wrappers as normal links (allow bubbling)
+    if (a.closest('.nav_top-link-wrap[data-menu]')) {
+      const parentKey = a.closest('.nav_top-link-wrap[data-menu]')?.dataset?.menu;
+      if (EXCLUDED_MENUS.has(parentKey)) return true;
+    }
     return !!(a.closest('.nav_megamenu_container') || a.closest('.nav_links-right'));
   };
 
@@ -67,9 +51,45 @@ document.addEventListener('DOMContentLoaded', () => {
     resetHamburger();
   };
 
+  // Force-close on hover/focus of excluded menus (e.g., "About")
+  // Using bubbling 'mouseover' so it triggers even when pointer lands on child anchors/icons.
+  if (navMenu) {
+    navMenu.addEventListener('mouseover', (e) => {
+      if (isMobile()) return;
+      const wrap = e.target.closest('.nav_top-link-wrap[data-menu]');
+      if (!wrap) return;
+      const key = wrap.dataset.menu;
+      if (EXCLUDED_MENUS.has(key)) {
+        closeAllMenus();
+      }
+    });
+    // Keyboard accessibility: close when focus enters an excluded item
+    navMenu.addEventListener('focusin', (e) => {
+      const wrap = e.target.closest('.nav_top-link-wrap[data-menu]');
+      if (!wrap) return;
+      const key = wrap.dataset.menu;
+      if (EXCLUDED_MENUS.has(key)) {
+        closeAllMenus();
+      }
+    });
+  }
+
   // Top-level link behavior
   links.forEach(link => {
     const key = link.dataset.menu;
+
+    // EXCLUDED menus (e.g., "about") behave like normal links
+    if (EXCLUDED_MENUS.has(key)) {
+      // Mobile: tapping "About" should close any open menus, then allow navigation
+      link.addEventListener('click', () => {
+        if (isMobile()) {
+          handleClose(); // close overlays/locks
+          // do not preventDefault -> proceed to href
+        }
+      });
+      return;
+    }
+
     const dropdown = document.querySelector(`.nav_megamenu_dropdown[data-menu="${key}"]`);
     if (!dropdown) return;
 
@@ -90,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', (e) => {
       if (!isMobile()) return;
       e.preventDefault();
-      // allow our handler to run, but prevent global trackers:
       e.stopPropagation();
 
       closeAllMenus();
@@ -122,23 +141,27 @@ document.addEventListener('DOMContentLoaded', () => {
     dropdown.addEventListener('click', (e) => {
       const anchor = e.target.closest('a');
       if (isTrackableAnchor(anchor)) {
-        // let it bubble to global click listener (datalayer)
-        return;
+        return; // let it bubble
       }
-      // suppress UI/background clicks from reaching global trackers
-      e.stopPropagation();
+      e.stopPropagation(); // suppress UI/background clicks
     });
   });
 
-  // SAFETY NET (capture): don't block .nav_top-link-wrap (mobile submenu toggles),
-  // but do block other non-trackable anchors inside the nav from reaching global listeners
+  // SAFETY NET (capture)
   if (navMenu) {
     navMenu.addEventListener('click', (e) => {
       const a = e.target.closest('a');
       if (!a) return;
 
-      // Allow top-level toggles to reach their own handler
-      if (a.matches('.nav_top-link-wrap[data-menu]')) {
+      // If the anchor is inside a top-level menu wrapper...
+      const wrap = a.closest('.nav_top-link-wrap[data-menu]');
+      if (wrap) {
+        const key = wrap.dataset.menu;
+        // For real dropdown toggles, allow their handler
+        if (!EXCLUDED_MENUS.has(key)) {
+          return;
+        }
+        // For excluded menus (e.g., "about"), treat as a normal link; do nothing (allow bubbling/default)
         return;
       }
 
@@ -177,6 +200,30 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+/*------------------------------*/
+/* StatusPal.io required script */
+/*------------------------------*/
+
+window.statuspalWidget = {
+  subdomain: 'solcast-com',
+  badge: {
+    enabled: true,
+    selector: '.sp-status',
+    position: 'bottom',
+  },
+  banner: {
+    enabled: true,
+    position: 'bottom-left',
+    translations: {
+      en: {
+        lates_updates: 'View latest updates',
+        ongoing: 'Ongoing for {{time_diff}}',
+      },
+    },
+  },
+  // serviceId: 1,
+};
+
 /*----------------------------------------------*/
 /*       Footer Newsletter Submit               */
 /*----------------------------------------------*/
@@ -186,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (subscribeButton) {
     subscribeButton.addEventListener('click', () => {
-      const emailInput = document.querySelector('#footer_subscribe-email'); // Adjust the selector to match your actual input
+      const emailInput = document.querySelector('#footer_subscribe-email');
 
       if (emailInput && emailInput.value) {
         window.dataLayer = window.dataLayer || [];
