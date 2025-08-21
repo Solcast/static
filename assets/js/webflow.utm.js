@@ -19,7 +19,6 @@ function initUtmPopulation() {
     if (input) input.value = value;
   });
 
-  // Always populate utm_url with relative URL
   var utmUrlInput = document.getElementById('utm_url');
   if (utmUrlInput) {
     var relativeUrl = window.location.pathname + window.location.search + window.location.hash;
