@@ -7,7 +7,7 @@ if (!recaptchaEl) return;
 const form = recaptchaEl.closest('form');
 if (!form) return;
 
-const submitButton = form.querySelector('input[type="submit"]');
+const submitButton = form.querySelector('button[type="submit"]');
 if (!submitButton) return;
 
 function disableSubmit() {

@@ -1,4 +1,3 @@
-
 /* Make text look crisper and more legible in all browsers */
 body {
   -webkit-font-smoothing: antialiased;
@@ -1093,6 +1092,16 @@ div[data-wf--section-hero-sub-page-hero--variant="base"]
 
 .form_select.is-on-dark option {
   color: var(--brand-colours--black);
+}
+
+/*** CTA Wrapped form ***/
+
+@media (max-width: 1300px) {
+	.cta_wrapper {
+		& .form_row {
+			grid-template-columns: 1fr;
+    }
+	}
 }
 
 /********* Graph Embeds **********/
