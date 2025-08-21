@@ -10,6 +10,7 @@ function initUtmPopulation() {
     return match ? decodeURIComponent(match[2]) : null;
   }
 
+  // Populate UTM fields from cookies
   utmKeys.forEach(function (key) {
     var value = getCookieValue(key);
     if (!value) return;
@@ -18,15 +19,10 @@ function initUtmPopulation() {
     if (input) input.value = value;
   });
 
+  // Always populate utm_url with relative URL
   var utmUrlInput = document.getElementById('utm_url');
   if (utmUrlInput) {
-    var hasUtmValues = utmKeys.some(function (key) {
-      return getCookieValue(key) !== null;
-    });
-
-    if (!hasUtmValues) {
-      var relativeUrl = window.location.pathname + window.location.search + window.location.hash;
-      utmUrlInput.value = relativeUrl.replace(/\?$/, '');
-    }
+    var relativeUrl = window.location.pathname + window.location.search + window.location.hash;
+    utmUrlInput.value = relativeUrl.replace(/\?$/, '');
   }
 }
