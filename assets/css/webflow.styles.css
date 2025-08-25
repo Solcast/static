@@ -829,7 +829,7 @@ img[style-image-object-fit="cover"] {
   .nav_megamenu_dropdown {
     display: block !important;
     position: fixed;
-    top: 4rem;
+    padding-top: 4rem;
     left: 0;
     width: 100vw;
     height: calc(100svh - 4rem);

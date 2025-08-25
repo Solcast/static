@@ -1,28 +1,4 @@
 /*------------------------------*/
-/* StatusPal.io required script */
-/*------------------------------*/
-
-window.statuspalWidget = {
-  subdomain: 'solcast-com',
-  badge: {
-    enabled: true,
-    selector: '.sp-status', // Optional
-    position: 'bottom', // Optional [top | bottom | left | right] - defaults to top.
-  },
-  banner: {
-    enabled: true,
-    position: 'bottom-left', // Optional [bottom-left | bottom-right | top-left | top-right], def: bottom-left
-    translations: {
-      en: {
-        lates_updates: 'View latest updates',
-        ongoing: 'Ongoing for {{time_diff}}',
-      },
-    },
-  },
-  // serviceId: 1, // Optional - Display the status of only one service
-};
-
-/*------------------------------*/
 /*           Nav Menu           */
 /*------------------------------*/
 
@@ -37,9 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const backButtons  = document.querySelectorAll('.nav_back');
   const closeButtons = document.querySelectorAll('.nav_close');
 
-  // Trackable anchors are ONLY within megamenu content or right-side links
+  const announcementBar = document.querySelector('.announcement_container');
+  const navBar          = document.querySelector('.nav_container');
+
+  const EXCLUDED_MENUS = new Set(['about']);
+
   const isTrackableAnchor = (a) => {
     if (!a) return false;
+    if (a.closest('.nav_top-link-wrap[data-menu]')) {
+      const parentKey = a.closest('.nav_top-link-wrap[data-menu]')?.dataset?.menu;
+      if (EXCLUDED_MENUS.has(parentKey)) return true;
+    }
     return !!(a.closest('.nav_megamenu_container') || a.closest('.nav_links-right'));
   };
 
@@ -53,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const resetHamburger = () => {
     if (hamburger?.classList.contains('w--open')) {
-      hamburger.click(); // simulate toggle to close
+      hamburger.click();
     }
   };
 
@@ -67,13 +51,70 @@ document.addEventListener('DOMContentLoaded', () => {
     resetHamburger();
   };
 
-  // Top-level link behavior
+  const getHeight = (el) => (el ? Math.round(el.getBoundingClientRect().height) : 0);
+
+  let rafId = null;
+  const scheduleUpdateNavPadding = () => {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(updateNavPadding);
+  };
+
+  function updateNavPadding() {
+    const total = isMobile()
+      ? getHeight(announcementBar) + getHeight(navBar) + 16
+      : 0;
+
+    if (navMenu) {
+      navMenu.style.paddingTop = total ? `${total}px` : '';
+    }
+
+    dropdowns.forEach(dd => {
+      dd.style.paddingTop = total ? `${total}px` : '';
+    });
+  }
+
+  const observeOpts = { attributes: true, childList: true, subtree: true };
+  const observer = new MutationObserver(scheduleUpdateNavPadding);
+  if (announcementBar) observer.observe(announcementBar, observeOpts);
+  if (navBar)          observer.observe(navBar, observeOpts);
+
+  window.addEventListener('load', updateNavPadding);
+
+  if (navMenu) {
+    navMenu.addEventListener('mouseover', (e) => {
+      if (isMobile()) return;
+      const wrap = e.target.closest('.nav_top-link-wrap[data-menu]');
+      if (!wrap) return;
+      const key = wrap.dataset.menu;
+      if (EXCLUDED_MENUS.has(key)) {
+        closeAllMenus();
+      }
+    });
+    navMenu.addEventListener('focusin', (e) => {
+      const wrap = e.target.closest('.nav_top-link-wrap[data-menu]');
+      if (!wrap) return;
+      const key = wrap.dataset.menu;
+      if (EXCLUDED_MENUS.has(key)) {
+        closeAllMenus();
+      }
+    });
+  }
+
   links.forEach(link => {
     const key = link.dataset.menu;
+
+    if (EXCLUDED_MENUS.has(key)) {
+      link.addEventListener('click', () => {
+        if (isMobile()) {
+          handleClose();
+        }
+      });
+      return;
+    }
+
     const dropdown = document.querySelector(`.nav_megamenu_dropdown[data-menu="${key}"]`);
     if (!dropdown) return;
 
-    // Desktop hover open
     link.addEventListener('mouseenter', () => {
       if (!isMobile()) {
         closeAllMenus();
@@ -86,11 +127,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isMobile()) closeAllMenus();
     });
 
-    // Mobile click: open submenu (and stop bubbling to avoid datalayer)
     link.addEventListener('click', (e) => {
       if (!isMobile()) return;
       e.preventDefault();
-      // allow our handler to run, but prevent global trackers:
       e.stopPropagation();
 
       closeAllMenus();
@@ -100,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Back button: slide submenu out
   backButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const submenu = btn.closest('.nav_megamenu_dropdown');
@@ -112,70 +150,88 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Close button: close everything
   closeButtons.forEach(btn => {
     btn.addEventListener('click', handleClose);
   });
 
-  // Inside dropdowns: allow megamenu content links to bubble (for datalayer), suppress other clicks
   dropdowns.forEach(dropdown => {
     dropdown.addEventListener('click', (e) => {
       const anchor = e.target.closest('a');
       if (isTrackableAnchor(anchor)) {
-        // let it bubble to global click listener (datalayer)
         return;
       }
-      // suppress UI/background clicks from reaching global trackers
       e.stopPropagation();
     });
   });
 
-  // SAFETY NET (capture): don't block .nav_top-link-wrap (mobile submenu toggles),
-  // but do block other non-trackable anchors inside the nav from reaching global listeners
   if (navMenu) {
     navMenu.addEventListener('click', (e) => {
       const a = e.target.closest('a');
       if (!a) return;
-
-      // Allow top-level toggles to reach their own handler
-      if (a.matches('.nav_top-link-wrap[data-menu]')) {
+      const wrap = a.closest('.nav_top-link-wrap[data-menu]');
+      if (wrap) {
+        const key = wrap.dataset.menu;
+        if (!EXCLUDED_MENUS.has(key)) {
+          return;
+        }
         return;
       }
-
-      // Allow trackable anchors (megamenu content + right side) to bubble to datalayer
       if (isTrackableAnchor(a)) {
         return;
       }
-
-      // Everything else in the nav is UI; suppress bubbling
       e.stopPropagation();
-    }, true); // capture
+    }, true);
   }
 
-  // Escape key: close everything
   window.addEventListener('keydown', e => {
     if (e.key === 'Escape') handleClose();
   });
 
-  // Resize handling
   window.addEventListener('resize', () => {
     const currentIsMobile = isMobile();
     if (currentIsMobile !== previousIsMobile) {
-      handleClose(); // Reset menus when crossing breakpoint
+      handleClose();
       previousIsMobile = currentIsMobile;
     }
+    scheduleUpdateNavPadding();
   });
 
-  // When hamburger is clicked while open, close submenus
   if (hamburger) {
     hamburger.addEventListener('click', () => {
       if (hamburger.classList.contains('w--open')) {
         closeAllMenus();
       }
+      scheduleUpdateNavPadding();
     });
   }
+
+  updateNavPadding();
 });
 
+
+/*------------------------------*/
+/* StatusPal.io required script */
+/*------------------------------*/
+
+window.statuspalWidget = {
+  subdomain: 'solcast-com',
+  badge: {
+    enabled: true,
+    selector: '.sp-status',
+    position: 'bottom',
+  },
+  banner: {
+    enabled: true,
+    position: 'bottom-left',
+    translations: {
+      en: {
+        lates_updates: 'View latest updates',
+        ongoing: 'Ongoing for {{time_diff}}',
+      },
+    },
+  },
+  // serviceId: 1,
+};
 
 /*----------------------------------------------*/
 /*       Footer Newsletter Submit               */
@@ -186,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (subscribeButton) {
     subscribeButton.addEventListener('click', () => {
-      const emailInput = document.querySelector('#footer_subscribe-email'); // Adjust the selector to match your actual input
+      const emailInput = document.querySelector('#footer_subscribe-email');
 
       if (emailInput && emailInput.value) {
         window.dataLayer = window.dataLayer || [];
@@ -194,10 +250,6 @@ document.addEventListener('DOMContentLoaded', () => {
           event: 'subscribe_submit',
           email: emailInput.value
         });
-
-        console.log('[Subscribe] DataLayer event pushed:', emailInput.value);
-      } else {
-        console.warn('[Subscribe] Email input not found or empty');
       }
     });
   }
