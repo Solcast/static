@@ -112,7 +112,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // ---------- Form preselect ----------
   if (document.querySelector('form')) {
-    await loadModule('component.form-preselect.js', 'form preselect');
+    await loadModule('component.form-preselect.js', 'forms preselect');
+    await loadModule('component.recaptch-helper.js', 'recaptch helper');
   }
 
   // ---------- GTM tracking ----------
@@ -181,6 +182,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // ---------- Per-page modules ----------
   if (window.location.pathname.includes('/pricing/')) {
     await loadModule('page.pricing.js', 'pricing page');
+    await loadModule('page.pricing.request-quote.js', 'request quote listener');
   }
 
   if (window.location.pathname.includes('/search')) {
