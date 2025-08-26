@@ -29,13 +29,6 @@ export default function initQuoteLinks() {
       { label: "Site-Adapted TMY", slug: "site-adapted-tmy" },
       { label: "I'm not sure yet", slug: "unsure" }
     ],
-    "live": [
-      { label: "Starter", slug: "starter" },
-      { label: "Pro", slug: "pro" },
-      { label: "Max", slug: "max" },
-      { label: "Custom", slug: "custom" },
-      { label: "I'm not sure yet", slug: "unsure" }
-    ],
     "solar": [
       { label: "Rooftop PV Power Forecast Model", slug: "rooftop-pv-power" },
       { label: "Advanced PV Power Forecast Model", slug: "adv-pv-power" },
@@ -59,6 +52,9 @@ export default function initQuoteLinks() {
       { label: "I'm not sure yet", slug: "unsure" }
     ]
   };
+
+  // Alias "live" to share the exact array used by "forecast"
+  planMappings["live"] = planMappings["forecast"];
 
   // -----------------------------------------
   // 2) Synonyms (URL/product_type → mapping key)
