@@ -281,10 +281,11 @@
       tasks.push(loadModule("page.pricing.request-quote.js", "pricing-quote"));
     }
 
-    // For testing
-    if (path.includes("/forms/requestaquote-copy")) {
-      tasks.push(loadModule("page.pricing.js", "pricing"));
-      tasks.push(loadModule("page.pricing.request-quote.js", "pricing-quote"));
+    // ---------- Blog Template Pages ----------
+    if (path.includes("/blog/")) {
+      loadExternalScript("https://cdn.jsdelivr.net/npm/@flowbase-co/boosters-social-share@1.0.0/dist/social-share.min.js", "Social Sharing"),
+      loadExternalScript("https://cdn.jsdelivr.net/npm/@finsweet/attributes-toc@1/toc.js", "Table of Contents"),
+      tasks.push(loadModule("page.blog-template.js", "Blog Template Page"));
     }
 
     // ---------- Search Page ----------
