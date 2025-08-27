@@ -104,7 +104,7 @@
     };
 
     const need = [];
-    if (!window.jQuery && found.jquery.length)         need.push(found.jquery[0]);
+    if (!window.jQuery && found.jquery.length)        need.push(found.jquery[0]);
     for (const src of found.webflow)                  need.push(src);
     if (!window.grecaptcha && found.recaptcha.length) need.push(found.recaptcha[0]);
     if (!window.WebFont && found.webfont.length)      need.push(found.webfont[0]);

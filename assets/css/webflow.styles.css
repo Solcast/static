@@ -840,7 +840,7 @@ img[style-image-object-fit="cover"] {
     left: 0;
     top: 0;
     width: 100vw;
-    height: calc(100svh - 4rem);
+    height: 100svh;
     transform: translateX(100%);
     transition: transform 0.3s ease;
     opacity: 1 !important;
