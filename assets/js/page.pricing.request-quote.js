@@ -5,7 +5,6 @@ export default function initQuoteLinks() {
   if (initialized) return;
   initialized = true;
 
-<<<<<<< HEAD
   // -----------------------------------------
   // 1) Plan mappings (labels + slugs)
   //    Keys must match #product_type option values
@@ -208,17 +207,10 @@ export default function initQuoteLinks() {
   const PROCESSED_ATTR = 'data-quote-init';
 
   document.querySelectorAll(BTN_SELECTOR).forEach((button) => {
-=======
-  const SELECTOR = 'a[data-listener="btn-request-quote"]';
-  const PROCESSED_ATTR = 'data-quote-init';
-
-  document.querySelectorAll(SELECTOR).forEach((button) => {
->>>>>>> a97561650faadbb5f465452a0db90f43dd554145
     if (button.getAttribute(PROCESSED_ATTR) === '1') return;
     button.setAttribute(PROCESSED_ATTR, '1');
 
     button.addEventListener('click', (e) => {
-<<<<<<< HEAD
       const form = button.closest('form');
       const formProduct = form?.querySelector('#product_type')?.value || null;
       const formPlan    = form?.querySelector('#product_plan')?.value || null;
@@ -237,25 +229,6 @@ export default function initQuoteLinks() {
         window.location.href = `${url.pathname}${url.search}${url.hash}`;
       } catch {
         // invalid href — default navigation
-=======
-      const product = button.dataset.gtmProduct;
-      const plan    = button.dataset.gtmPlan;
-      const href    = button.getAttribute('href') || '/';
-
-      // If data is missing, let it behave like a normal link
-      if (!product || !plan) return;
-
-      try {
-        const url = new URL(href, window.location.origin);
-        url.searchParams.set('product', product);
-        url.searchParams.set('plan', plan);
-
-        // Rewrite navigation to the updated URL
-        e.preventDefault();
-        window.location.href = `${url.pathname}${url.search}${url.hash}`;
-      } catch {
-        // Invalid href — fall through to default navigation
->>>>>>> a97561650faadbb5f465452a0db90f43dd554145
       }
     });
   });
