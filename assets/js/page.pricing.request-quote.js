@@ -7,38 +7,37 @@ export default function initQuoteLinks() {
 
   // -----------------------------------------
   // 1) Plan mappings (labels + slugs)
-  //    Keys must match #product_type option values
+  //    Keys are internal shorthands; select uses human-readable labels.
   // -----------------------------------------
   const planMappings = {
-    "forecast": [
+    forecast: [
       { label: "Starter", slug: "starter" },
       { label: "Pro",     slug: "pro"     },
       { label: "Max",     slug: "max"     },
       { label: "Custom",  slug: "custom"  },
       { label: "I'm not sure yet", slug: "unsure" }
     ],
-    "hts": [
+    hts: [
       { label: "Starter", slug: "starter" },
       { label: "Pro",     slug: "pro"     },
       { label: "Max",     slug: "max"     },
       { label: "Custom",  slug: "custom"  },
       { label: "I'm not sure yet", slug: "unsure" }
     ],
-    "tmy": [
+    tmy: [
       { label: "TMY Pro",          slug: "tmy-pro" },
       { label: "TMY Max",          slug: "tmy-max" },
       { label: "Site-Adapted TMY", slug: "site-adapted-tmy" },
       { label: "I'm not sure yet", slug: "unsure" }
     ],
-    // NOTE: "live" will be aliased to "forecast" below (Option 1)
-    "solar": [
+    solar: [
       { label: "Rooftop PV Power Forecast Model",  slug: "rooftop-pv-power" },
       { label: "Advanced PV Power Forecast Model", slug: "adv-pv-power" },
       { label: "Premium PV Power Forecast Model",  slug: "premium-pv-power" },
       { label: "Premium PV Power: Additional Options", slug: "custom" },
       { label: "I'm not sure yet", slug: "unsure" }
     ],
-    "wind": [
+    wind: [
       { label: "Premium Wind Power", slug: "premium" },
       { label: "Custom",             slug: "custom"  },
       { label: "I'm not sure yet",   slug: "unsure"  }
@@ -46,7 +45,7 @@ export default function initQuoteLinks() {
     "market-portfolio": [
       { label: "Load Forecasts",            slug: "load-forecast" },
       { label: "Portfolio Forecast Models", slug: "portfolio-power-models" },
-      { label: "Market Forecast Models",    slug: "market-power-models" },
+      { label: "Market Forecasts Models",    slug: "market-power-models" },
       { label: "Custom",                    slug: "custom" },
       { label: "I'm not sure yet",          slug: "unsure" }
     ],
@@ -55,29 +54,85 @@ export default function initQuoteLinks() {
     ]
   };
 
-  // ---- Option 1: alias "live" to share the exact array used by "forecast"
-  planMappings["live"] = planMappings["forecast"];
+  // Alias "live" to use the same plans as "forecast"
+  planMappings.live = planMappings.forecast;
 
   // -----------------------------------------
-  // 2) Synonyms for ?product= (optional)
-  //    Map common labels/old values -> mapping keys above
-  // -----------------------------------------
-  const productSynonyms = new Map([
-    ["power models", "solar"],
-    ["solar power models", "solar"],
-    ["wind power models", "wind"],
-    ["markets, portfolios and grid models", "market-portfolio"],
-    ["market-portfolios", "market-portfolio"],
-    ["time-series", "hts"],
-    ["historical", "hts"],
-    ["live-data", "live"] // still resolves to "live" (which is aliased to "forecast")
-  ]);
-
-  // -----------------------------------------
-  // 3) Utilities
+  // 2) Product mapping
+  //    A) URL value -> exact <select> option value (human label)
+  //    B) Selected <select> option value -> internal key for planMappings
   // -----------------------------------------
   const norm = (s) => (s || "").toString().trim().toLowerCase();
 
+  // Exact option values present in your <select id="product_type">
+  const SELECT_LABELS = {
+    LIVE:  "Live and Forecast: -7 to +14 days",
+    HTS:   "Time Series: 2007 to -7 days ago",
+    TMY:   "TMY (Typical Meteorological Year)",
+    SOLAR: "Solar Power Models",
+    WIND:  "Wind Power Models",
+    MKT:   "Markets, Portfolios and Grid models",
+    UNSURE:"I'm not sure yet",
+  };
+
+  // A) Map various URL inputs to the exact select option value
+  function mapUrlProductToSelectValue(urlValue) {
+    if (!urlValue) return null;
+    const s = norm(urlValue);
+
+    // If it already matches one of the select labels (case-insensitive on text), accept as-is
+    const allLabels = Object.values(SELECT_LABELS);
+    for (const label of allLabels) {
+      if (norm(label) === s) return label;
+    }
+
+    // Accept common shorthands / fragments
+    // Prefer head term before colon if present
+    const head = s.split(":")[0].trim();
+
+    if (head.includes("live"))       return SELECT_LABELS.LIVE;
+    if (head.includes("forecast"))   return SELECT_LABELS.LIVE; // "Live and Forecast"
+    if (head.includes("time series") || head.includes("time-series") || head.includes("historical"))
+                                   return SELECT_LABELS.HTS;
+    if (head.includes("tmy") || head.includes("typical meteorological year"))
+                                   return SELECT_LABELS.TMY;
+    if (head.includes("solar"))     return SELECT_LABELS.SOLAR;
+    if (head.includes("wind"))      return SELECT_LABELS.WIND;
+    if (head.includes("market") || head.includes("portfolio") || head.includes("grid"))
+                                   return SELECT_LABELS.MKT;
+    if (head.includes("not sure"))  return SELECT_LABELS.UNSURE;
+
+    // Also accept very short keys directly
+    if (s === "live")               return SELECT_LABELS.LIVE;
+    if (s === "forecast")           return SELECT_LABELS.LIVE;
+    if (s === "hts")                return SELECT_LABELS.HTS;
+    if (s === "tmy")                return SELECT_LABELS.TMY;
+    if (s === "solar")              return SELECT_LABELS.SOLAR;
+    if (s === "wind")               return SELECT_LABELS.WIND;
+    if (s === "market-portfolio" || s === "market" || s === "markets")
+                                   return SELECT_LABELS.MKT;
+    if (s === "i'm not sure yet" || s === "unsure")
+                                   return SELECT_LABELS.UNSURE;
+
+    return null;
+  }
+
+  // B) Map the selected option value (label) to internal key for planMappings
+  function productKeyFromSelectValue(selectValue) {
+    const v = norm(selectValue);
+    if (v === norm(SELECT_LABELS.LIVE))   return "live";
+    if (v === norm(SELECT_LABELS.HTS))    return "hts";
+    if (v === norm(SELECT_LABELS.TMY))    return "tmy";
+    if (v === norm(SELECT_LABELS.SOLAR))  return "solar";
+    if (v === norm(SELECT_LABELS.WIND))   return "wind";
+    if (v === norm(SELECT_LABELS.MKT))    return "market-portfolio";
+    if (v === norm(SELECT_LABELS.UNSURE)) return "I'm not sure yet";
+    return null;
+  }
+
+  // -----------------------------------------
+  // 3) Helpers for form behaviour
+  // -----------------------------------------
   function normalizePlan(entry) {
     if (typeof entry === "string") {
       return { label: entry, slug: entry.toLowerCase().replace(/\s+/g, "-") };
@@ -88,7 +143,7 @@ export default function initQuoteLinks() {
     return { label: "I'm not sure yet", slug: "unsure" };
   }
 
-  // Case-insensitive setter for <select> based on value or text
+  // Case-insensitive setter for <select> based on value or visible text
   function setSelectValue(selectEl, desiredValue) {
     if (!selectEl || !desiredValue) return false;
     const want = norm(desiredValue);
@@ -102,9 +157,9 @@ export default function initQuoteLinks() {
   }
 
   // Show/hide the plan row (remember original display and required)
-  function togglePlanRow(selectedType, planRowEl, productPlanEl) {
+  function togglePlanRow(selectedTypeValue, planRowEl, productPlanEl) {
     if (!planRowEl) return;
-    const isUnsure = norm(selectedType) === norm("I'm not sure yet");
+    const isUnsure = norm(selectedTypeValue) === norm(SELECT_LABELS.UNSURE);
 
     if (!planRowEl.dataset.originalDisplay) {
       const computed = window.getComputedStyle(planRowEl).display;
@@ -127,23 +182,24 @@ export default function initQuoteLinks() {
     }
   }
 
-  // Populate #product_plan based on current #product_type
+  // Populate #product_plan based on the SELECTED option value in #product_type
   function updatePlans(productTypeEl, productPlanEl, planRowEl) {
     if (!productTypeEl || !productPlanEl) return;
 
-    const selectedType = productTypeEl.value;
+    const selectedLabel = productTypeEl.value;                // human label from <option value="...">
+    const productKey    = productKeyFromSelectValue(selectedLabel) || "I'm not sure yet";
 
-    togglePlanRow(selectedType, planRowEl, productPlanEl);
+    togglePlanRow(selectedLabel, planRowEl, productPlanEl);
 
-    const rawPlans = planMappings[selectedType] ?? ["I'm not sure yet"];
+    const rawPlans = planMappings[productKey] ?? ["I'm not sure yet"];
     const plans = rawPlans.map(normalizePlan);
 
     const prev = productPlanEl.value;
-
     productPlanEl.innerHTML = "";
+
     plans.forEach(({ label, slug }) => {
       const opt = document.createElement("option");
-      opt.value = slug;        // goes into URL/query
+      opt.value = slug;        // query slug
       opt.textContent = label; // visible text
       opt.dataset.label = label;
       productPlanEl.appendChild(opt);
@@ -156,24 +212,10 @@ export default function initQuoteLinks() {
     }
   }
 
-  // Resolve ?product= against #product_type (values, labels, or synonyms)
-  function resolveProductValue(productRaw, productTypeEl) {
-    if (!productTypeEl || !productRaw) return null;
-    const want = norm(productRaw);
-
-    for (const opt of productTypeEl.options) {
-      if (norm(opt.value) === want) return opt.value;
-    }
-    for (const opt of productTypeEl.options) {
-      if (norm(opt.textContent) === want) return opt.value;
-    }
-    if (productSynonyms.has(want)) return productSynonyms.get(want);
-
-    return null;
-  }
-
   // -----------------------------------------
-  // 4) Init: auto-select from URL and wire up change handlers
+  // 4) Init: read URL (?product=, ?plan=)
+  //    Map ?product= (shorthand or long) to the EXACT select label.
+  //    Then populate plans and try to set ?plan= by slug or label.
   // -----------------------------------------
   (function initFormAutoselect() {
     const productType = document.getElementById("product_type");
@@ -185,46 +227,56 @@ export default function initQuoteLinks() {
     const urlProduct = params.get("product");
     const urlPlan    = params.get("plan");
 
-    const resolvedProduct = resolveProductValue(urlProduct, productType);
-    if (resolvedProduct) productType.value = resolvedProduct;
+    // Compute the exact select label from the URL product
+    const mappedSelectValue = mapUrlProductToSelectValue(urlProduct);
 
+    if (mappedSelectValue) {
+      // Set by exact option value
+      setSelectValue(productType, mappedSelectValue);
+    } else if (urlProduct) {
+      // If the URL product already equals an option's label, this will also work
+      setSelectValue(productType, urlProduct);
+    }
+
+    // Populate plans for the selected product
     updatePlans(productType, productPlan, planRowEl);
 
+    // Try to set plan from URL (matches either slug or visible label)
     if (urlPlan) {
-      // Match by slug (option.value) or label
       setSelectValue(productPlan, urlPlan);
     }
 
+    // Keep plans in sync if product changes
     productType.addEventListener("change", () =>
       updatePlans(productType, productPlan, planRowEl)
     );
   })();
 
   // -----------------------------------------
-  // 5) Quote buttons: prefer nearest form values, fallback to data-*
+  // 5) Quote buttons:
+  //    Write the *card's* data-qrf-* directly to the URL (no mapping).
   // -----------------------------------------
   const BTN_SELECTOR = 'a[data-listener="btn-request-quote"]';
   const PROCESSED_ATTR = 'data-quote-init';
 
   document.querySelectorAll(BTN_SELECTOR).forEach((button) => {
-    if (button.getAttribute(PROCESSED_ATTR) === '1') return;
-    button.setAttribute(PROCESSED_ATTR, '1');
+    if (button.getAttribute(PROCESSED_ATTR) === "1") return;
+    button.setAttribute(PROCESSED_ATTR, "1");
 
-    button.addEventListener('click', (e) => {
-      const form = button.closest('form');
-      const formProduct = form?.querySelector('#product_type')?.value || null;
-      const formPlan    = form?.querySelector('#product_plan')?.value || null;
+    button.addEventListener("click", (e) => {
+      const card = button.closest(".pricing_pane-card");
+      if (!card) return;
 
-      const product = formProduct || button.dataset.gtmProduct || null;
-      const plan    = formPlan    || button.dataset.gtmPlan    || null;
+      const product = card.getAttribute("data-qrf-product") || "";
+      const plan    = card.getAttribute("data-qrf-plan") || "";
 
-      const href = button.getAttribute('href') || '/';
-      if (!product || !plan) return; // fall through to normal nav
+      const href = button.getAttribute("href") || "/";
+      if (!product || !plan) return; // let default navigation happen if missing
 
       try {
         const url = new URL(href, window.location.origin);
-        url.searchParams.set('product', product); // product_type value
-        url.searchParams.set('plan', plan);       // plan slug
+        url.searchParams.set("product", product);
+        url.searchParams.set("plan", plan);
         e.preventDefault();
         window.location.href = `${url.pathname}${url.search}${url.hash}`;
       } catch {
