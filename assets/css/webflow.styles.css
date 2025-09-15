@@ -1104,7 +1104,7 @@ div[data-wf--section-hero-sub-page-hero--variant="base"]
 
 /*** CTA Wrapped form ***/
 
-@media (max-width: 1300px) {
+@media (max-width: 1360px) {
 	.cta_wrapper {
 		& .form_row {
 			grid-template-columns: 1fr;
