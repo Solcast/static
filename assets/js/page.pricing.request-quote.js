@@ -1,287 +1,170 @@
-// component.quote-links.js
-let initialized = false;
+// page.pricing.request-quote.js
+// Product/plan behavior for pricing & request-a-quote pages.
+//
+// - Intercepts <a data-listener="btn-request-quote"> and appends ?product=&plan=
+// - Preselects #product_type
+// - Shows/enables only the correct plan <select>. Others stay hidden by CSS and disabled.
+// - Hides the whole plan row if "I'm not sure yet"
+// - Supports deep links (?product=&plan=) and manual changes
 
 export default function initQuoteLinks() {
-  if (initialized) return;
-  initialized = true;
+  if (window.__qrfQuoteLinksInit__) return;
+  window.__qrfQuoteLinksInit__ = true;
 
-  // -----------------------------------------
-  // 1) Plan mappings (labels + slugs)
-  //    Keys are internal shorthands; select uses human-readable labels.
-  // -----------------------------------------
-  const planMappings = {
-    forecast: [
-      { label: "Starter", slug: "starter" },
-      { label: "Pro",     slug: "pro"     },
-      { label: "Max",     slug: "max"     },
-      { label: "Custom",  slug: "custom"  },
-      { label: "I'm not sure yet", slug: "unsure" }
-    ],
-    hts: [
-      { label: "Starter", slug: "starter" },
-      { label: "Pro",     slug: "pro"     },
-      { label: "Max",     slug: "max"     },
-      { label: "Custom",  slug: "custom"  },
-      { label: "I'm not sure yet", slug: "unsure" }
-    ],
-    tmy: [
-      { label: "TMY Pro",          slug: "tmy-pro" },
-      { label: "TMY Max",          slug: "tmy-max" },
-      { label: "Site-Adapted TMY", slug: "site-adapted-tmy" },
-      { label: "I'm not sure yet", slug: "unsure" }
-    ],
-    solar: [
-      { label: "Rooftop PV Power Forecast Model",  slug: "rooftop-pv-power" },
-      { label: "Advanced PV Power Forecast Model", slug: "adv-pv-power" },
-      { label: "Premium PV Power Forecast Model",  slug: "premium-pv-power" },
-      { label: "Premium PV Power: Additional Options", slug: "custom" },
-      { label: "I'm not sure yet", slug: "unsure" }
-    ],
-    wind: [
-      { label: "Premium Wind Power", slug: "premium" },
-      { label: "Custom",             slug: "custom"  },
-      { label: "I'm not sure yet",   slug: "unsure"  }
-    ],
-    "market-portfolio": [
-      { label: "Load Forecasts",            slug: "load-forecast" },
-      { label: "Portfolio Forecast Models", slug: "portfolio-power-models" },
-      { label: "Market Forecasts Models",    slug: "market-power-models" },
-      { label: "Custom",                    slug: "custom" },
-      { label: "I'm not sure yet",          slug: "unsure" }
-    ],
-    "I'm not sure yet": [
-      { label: "I'm not sure yet", slug: "unsure" }
-    ]
+  const BTN_SELECTOR = 'a[data-listener="btn-request-quote"]';
+  const PLAN_ROW_SELECTOR = '.form_row.is-plan';
+  const PLAN_SELECT_SELECTOR = 'select.is-qrf-plan[name="product_plan"]';
+
+  const productSel = /** @type {HTMLSelectElement|null} */ (document.getElementById('product_type'));
+  const planRow = /** @type {HTMLElement|null} */ (document.querySelector(PLAN_ROW_SELECTOR));
+  const planSelects = planRow ? /** @type {HTMLSelectElement[]} */ ([...planRow.querySelectorAll(PLAN_SELECT_SELECTOR)]) : [];
+
+  const planById = new Map(planSelects.map(s => [s.id, s]));
+
+  // --- helpers ---
+  const normalizeWS = (s) => (s ?? '').toString().trim().replace(/\s+/g, ' ');
+
+  const productLabelToPlanId = (labelRaw) => {
+    let s = normalizeWS(labelRaw);
+    s = s.replace(/[–—]/g, '-');          // normalize fancy dashes
+    s = s.replace(/[^A-Za-z0-9\s-]/g, ''); // strip punctuation
+    s = s.replace(/\s+/g, '-');            // spaces -> hyphens
+    return s;
   };
 
-  // Alias "live" to use the same plans as "forecast"
-  planMappings.live = planMappings.forecast;
-
-  // -----------------------------------------
-  // 2) Product mapping
-  //    A) URL value -> exact <select> option value (human label)
-  //    B) Selected <select> option value -> internal key for planMappings
-  // -----------------------------------------
-  const norm = (s) => (s || "").toString().trim().toLowerCase();
-
-  // Exact option values present in your <select id="product_type">
-  const SELECT_LABELS = {
-    LIVE:  "Live and Forecast: -7 to +14 days",
-    HTS:   "Time Series: 2007 to -7 days ago",
-    TMY:   "TMY (Typical Meteorological Year)",
-    SOLAR: "Solar Power Models",
-    WIND:  "Wind Power Models",
-    MKT:   "Markets, Portfolios and Grid models",
-    UNSURE:"I'm not sure yet",
-  };
-
-  // A) Map various URL inputs to the exact select option value
-  function mapUrlProductToSelectValue(urlValue) {
-    if (!urlValue) return null;
-    const s = norm(urlValue);
-
-    // If it already matches one of the select labels (case-insensitive on text), accept as-is
-    const allLabels = Object.values(SELECT_LABELS);
-    for (const label of allLabels) {
-      if (norm(label) === s) return label;
+  const setSelectValue = (selectEl, valueRaw) => {
+    if (!selectEl) return false;
+    const v = normalizeWS(valueRaw);
+    if (!v) return false;
+    let opt = [...selectEl.options].find(o => o.value === v);
+    if (!opt) {
+      const vLower = v.toLowerCase();
+      opt = [...selectEl.options].find(
+        o => normalizeWS(o.value).toLowerCase() === vLower ||
+             normalizeWS(o.textContent).toLowerCase() === vLower
+      );
     }
-
-    // Accept common shorthands / fragments
-    // Prefer head term before colon if present
-    const head = s.split(":")[0].trim();
-
-    if (head.includes("live"))       return SELECT_LABELS.LIVE;
-    if (head.includes("forecast"))   return SELECT_LABELS.LIVE; // "Live and Forecast"
-    if (head.includes("time series") || head.includes("time-series") || head.includes("historical"))
-                                   return SELECT_LABELS.HTS;
-    if (head.includes("tmy") || head.includes("typical meteorological year"))
-                                   return SELECT_LABELS.TMY;
-    if (head.includes("solar"))     return SELECT_LABELS.SOLAR;
-    if (head.includes("wind"))      return SELECT_LABELS.WIND;
-    if (head.includes("market") || head.includes("portfolio") || head.includes("grid"))
-                                   return SELECT_LABELS.MKT;
-    if (head.includes("not sure"))  return SELECT_LABELS.UNSURE;
-
-    // Also accept very short keys directly
-    if (s === "live")               return SELECT_LABELS.LIVE;
-    if (s === "forecast")           return SELECT_LABELS.LIVE;
-    if (s === "hts")                return SELECT_LABELS.HTS;
-    if (s === "tmy")                return SELECT_LABELS.TMY;
-    if (s === "solar")              return SELECT_LABELS.SOLAR;
-    if (s === "wind")               return SELECT_LABELS.WIND;
-    if (s === "market-portfolio" || s === "market" || s === "markets")
-                                   return SELECT_LABELS.MKT;
-    if (s === "i'm not sure yet" || s === "unsure")
-                                   return SELECT_LABELS.UNSURE;
-
-    return null;
-  }
-
-  // B) Map the selected option value (label) to internal key for planMappings
-  function productKeyFromSelectValue(selectValue) {
-    const v = norm(selectValue);
-    if (v === norm(SELECT_LABELS.LIVE))   return "live";
-    if (v === norm(SELECT_LABELS.HTS))    return "hts";
-    if (v === norm(SELECT_LABELS.TMY))    return "tmy";
-    if (v === norm(SELECT_LABELS.SOLAR))  return "solar";
-    if (v === norm(SELECT_LABELS.WIND))   return "wind";
-    if (v === norm(SELECT_LABELS.MKT))    return "market-portfolio";
-    if (v === norm(SELECT_LABELS.UNSURE)) return "I'm not sure yet";
-    return null;
-  }
-
-  // -----------------------------------------
-  // 3) Helpers for form behaviour
-  // -----------------------------------------
-  function normalizePlan(entry) {
-    if (typeof entry === "string") {
-      return { label: entry, slug: entry.toLowerCase().replace(/\s+/g, "-") };
-    }
-    if (entry && typeof entry === "object") {
-      return { label: entry.label, slug: entry.slug };
-    }
-    return { label: "I'm not sure yet", slug: "unsure" };
-  }
-
-  // Case-insensitive setter for <select> based on value or visible text
-  function setSelectValue(selectEl, desiredValue) {
-    if (!selectEl || !desiredValue) return false;
-    const want = norm(desiredValue);
-    for (const opt of selectEl.options) {
-      if (norm(opt.value) === want) { selectEl.value = opt.value; return true; }
-    }
-    for (const opt of selectEl.options) {
-      if (norm(opt.textContent) === want) { selectEl.value = opt.value; return true; }
+    if (opt) {
+      selectEl.value = opt.value;
+      selectEl.dispatchEvent(new Event('change', { bubbles: true }));
+      return true;
     }
     return false;
-  }
+  };
 
-  // Show/hide the plan row (remember original display and required)
-  function togglePlanRow(selectedTypeValue, planRowEl, productPlanEl) {
-    if (!planRowEl) return;
-    const isUnsure = norm(selectedTypeValue) === norm(SELECT_LABELS.UNSURE);
+  const hideAllPlans = () => {
+    for (const s of planSelects) {
+      s.disabled = true;
+      s.required = false;
+      s.style.display = 'none';
+      s.setAttribute('aria-hidden', 'true');
+      s.selectedIndex = 0;
+    }
+  };
 
-    if (!planRowEl.dataset.originalDisplay) {
-      const computed = window.getComputedStyle(planRowEl).display;
-      planRowEl.dataset.originalDisplay = computed && computed !== "none" ? computed : "block";
+  const revealPlanForProduct = (productLabel) => {
+    if (!planRow || !planSelects.length) return;
+    const label = normalizeWS(productLabel);
+
+    if (!label) {
+      planRow.style.display = '';
+      hideAllPlans();
+      return;
     }
 
-    if (isUnsure) {
-      planRowEl.style.display = "none";
-      if (productPlanEl) {
-        if (!productPlanEl.dataset.wasRequired) {
-          productPlanEl.dataset.wasRequired = productPlanEl.required ? "1" : "0";
-        }
-        productPlanEl.required = false;
-      }
+    if (label.toLowerCase() === "i'm not sure yet") {
+      planRow.style.display = 'none';
+      hideAllPlans();
+      return;
+    }
+
+    planRow.style.display = '';
+    hideAllPlans();
+
+    const wantedId = productLabelToPlanId(label);
+    const target = planById.get(wantedId);
+
+    if (target) {
+      target.disabled = false;
+      target.required = true;
+      target.style.display = 'block';
+      target.setAttribute('aria-hidden', 'false');
     } else {
-      planRowEl.style.display = planRowEl.dataset.originalDisplay || "block";
-      if (productPlanEl && productPlanEl.dataset.wasRequired !== "0") {
-        productPlanEl.required = true;
+      // fallback: show all if no exact match
+      for (const s of planSelects) {
+        s.disabled = false;
+        s.required = false;
+        s.style.display = 'block';
+        s.setAttribute('aria-hidden', 'false');
       }
     }
-  }
+  };
 
-  // Populate #product_plan based on the SELECTED option value in #product_type
-  function updatePlans(productTypeEl, productPlanEl, planRowEl) {
-    if (!productTypeEl || !productPlanEl) return;
+  const applyPlanIfVisible = (planRaw) => {
+    if (!planRow || !planRaw) return false;
+    const visible = /** @type {HTMLSelectElement|null} */ (planRow.querySelector(`${PLAN_SELECT_SELECTOR}:not([disabled])`));
+    return visible ? setSelectValue(visible, planRaw) : false;
+  };
 
-    const selectedLabel = productTypeEl.value;                // human label from <option value="...">
-    const productKey    = productKeyFromSelectValue(selectedLabel) || "I'm not sure yet";
+  // --- A) Click handler for pricing cards ---
+  document.addEventListener('click', (evt) => {
+    const anchor = evt.target && /** @type {HTMLElement} */ (evt.target).closest?.(BTN_SELECTOR);
+    if (!anchor) return;
 
-    togglePlanRow(selectedLabel, planRowEl, productPlanEl);
+    const card = /** @type {HTMLElement|null} */ (anchor.closest('[data-qrf-product][data-qrf-plan]'));
+    const product = card?.getAttribute('data-qrf-product');
+    const plan = card?.getAttribute('data-qrf-plan');
+    if (!product || !plan) return;
 
-    const rawPlans = planMappings[productKey] ?? ["I'm not sure yet"];
-    const plans = rawPlans.map(normalizePlan);
+    let url;
+    try {
+      url = new URL(anchor.getAttribute('href') || '/', window.location.origin);
+    } catch {
+      return;
+    }
+    url.searchParams.set('product', product);
+    url.searchParams.set('plan', plan);
 
-    const prev = productPlanEl.value;
-    productPlanEl.innerHTML = "";
+    if (productSel) setSelectValue(productSel, product);
+    revealPlanForProduct(product);
+    applyPlanIfVisible(plan);
 
-    plans.forEach(({ label, slug }) => {
-      const opt = document.createElement("option");
-      opt.value = slug;        // query slug
-      opt.textContent = label; // visible text
-      opt.dataset.label = label;
-      productPlanEl.appendChild(opt);
-    });
-
-    if (plans.some(p => p.slug === prev)) {
-      productPlanEl.value = prev;
+    evt.preventDefault();
+    const target = (anchor.getAttribute('target') || '').toLowerCase();
+    if (target === '_blank') {
+      window.open(url.toString(), '_blank', 'noopener,noreferrer');
     } else {
-      productPlanEl.value = plans[0]?.slug ?? "";
+      const sameOrigin = url.origin === window.location.origin;
+      const next = sameOrigin ? (url.pathname + url.search + url.hash) : url.toString();
+      window.location.href = next;
     }
+  }, { capture: true });
+
+  // --- B) Deep link support (?product=&plan=) ---
+  const params = new URLSearchParams(window.location.search);
+  const productParam = params.get('product');
+  const planParam = params.get('plan');
+
+  const initFromParams = () => {
+    if (productParam && productSel) setSelectValue(productSel, productParam);
+    revealPlanForProduct(productParam || productSel?.value || '');
+    if (planParam) applyPlanIfVisible(planParam);
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFromParams, { once: true });
+  } else {
+    initFromParams();
   }
 
-  // -----------------------------------------
-  // 4) Init: read URL (?product=, ?plan=)
-  //    Map ?product= (shorthand or long) to the EXACT select label.
-  //    Then populate plans and try to set ?plan= by slug or label.
-  // -----------------------------------------
-  (function initFormAutoselect() {
-    const productType = document.getElementById("product_type");
-    const productPlan = document.getElementById("product_plan");
-    const planRowEl   = productPlan?.closest(".form_row");
-    if (!productType || !productPlan || !planRowEl) return;
-
-    const params = new URLSearchParams(window.location.search);
-    const urlProduct = params.get("product");
-    const urlPlan    = params.get("plan");
-
-    // Compute the exact select label from the URL product
-    const mappedSelectValue = mapUrlProductToSelectValue(urlProduct);
-
-    if (mappedSelectValue) {
-      // Set by exact option value
-      setSelectValue(productType, mappedSelectValue);
-    } else if (urlProduct) {
-      // If the URL product already equals an option's label, this will also work
-      setSelectValue(productType, urlProduct);
+  // --- C) Manual product select changes ---
+  productSel?.addEventListener('change', (e) => {
+    const product = /** @type {HTMLSelectElement} */ (e.currentTarget).value;
+    revealPlanForProduct(product);
+    const visible = /** @type {HTMLSelectElement|null} */ (planRow?.querySelector(`${PLAN_SELECT_SELECTOR}:not([disabled])`));
+    if (visible && !visible.value && visible.options.length) {
+      visible.selectedIndex = 0;
+      visible.dispatchEvent(new Event('change', { bubbles: true }));
     }
-
-    // Populate plans for the selected product
-    updatePlans(productType, productPlan, planRowEl);
-
-    // Try to set plan from URL (matches either slug or visible label)
-    if (urlPlan) {
-      setSelectValue(productPlan, urlPlan);
-    }
-
-    // Keep plans in sync if product changes
-    productType.addEventListener("change", () =>
-      updatePlans(productType, productPlan, planRowEl)
-    );
-  })();
-
-  // -----------------------------------------
-  // 5) Quote buttons:
-  //    Write the *card's* data-qrf-* directly to the URL (no mapping).
-  // -----------------------------------------
-  const BTN_SELECTOR = 'a[data-listener="btn-request-quote"]';
-  const PROCESSED_ATTR = 'data-quote-init';
-
-  document.querySelectorAll(BTN_SELECTOR).forEach((button) => {
-    if (button.getAttribute(PROCESSED_ATTR) === "1") return;
-    button.setAttribute(PROCESSED_ATTR, "1");
-
-    button.addEventListener("click", (e) => {
-      const card = button.closest(".pricing_pane-card");
-      if (!card) return;
-
-      const product = card.getAttribute("data-qrf-product") || "";
-      const plan    = card.getAttribute("data-qrf-plan") || "";
-
-      const href = button.getAttribute("href") || "/";
-      if (!product || !plan) return; // let default navigation happen if missing
-
-      try {
-        const url = new URL(href, window.location.origin);
-        url.searchParams.set("product", product);
-        url.searchParams.set("plan", plan);
-        e.preventDefault();
-        window.location.href = `${url.pathname}${url.search}${url.hash}`;
-      } catch {
-        // invalid href — default navigation
-      }
-    });
   });
 }
