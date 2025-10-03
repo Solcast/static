@@ -192,9 +192,8 @@
 
     // ---------- Form helpers ----------
     if (has("form")) {
-      tasks.push(loadModule("component.form-preselect.js", "form-preselect"));
+      tasks.push(loadModule("component.form-select-helper.js", "form-select-helper"));
       tasks.push(loadModule("component.recaptch-helper.js", "recaptcha-helper"));
-      tasks.push(loadModule("component.form-country-select.js", "country-select"));
     }
 
     // ---------- GTM tracking ----------
