@@ -38,41 +38,60 @@
         document.head.appendChild(s);
       });
 
-    // --- Map-Story Widget Helper --
-    const loadMapStoryWidget = () =>
-      new Promise((resolve, reject) => {
-      const container = document.querySelector("#map-story");
-      if (!container) return resolve();
+    // --- Map-Story Widget Helper ---
+    const loadMapStoryWidget = () => {
+      loadMapStoryWidget.cache ??= null;
+      if (loadMapStoryWidget.cache) return loadMapStoryWidget.cache;
 
-      const src =
-        "https://static.solcast.com/2025-global-interactive-story/js/map-story-widget.iife.js";
+      loadMapStoryWidget.cache = new Promise((resolve, reject) => {
+        const container = document.querySelector('[data-script-loader="component.map-box"]');
+        if (!container) return resolve();
 
-      // Prevent double-injection
-      if (document.querySelector(`script[src="${src}"]`)) {
-        return resolve();
-      }
+        const src =
+          "https://static.solcast.com/2025-global-interactive-story/js/map-story-widget.iife.js";
 
-      const mapboxToken = container.getAttribute("component-data-mapbox-token");
-      const dataContainer = container.getAttribute("component-data-container");
+        // Prevent double-injection
+        if (document.querySelector(`script[src="${src}"]`)) {
+          return resolve();
+        }
 
-      const s = document.createElement("script");
-      s.src = src;
-      s.async = true;
+        const mapboxToken = container.getAttribute("component-data-mapbox-token");
 
-      if (dataContainer) {
-        s.setAttribute("data-container", dataContainer);
-      }
+        // Fill in component-data-container from the dynamically set ID
+        if (container.id) {
+          container.setAttribute("component-data-container", `#${container.id}`);
+        }
 
-      if (mapboxToken) {
-        s.setAttribute("data-mapbox-token", mapboxToken);
-      }
+        const dataContainer = container.getAttribute("component-data-container");
 
-      s.onload = resolve;
-      s.onerror = () => reject(new Error("Failed to load Map Story widget"));
+        if (!mapboxToken || !dataContainer) {
+          console.warn("[MapStory] Missing mapbox token or container selector", {
+            mapboxToken,
+            dataContainer,
+          });
+        }
 
-      document.head.appendChild(s);
-    });
-  
+        const s = document.createElement("script");
+        s.src = src;
+        s.async = true;
+
+        if (dataContainer) {
+          s.setAttribute("data-container", dataContainer);
+        }
+
+        if (mapboxToken) {
+          s.setAttribute("data-mapbox-token", mapboxToken);
+        }
+
+        s.onload = resolve;
+        s.onerror = () => reject(new Error("Failed to load Map Story widget"));
+
+        document.head.appendChild(s);
+      });
+
+      return loadMapStoryWidget.cache;
+    };
+
 
     // Function to allow loading of External JS
     const loadExternalScript = (src, label) => {
