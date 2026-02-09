@@ -38,6 +38,42 @@
         document.head.appendChild(s);
       });
 
+    // --- Map-Story Widget Helper --
+    const loadMapStoryWidget = () =>
+      new Promise((resolve, reject) => {
+      const container = document.querySelector("#map-story");
+      if (!container) return resolve();
+
+      const src =
+        "https://static.solcast.com/2025-global-interactive-story/js/map-story-widget.iife.js";
+
+      // Prevent double-injection
+      if (document.querySelector(`script[src="${src}"]`)) {
+        return resolve();
+      }
+
+      const mapboxToken = container.getAttribute("component-data-mapbox-token");
+      const dataContainer = container.getAttribute("component-data-container");
+
+      const s = document.createElement("script");
+      s.src = src;
+      s.async = true;
+
+      if (dataContainer) {
+        s.setAttribute("data-container", dataContainer);
+      }
+
+      if (mapboxToken) {
+        s.setAttribute("data-mapbox-token", mapboxToken);
+      }
+
+      s.onload = resolve;
+      s.onerror = () => reject(new Error("Failed to load Map Story widget"));
+
+      document.head.appendChild(s);
+    });
+  
+
     // Function to allow loading of External JS
     const loadExternalScript = (src, label) => {
       loadExternalScript.cache ??= new Map();
@@ -266,6 +302,11 @@
     // ---------- DatawrapperGraph embeds ----------
     if (has(".embed-graph")) {
       tasks.push(loadModule("component.dw-graph.js", "graph"));
+    }
+       
+    // ---------- Map-box Solar Anomaly ----------
+    if (has('[data-script-loader="component.map-box"]')) {
+      tasks.push(loadMapStoryWidget());
     }
 
     // ---------- Per-page modules ----------
