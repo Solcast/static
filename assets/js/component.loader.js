@@ -38,6 +38,68 @@
         document.head.appendChild(s);
       });
 
+    // --- Map-Story Widget Helper ---
+    const loadMapStoryWidget = () => {
+      loadMapStoryWidget.cache ??= null;
+      if (loadMapStoryWidget.cache) return loadMapStoryWidget.cache;
+
+      loadMapStoryWidget.cache = new Promise((resolve, reject) => {
+        const container = document.querySelector('[data-script-loader="component.map-box"]');
+        if (!container) return resolve();
+
+        const src =
+          "https://static.solcast.com/2025-global-interactive-story/js/map-story-widget.iife.js";
+
+        // Prevent double-injection
+        if (document.querySelector(`script[src="${src}"]`)) {
+          return resolve();
+        }
+
+        const mapboxToken = container.getAttribute("component-data-mapbox-token");
+
+        // Fill in component-data-container from the dynamically set ID
+        if (container.id) {
+          container.setAttribute("component-data-container", `#${container.id}`);
+        }
+
+        const dataContainer = container.getAttribute("component-data-container");
+
+        if (!mapboxToken || !dataContainer) {
+          console.warn("[MapStory] Missing mapbox token or container selector", {
+            mapboxToken,
+            dataContainer,
+          });
+          // Allow retry if attributes are populated later.
+          loadMapStoryWidget.cache = null;
+          reject(
+            new Error(
+              "Missing required Map Story attributes: component-data-mapbox-token and component-data-container"
+            )
+          );
+          return;
+        }
+
+        const s = document.createElement("script");
+        s.src = src;
+        s.async = true;
+
+        s.setAttribute("data-container", dataContainer);
+        s.setAttribute("data-mapbox-token", mapboxToken);
+        const nonceNode = document.querySelector("[nonce]");
+        const nonce = nonceNode?.nonce || nonceNode?.getAttribute("nonce");
+        if (nonce) {
+          s.setAttribute("nonce", nonce);
+        }
+
+        s.onload = resolve;
+        s.onerror = () => reject(new Error("Failed to load Map Story widget"));
+
+        document.head.appendChild(s);
+      });
+
+      return loadMapStoryWidget.cache;
+    };
+
     // Function to allow loading of External JS
     const loadExternalScript = (src, label) => {
       loadExternalScript.cache ??= new Map();
@@ -266,6 +328,11 @@
     // ---------- DatawrapperGraph embeds ----------
     if (has(".embed-graph")) {
       tasks.push(loadModule("component.dw-graph.js", "graph"));
+    }
+
+    // ---------- Map-box Solar Anomaly ----------
+    if (has('[data-script-loader="component.map-box"]')) {
+      tasks.push(loadMapStoryWidget());
     }
 
     // ---------- Per-page modules ----------
